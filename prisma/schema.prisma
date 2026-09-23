@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Справочник видов ВИЭ
+model EnergyType {
+  id          String       @id // wind | solar | hydro | biomass | geothermal
+  name        String
+  shortName   String
+  description String
+  color       String
+  cim         Float // типовой КИУМ, %
+  projects    Project[]
+  yearlyStats YearlyStat[]
+}
+
+// Регионы РФ
+model Region {
+  id              Int      @id @default(autoincrement())
+  name            String   @unique
+  federalDistrict String
+  projects        Project[]
+}
+
+// Каталог ключевых объектов генерации
+model Project {
+  id              Int        @id @default(autoincrement())
+  name            String
+  energyTypeId    String
+  energyType      EnergyType @relation(fields: [energyTypeId], references: [id])
+  regionId        Int
+  region          Region     @relation(fields: [regionId], references: [id])
+  capacityMW      Float
+  status          String // operating | construction | planned
+  yearCommissioned Int?
+  yearPlanned     Int?
+  operator        String
+  investmentBlnRub Float?
+  description     String
+  isFlagship      Boolean    @default(false)
+}
+
+// Годовые ряды: установленная мощность и выработка по видам ВИЭ
+model YearlyStat {
+  id           Int        @id @default(autoincrement())
+  year         Int
+  energyTypeId String
+  energyType   EnergyType @relation(fields: [energyTypeId], references: [id])
+  capacityMW   Float
+  generationTWh Float
+
+  @@unique([year, energyTypeId])
+}
+
+// Прогнозные сценарии развития ВИЭ (без крупных ГЭС)
+model ForecastPoint {
+  id               Int    @id @default(autoincrement())
+  year             Int
+  scenario         String // conservative | base | optimistic
+  capacityMW       Float
+  sharePercent     Float
+  investmentBlnRub Float
+
+  @@unique([year, scenario])
+}
