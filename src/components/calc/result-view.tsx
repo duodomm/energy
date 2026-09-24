@@ -22,9 +22,9 @@ import { formatRub, formatKwh } from "@/lib/calc/ref-bundle"
 import { MONTH_LABELS } from "@/lib/calc/constants"
 import { LeadForm } from "@/components/lead/lead-form"
 import { AdSlot } from "@/components/common/ad-slot"
-import { trackGoal } from "@/lib/analytics"
 import { MONTH_RU } from "@/lib/calc/months"
 import { SolarHouseCard } from "./solar-house"
+import { GostEstimate } from "./gost-estimate"
 
 const nbsp = (v: number) => Math.round(v).toLocaleString("ru-RU")
 
@@ -49,11 +49,6 @@ export function ResultView({ result, bundle }: { result: CalcResult; bundle: Ref
   ]
 
   const priceDate = new Date(bundle.priceUpdatedAt).toLocaleDateString("ru-RU")
-
-  const printPdf = () => {
-    trackGoal("pdf_download")
-    window.print()
-  }
 
   const mailSummary = () => {
     const subject = encodeURIComponent(`Смета: ${c.pnom} кВт, ${region.name}`)
@@ -392,9 +387,7 @@ export function ResultView({ result, bundle }: { result: CalcResult; bundle: Ref
               и пришлёт PDF-смету с позициями «от–до» и графиком работ. 24 часа, без спама.
             </p>
             <div className="mt-4 flex flex-wrap gap-2.5 no-print">
-              <Button onClick={printPdf} variant="outline">
-                <FileDown className="mr-1.5 h-4 w-4" /> Скачать смету PDF
-              </Button>
+              <GostEstimate result={result} bundle={bundle} label="Смета PDF (ГОСТ)" />
               <Button onClick={mailSummary} variant="outline">
                 <Mail className="mr-1.5 h-4 w-4" /> Отправить на e-mail
               </Button>
@@ -405,8 +398,9 @@ export function ResultView({ result, bundle }: { result: CalcResult; bundle: Ref
               </a>
             </div>
             <p className="mt-3 text-xs text-muted-foreground">
-              PDF генерируется в браузере (печать страницы) — кириллица в штатных шрифтах,
-              содержит дату актуальности цен{result.priceStaleDays > 14 ? " и предупреждение о возможном изменении" : ""}.
+              PDF-смета собирается в браузере как лист конструкторского документа — рамка
+              и основная надпись ГОСТ 2.104, спецификация «от–до» с датой актуальности цен
+              {result.priceStaleDays > 14 ? " и предупреждением о возможном изменении" : ""}. Данные не покидают устройство (152-ФЗ).
             </p>
           </div>
           <div>

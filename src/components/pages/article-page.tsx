@@ -3,16 +3,17 @@
 // Страница статьи: markdown-тело, SEO-поля, FAQ-блок внутри тела,
 // для кейсов — кнопка «Воспроизвести в калькуляторе» (caseSpecJson → localStorage)
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import ReactMarkdown from "react-markdown"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Badge } from "@/components/ui/badge"
-import { CalendarDays, Clock, Eye, PlayCircle, ArrowLeft, TrendingUp } from "lucide-react"
+import { CalendarDays, Clock, Eye, PlayCircle, ArrowLeft, TrendingUp, Box } from "lucide-react"
 import { saveInput, normalizeInput } from "@/lib/calc/share"
 import { navigate } from "@/lib/router"
 import { AdSlot } from "@/components/common/ad-slot"
 import { LeadForm } from "@/components/lead/lead-form"
+import { Estate3D } from "@/components/common/estate-3d"
 import { trackGoal } from "@/lib/analytics"
 
 interface ArticleData {
@@ -63,6 +64,22 @@ export function ArticlePage({ slug }: { slug: string }) {
     })
     return () => cancelAnimationFrame(raf)
   }, [slug])
+
+  // Параметры кейса для 3D-сцены (мощность/тип монтажа из caseSpecJson)
+  const caseSpecJson = article?.caseSpecJson ?? null
+  const case3d = useMemo(() => {
+    if (!caseSpecJson) return null
+    try {
+      const spec = JSON.parse(caseSpecJson) as { panelKw?: number; installType?: string }
+      if (typeof spec.panelKw !== "number") return null
+      return {
+        kw: Math.min(10, Math.max(2, spec.panelKw)),
+        groundFirst: spec.installType === "ground",
+      }
+    } catch {
+      return null
+    }
+  }, [caseSpecJson])
 
   const reproduce = () => {
     if (!article?.caseSpecJson) return
@@ -128,6 +145,27 @@ export function ArticlePage({ slug }: { slug: string }) {
             <Button onClick={reproduce} className="bg-gradient-solar text-primary-foreground hover:opacity-95">
               <PlayCircle className="mr-1.5 h-4 w-4" /> Воспроизвести в калькуляторе
             </Button>
+          </div>
+        )}
+
+        {/* №7: кейс в 3D — «покрутите усадьбу», мощность из сметы кейса */}
+        {case3d && (
+          <div className="mt-6 rounded-2xl border border-border bg-card p-4 md:p-5">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+              <p className="flex items-center gap-2 text-sm font-semibold">
+                <Box className="h-4 w-4 text-primary" /> Кейс в 3D
+              </p>
+              <p className="text-[11px] text-muted-foreground">
+                модель иллюстрирует компоновку; потяните мышью — усадьба вращается
+              </p>
+            </div>
+            <Estate3D
+              initialKw={case3d.kw}
+              groundFirst={case3d.groundFirst}
+              showCta={false}
+              hudTitle={`КЕЙС: СЭС ${String(case3d.kw).replace(".", ",")} КВТ`}
+              noteText="Слайдер — «а если панелей больше?»: 16 на скате, дальше — ряд на каркасе. Точная компоновка — кнопкой «Воспроизвести в калькуляторе»."
+            />
           </div>
         )}
 

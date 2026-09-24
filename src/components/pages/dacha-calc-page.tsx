@@ -19,6 +19,8 @@ import type { CalcInput, CalcResult, RefBundle } from "@/lib/calc/types"
 import { formatRub } from "@/lib/calc/ref-bundle"
 import { LeadForm } from "@/components/lead/lead-form"
 import { SolarHouseCard } from "@/components/calc/solar-house"
+import { Estate3D } from "@/components/common/estate-3d"
+import { GostEstimate } from "@/components/calc/gost-estimate"
 import { navigate } from "@/lib/router"
 import { trackGoal } from "@/lib/analytics"
 import { PageHero } from "@/components/common/page-hero"
@@ -43,6 +45,7 @@ export function DachaCalcPage() {
   const [checked, setChecked] = useState<string[]>(["fridge", "pump", "light", "tv", "kettle"])
   const [result, setResult] = useState<CalcResult | null>(null)
   const [contactSent, setContactSent] = useState(false)
+  const [sceneMode, setSceneMode] = useState<"3d" | "schema">("3d")
 
   useEffect(() => {
     loadRefBundle().then(setBundle).catch(() => undefined)
@@ -120,6 +123,7 @@ export function DachaCalcPage() {
         {result ? (
           <DachaResult
             result={result}
+            bundle={bundle}
             onPro={goPro}
             onAgain={() => { setResult(null); setStep(1) }}
             contactSent={contactSent}
@@ -128,9 +132,41 @@ export function DachaCalcPage() {
           />
         ) : (
           <div>
-          {/* Живой конфигуратор №4: усадьба перестраивается под отмеченные приборы */}
+          {/* Живой конфигуратор: усадьба перестраивается под отмеченные приборы.
+              Табы: 3D-усадьба (№7) — пространственное чутьё, Схема (№4) — цифры сметы */}
           <div className="mb-5">
-            <SolarHouseCard input={dachaInput} bundle={bundle} />
+            <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+              <div role="tablist" aria-label="Вид сцены" className="flex rounded-xl border border-border bg-secondary/40 p-1">
+                {(["3d", "schema"] as const).map((m) => (
+                  <button
+                    key={m}
+                    role="tab"
+                    aria-selected={sceneMode === m}
+                    type="button"
+                    onClick={() => setSceneMode(m)}
+                    className={`rounded-lg px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                      sceneMode === m ? "bg-card text-foreground shadow-sm border border-border" : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {m === "3d" ? "3D-усадьба" : "Схема со сметой"}
+                  </button>
+                ))}
+              </div>
+              <span className="hidden sm:block text-[11px] text-muted-foreground">
+                сцена живая — панели подстраиваются под отмеченные приборы
+              </span>
+            </div>
+            {sceneMode === "3d" ? (
+              <Estate3D
+                powerKw={dachaInput.panelKw}
+                groundFirst
+                showSlider={false}
+                showCta={false}
+                hudTitle="ДАЧА · АВТОНОМНЫЙ КОМПЛЕКТ"
+              />
+            ) : (
+              <SolarHouseCard input={dachaInput} bundle={bundle} />
+            )}
           </div>
           <div className="card-premium p-5 md:p-7">
             <div className="mb-6">
@@ -248,9 +284,10 @@ export function DachaCalcPage() {
 }
 
 function DachaResult({
-  result, onPro, onAgain, contactSent, onContactSent, regionCode,
+  result, bundle, onPro, onAgain, contactSent, onContactSent, regionCode,
 }: {
   result: CalcResult
+  bundle: RefBundle
   onPro: () => void
   onAgain: () => void
   contactSent: boolean
@@ -327,6 +364,7 @@ function DachaResult({
       )}
 
       <div className="flex flex-wrap gap-2.5">
+        <GostEstimate result={result} bundle={bundle} label="Смета PDF (ГОСТ)" compact />
         <Button variant="outline" onClick={onPro}>
           Усложнить расчёт — профессиональный <ArrowRight className="ml-1.5 h-4 w-4" />
         </Button>

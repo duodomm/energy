@@ -20,6 +20,8 @@ type MetricaGoal =
   | "pdf_download"
   | "share_click"
   | "estate3d_interact"
+  | "region_map_interact"
+  | "gost_pdf_open"
 
 const YM_ID = 0 // номер счётчика задаётся при деплое
 

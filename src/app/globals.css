@@ -360,6 +360,166 @@
   .print-text { color: #000 !important; }
 }
 
+/* ===== №1 «ГОСТ-чертёж»: PDF-смета листом А4 (печать из браузера) ===== */
+/* Лист 794×1123 px = А4 при 96 dpi; поля ГОСТ 2.301: слева 20 мм, прочие 5 мм */
+.gost-sheet {
+  position: relative;
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  color: #16181c;
+  font-size: 10px;
+  line-height: 1.38;
+  box-shadow: 0 30px 90px rgba(15, 20, 26, 0.42);
+}
+.gost-sheet b { font-weight: 700; }
+.gost-frame {
+  position: absolute;
+  top: 19px;
+  right: 19px;
+  bottom: 19px;
+  left: 76px;
+  border: 2.5px solid #111;
+  pointer-events: none;
+}
+.gost-corner {
+  position: absolute;
+  top: 4px;
+  right: 21px;
+  font-size: 8px;
+  color: #6c7077;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.gost-body {
+  position: absolute;
+  top: 19px;
+  left: 76px;
+  right: 19px;
+  bottom: 19px;
+  padding: 15px 18px 232px 20px;
+  overflow: hidden;
+}
+.gost-body h1 { color: #111; }
+
+.gost-tb { border-collapse: collapse; width: 100%; table-layout: fixed; }
+.gost-tb th, .gost-tb td { border: 1px solid #111; padding: 2.5px 6px; text-align: left; vertical-align: top; }
+.gost-td { margin-top: 10px; }
+.gost-td th {
+  font-size: 8.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.gost-td td { font-size: 9px; }
+.gost-td .gost-k {
+  width: 168px;
+  color: #4a4f55;
+  font-size: 8px;
+  background: #f4f2ec;
+}
+
+.gost-spec { margin-top: 12px; }
+.gost-spec th {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  text-align: center;
+}
+.gost-spec td { font-size: 9px; }
+.gost-spec .gost-note { color: #555; font-size: 8px; }
+.gost-group td {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  background: #f4f2ec;
+}
+.gost-total td {
+  border-top: 2px solid #111;
+  font-weight: 700;
+  font-size: 10.5px;
+  padding: 5px 6px;
+}
+
+.gost-notes { margin-top: 12px; font-size: 8px; line-height: 1.5; color: #333; }
+.gost-notes-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 8.5px;
+  margin-bottom: 3px;
+}
+.gost-notes ol { padding-left: 15px; }
+.gost-notes li { margin-bottom: 2px; }
+
+/* Основная надпись: форма 1 ГОСТ 2.104, 185×55 мм = 700×208 px */
+.gost-stamp {
+  position: absolute;
+  right: 19px;
+  bottom: 19px;
+  width: 700px;
+  height: 208px;
+  border: 2.5px solid #111;
+  background: #fff;
+  display: flex;
+}
+.gost-stamp-left { width: 236px; border-right: 1.5px solid #111; display: flex; flex-direction: column; }
+.gost-izm {
+  display: grid;
+  grid-template-columns: 42px 46px 84px 34px 30px;
+  border-bottom: 1px solid #111;
+  font-size: 7.5px;
+}
+.gost-izm span { padding: 3px 2px; border-right: 1px solid #111; text-align: center; }
+.gost-izm span:last-child { border-right: none; }
+.gost-izm-rows > div {
+  display: grid;
+  grid-template-columns: 42px 46px 84px 34px 30px;
+  height: 26px;
+  border-bottom: 1px solid #111;
+}
+.gost-izm-rows > div:last-child { border-bottom: none; }
+.gost-izm-rows span { border-right: 1px solid #111; }
+.gost-izm-rows span:last-child { border-right: none; }
+
+.gost-stamp-right { flex: 1; display: flex; flex-direction: column; }
+.gost-sign-row {
+  display: grid;
+  grid-template-columns: 78px 176px 118px 92px;
+  height: 22px;
+  border-bottom: 1px solid #111;
+  font-size: 8.5px;
+}
+.gost-sign-row span { border-right: 1px solid #111; padding: 3px 6px; overflow: hidden; }
+.gost-sign-row .gost-role, .gost-sign-row .gost-date { color: #333; }
+.gost-name { height: 74px; border-bottom: 1px solid #111; display: flex; flex-direction: column; justify-content: center; padding: 0 10px; }
+.gost-name-main { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.gost-name-sub { font-size: 8.5px; margin-top: 2px; color: #333; }
+.gost-meta {
+  display: grid;
+  grid-template-columns: 60px 84px 128px 96px 96px;
+  border-bottom: 1px solid #111;
+  height: 22px;
+  font-size: 8px;
+}
+.gost-meta span { border-right: 1px solid #111; padding: 3px 6px; }
+.gost-meta span:last-child { border-right: none; }
+.gost-org { flex: 1; display: flex; align-items: center; padding: 0 10px; font-size: 8.5px; letter-spacing: 0.04em; }
+
+/* Печать листа ГОСТ: остаётся только портал со листом (класс вешает компонент) */
+@media print {
+  body.gost-printing > *:not(.gost-portal) { display: none !important; }
+  .gost-portal { position: static !important; overflow: visible !important; background: #fff !important; backdrop-filter: none !important; }
+  .gost-ui { display: none !important; }
+  .gost-stage { padding: 0 !important; display: block !important; }
+  .gost-scale-wrap { width: auto !important; height: auto !important; }
+  .gost-scale { transform: none !important; }
+  .gost-sheet { box-shadow: none !important; }
+  html, body { background: #fff !important; }
+  .gost-tb tr, .gost-stamp { break-inside: avoid; page-break-inside: avoid; }
+}
+
 /* ===== Движение только для тех, кто его не отключил (CWV/доступность) ===== */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

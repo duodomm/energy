@@ -98,28 +98,70 @@ function groundPanelQuad(cx: number): Quad {
 const ROOF_CAPACITY = 16
 const GROUND_CAPACITY = 8
 
-export function Estate3D({ className }: { className?: string }) {
+// Режимы встраивания:
+//  • витрина (по умолчанию): внутренний слайдер 2–10 кВт + CTA в калькулятор
+//  • дачный калькулятор: powerKw (контроль от приборов, слайдер скрыт, каркас вперёд)
+//  • кейс-статья: initialKw из параметров кейса, слайдер-«поиграть мощностью»
+interface Estate3DProps {
+  className?: string
+  /** Контролируемая мощность (кВт) — сцена следует за внешним состоянием */
+  powerKw?: number
+  onPowerKwChange?: (kw: number) => void
+  /** Стартовое значение слайдера в свободном режиме */
+  initialKw?: number
+  minKw?: number
+  maxKw?: number
+  /** Сначала заполнять наземный каркас (дачи/кейсы с ground-монтажом) */
+  groundFirst?: boolean
+  showSlider?: boolean
+  showCta?: boolean
+  hudTitle?: string
+  noteText?: string
+}
+
+export function Estate3D({
+  className,
+  powerKw,
+  onPowerKwChange,
+  initialKw = 6,
+  minKw = 2,
+  maxKw = 10,
+  groundFirst = false,
+  showSlider = true,
+  showCta = true,
+  hudTitle = "ОБЪЕКТ: ДОМ 10×6 м",
+  noteText,
+}: Estate3DProps) {
   const wrapRef = useRef<HTMLDivElement | null>(null)
   const cvRef = useRef<HTMLCanvasElement | null>(null)
   const yawRef = useRef<HTMLSpanElement | null>(null)
   const inView = useInView(wrapRef)
   const reduced = useReducedMotion()
 
-  const [kw, setKw] = useState(6)
+  const [kwLocal, setKwLocal] = useState(initialKw)
+  const kw = powerKw ?? kwLocal
   const [season, setSeason] = useState<Season>("summer")
   const drawRef = useRef<(() => void) | null>(null)
 
-  const kwRef = useRef(kw)
   const seasonRef = useRef(season)
   useEffect(() => {
-    kwRef.current = kw
     seasonRef.current = season
-  }, [kw, season])
+  }, [season])
 
   const panelTotal = Math.round((kw * 1000) / 450)
-  const roofN = Math.min(panelTotal, ROOF_CAPACITY)
-  const groundN = Math.min(Math.max(0, panelTotal - ROOF_CAPACITY), GROUND_CAPACITY)
+  const roofN = groundFirst
+    ? Math.min(Math.max(0, panelTotal - GROUND_CAPACITY), ROOF_CAPACITY)
+    : Math.min(panelTotal, ROOF_CAPACITY)
+  const groundN = groundFirst
+    ? Math.min(panelTotal, GROUND_CAPACITY)
+    : Math.min(Math.max(0, panelTotal - ROOF_CAPACITY), GROUND_CAPACITY)
   const genY = Math.round(kw * 1050)
+
+  // Распределение панелей для отрисовщика (скат/каркас зависит от режима)
+  const distRef = useRef({ roof: roofN, ground: groundN })
+  useEffect(() => {
+    distRef.current = { roof: roofN, ground: groundN }
+  }, [roofN, groundN])
 
   useEffect(() => {
     const cv = cvRef.current
@@ -279,15 +321,15 @@ export function Estate3D({ className }: { className?: string }) {
         ctx.filter = "none"
       }
 
-      // Панели: скат (16) + земля (переполнение)
-      const n = Math.round((kwRef.current * 1000) / 450)
+      // Панели: скат + каркас — распределение считает компонент (groundFirst)
+      const roofCount = distRef.current.roof
+      const groundCount = distRef.current.ground
       const quads = [...house]
       for (let c = 0; c < 8; c++) {
         const cx = -1.5 + c * 0.43
-        if (c * 2 < n) quads.push(roofPanelQuad(cx, 0.55))
-        if (c * 2 + 1 < n) quads.push(roofPanelQuad(cx, 1.75))
+        if (c * 2 < roofCount) quads.push(roofPanelQuad(cx, 0.55))
+        if (c * 2 + 1 < roofCount) quads.push(roofPanelQuad(cx, 1.75))
       }
-      const groundCount = Math.min(Math.max(0, n - ROOF_CAPACITY), GROUND_CAPACITY)
       for (let c = 0; c < groundCount; c++) {
         quads.push(groundPanelQuad(-1.5 + c * 0.43))
       }
@@ -435,12 +477,25 @@ export function Estate3D({ className }: { className?: string }) {
       <div ref={wrapRef} className="relative h-[300px] overflow-hidden rounded-2xl border border-border bg-card sm:h-[360px] md:h-[420px]">
         <canvas ref={cvRef} className="block h-full w-full cursor-grab active:cursor-grabbing" aria-label="3D-сцена: дом с солнечными панелями, можно вращать мышью" role="img" />
         <div className="svg-mono pointer-events-none absolute left-3.5 top-3 text-[10.5px] leading-relaxed text-muted-foreground">
-          ОБЪЕКТ: ДОМ 10×6 м
+          {hudTitle}
           <br />
-          СКАТ 35° ЮГ · <b className="font-semibold text-foreground">{roofN} ПАНЕЛЕЙ</b>
-          {groundN > 0 && (
+          {groundFirst ? (
             <>
-              <br />+ <b className="font-semibold text-foreground">{groundN}</b> НА КАРКАСЕ
+              КАРКАС 35° ЮГ · <b className="font-semibold text-foreground">{groundN} ПАНЕЛЕЙ</b>
+              {roofN > 0 && (
+                <>
+                  <br />+ <b className="font-semibold text-foreground">{roofN}</b> НА СКАТЕ
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              СКАТ 35° ЮГ · <b className="font-semibold text-foreground">{roofN} ПАНЕЛЕЙ</b>
+              {groundN > 0 && (
+                <>
+                  <br />+ <b className="font-semibold text-foreground">{groundN}</b> НА КАРКАСЕ
+                </>
+              )}
             </>
           )}
         </div>
@@ -462,23 +517,36 @@ export function Estate3D({ className }: { className?: string }) {
               {kw.toLocaleString("ru-RU")} кВт · {panelTotal} панелей × 450 Вт
             </span>
           </div>
-          <input
-            type="range"
-            min={2}
-            max={10}
-            step={0.5}
-            value={kw}
-            style={{ "--p": `${((kw - 2) / 8) * 100}%` } as React.CSSProperties}
-            onChange={(e) => setKw(Number(e.target.value))}
-            onMouseUp={() => trackGoal("estate3d_interact", { kw })}
-            onTouchEnd={() => trackGoal("estate3d_interact", { kw })}
-            className="estate-range mt-3"
-            aria-label="Мощность станции, кВт"
-          />
-          <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-            Ориентир выработки: ~{genY.toLocaleString("ru-RU")} кВт·ч/год в средней полосе.
-            Точно — по PSH вашего региона в калькуляторе.
-          </p>
+          {showSlider ? (
+            <>
+              <input
+                type="range"
+                min={minKw}
+                max={maxKw}
+                step={0.5}
+                value={kw}
+                style={{ "--p": `${((kw - minKw) / (maxKw - minKw)) * 100}%` } as React.CSSProperties}
+                onChange={(e) => {
+                  const v = Number(e.target.value)
+                  if (onPowerKwChange) onPowerKwChange(v)
+                  else setKwLocal(v)
+                }}
+                onMouseUp={() => trackGoal("estate3d_interact", { kw })}
+                onTouchEnd={() => trackGoal("estate3d_interact", { kw })}
+                className="estate-range mt-3"
+                aria-label="Мощность станции, кВт"
+              />
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                Ориентир выработки: ~{genY.toLocaleString("ru-RU")} кВт·ч/год в средней полосе.
+                Точно — по PSH вашего региона в калькуляторе.
+              </p>
+            </>
+          ) : (
+            <p className="mt-2.5 text-xs leading-relaxed text-muted-foreground">
+              {noteText ??
+                "Панели подстраиваются под отмеченные приборы: отметьте бойлер — станция подрастёт."}
+            </p>
+          )}
         </div>
         <div className="card-premium flex flex-col justify-between px-4 py-3.5">
           <div className="flex gap-2">
@@ -497,13 +565,15 @@ export function Estate3D({ className }: { className?: string }) {
               <Snowflake className="h-4 w-4" /> Зима · низкое солнце
             </button>
           </div>
-          <Button
-            size="sm"
-            className="mt-3 w-full bg-gradient-solar text-primary-foreground hover:opacity-95"
-            onClick={() => navigate("#/kalkulyator")}
-          >
-            Считать точно в калькуляторе <ArrowRight className="ml-1.5 h-4 w-4" />
-          </Button>
+          {showCta && (
+            <Button
+              size="sm"
+              className="mt-3 w-full bg-gradient-solar text-primary-foreground hover:opacity-95"
+              onClick={() => navigate("#/kalkulyator")}
+            >
+              Считать точно в калькуляторе <ArrowRight className="ml-1.5 h-4 w-4" />
+            </Button>
+          )}
         </div>
       </div>
     </div>
