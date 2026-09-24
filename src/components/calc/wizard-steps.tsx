@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 import type { CalcInput, ObjectType, RefBundle, RefRegion, SystemMode, InstallType, Orientation, Shading, BatteryTech, GeneratorType, PanelClass, Voltage, TariffPlan, ConsumerType } from "@/lib/calc/types"
 import { objectLabel, summarize, LoadBuilder } from "./load-builder"
+import { SunPathCard } from "./sun-path"
 import { cn } from "@/lib/utils"
 
 // ===== Общие элементы =====
@@ -460,7 +461,7 @@ export function StepGeneration({
         <div className="space-y-1.5">
           <Label className="flex items-center gap-1.5">
             Ориентация
-            <FieldTooltip text="Юг — максимум годовой выработки. Восток/запад смещают пик на утро/вечер: иногда выгоднее совпадение с нагрузкой." />
+            <FieldTooltip text="Юг — максимум годовой выработки. Восток/запад смещают пик на утро/вечер: иногда выгоднее совпадение с нагрузкой. Ниже — дуга солнца региона: янтарная часть показывает, какие часы вы «ловите» панелями." />
           </Label>
           <div className="flex flex-wrap gap-2">
             {ORIENTS.map((o) => (
@@ -485,6 +486,11 @@ export function StepGeneration({
         </div>
       </div>
 
+      {/* №6: солнечный путь региона — реагирует на ориентацию и тип монтажа */}
+      <div className="mb-7">
+        <SunPathCard region={region} orientation={input.orientation} installType={input.installType} />
+      </div>
+
       {overMicro && (
         <div className="card-premium border-primary/40 bg-primary/5 p-4">
           <p className="flex items-start gap-3 text-sm leading-relaxed">
@@ -499,7 +505,6 @@ export function StepGeneration({
           </p>
         </div>
       )}
-      <span className="hidden">{region.code}</span>
     </TooltipProvider>
   )
 }

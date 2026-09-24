@@ -15,6 +15,7 @@ import { loadRefBundle } from "@/lib/calc/ref-bundle"
 import type { CalcInput, CalcResult, RefBundle } from "@/lib/calc/types"
 import { loadAppliances } from "./load-builder"
 import { StepObject, StepPower, StepGeneration, StepStorage, StepMount } from "./wizard-steps"
+import { SolarHouseCard } from "./solar-house"
 import { ResultView } from "./result-view"
 import { LeadForm } from "@/components/lead/lead-form"
 import { trackGoal } from "@/lib/analytics"
@@ -77,7 +78,7 @@ export function CalcWizard({
 
   if (showResult && result) {
     return (
-      <div className="space-y-8">
+      <div className="mx-auto max-w-3xl space-y-8">
         <div className="no-print flex flex-wrap items-center gap-2.5">
           <Button variant="outline" onClick={back}>
             <ChevronLeft className="mr-1.5 h-4 w-4" /> Изменить параметры
@@ -97,8 +98,11 @@ export function CalcWizard({
     )
   }
 
+  // Живой конфигуратор №4: сцена справа (десктоп, sticky) / сверху (мобайл)
+  // и обновляется на каждом шаге вместе с формой
   return (
-    <div className="mx-auto max-w-3xl">
+    <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_330px] lg:items-start lg:gap-7 xl:grid-cols-[minmax(0,1fr)_375px]">
+      <div className="min-w-0">
       {/* Прогресс */}
       <div className="mb-8">
         <div className="mb-2 flex items-center justify-between text-xs text-muted-foreground">
@@ -124,6 +128,11 @@ export function CalcWizard({
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Мобильная компактная сцена — конфигуратор виден и на телефоне */}
+      <div className="mb-6 lg:hidden">
+        <SolarHouseCard input={input} bundle={bundle} compact />
       </div>
 
       {/* Шаги */}
@@ -187,6 +196,17 @@ export function CalcWizard({
           </Button>
         </div>
       </div>
+      </div>
+
+      {/* Живая сцена №4 (десктоп): sticky, обновляется на каждом шаге */}
+      <aside className="hidden lg:block">
+        <div className="sticky top-20">
+          <SolarHouseCard input={input} bundle={bundle} />
+          <p className="mt-2.5 text-center text-[11px] leading-snug text-muted-foreground">
+            Схема живая: панели, АКБ и смета «от» пересчитываются на каждом шаге
+          </p>
+        </div>
+      </aside>
     </div>
   )
 }

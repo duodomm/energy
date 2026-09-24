@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { MountainSnow, Wind, Sun, Zap, Fuel, Search, TrendingUp } from "lucide-react"
 import { PageHero } from "@/components/common/page-hero"
 import { AdSlot } from "@/components/common/ad-slot"
+import { PshHeatmap } from "@/components/common/psh-heatmap"
 import { loadRefBundle } from "@/lib/calc/ref-bundle"
 import type { RefBundle, RefRegion } from "@/lib/calc/types"
 import { navigate } from "@/lib/router"
@@ -126,6 +127,13 @@ export function RegionsPage() {
                       </div>
                     </div>
                   </div>
+
+                  {/* №6: сезонность PSH — heatmap по месяцам на общей шкале */}
+                  <div className="mt-3 border-t border-border/60 pt-3">
+                    <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">PSH по месяцам, ч/сут</p>
+                    <PshHeatmap psh={r.psh} />
+                  </div>
+
                   <button
                     type="button"
                     onClick={() => navigate("#/kalkulyator")}

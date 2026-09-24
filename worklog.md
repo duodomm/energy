@@ -102,3 +102,30 @@ Stage Summary:
 - Файлы: src/app/globals.css (токены+утилиты), src/app/layout.tsx, src/components/{common/count-up.tsx (новый), pages/home-page.tsx, layout/site-{header,footer}.tsx, calc/result-view.tsx, calc/wizard-steps.tsx, lead/lead-form.tsx}, public/photos/* (4 фото)
 - Скриншоты: download/app-v2-{home,home-mobile,result,regions,reference}.png
 - Перезапуск dev: cd /home/z/my-project && setsid nohup bash -c "exec node node_modules/.bin/next dev -p 3000 > dev-direct.log 2>&1" </dev/null >/dev/null 2>&1 & disown
+
+---
+Task ID: 6
+Agent: Super Z (main agent)
+Task: Волна 2 дорожной карты С10 «Энергосистема»: живой SVG-конфигуратор №4 в калькуляторе + sun-path №6 в шаге ориентации + heatmap PSH регионов
+
+Work Log:
+- Инфраструктура движения (globals.css): .energy-flow (бегущий пунктир, пауза .flow-paused вне вьюпорта), .scene-panel (пружинный рост панелей cubic-bezier(.34,1.56,.64,1)), .sun-dot-halo, .svg-mono; всё отключается при prefers-reduced-motion
+- src/lib/calc/solar.ts (новый): солнечная астрономия без зависимостей — REGION_LAT (широты 32 регионов), ORIENT_AZIMUTH/INSTALL_TILT, sunDeclination (Купер), sunPosition (сферич. тригонометрия, азимут от севера), dayWindow (обычный/полярный день/полярная ночь), dayCurve, cosIncidence (cos i = sinβ·cos(alt)·cos(az−A)+cosβ·sin(alt)), pointAtT, fmtTime
+- src/hooks/use-in-view.ts (новый): useInView (IntersectionObserver) + useReducedMotion; setState только из асинхронных колбэков (rAF) — react-hooks/set-state-in-effect чист
+- src/components/calc/solar-house.tsx (новый, №4): SVG 560×300, viewBox-масштаб (нет CLS); 4 конструкции по installType (скат 17 слотов / плоская 16 наклонных / каркас 14 / фасад 8), панели растут с пружинкой от мощности (computeCalc → panelCount), призраки-слоты при недоборе, бейджи переполнения («+N → КАРКАС НА УЧАСТКЕ» и т.п.); АКБ (VRFB шире, уровень ∝ кВт·ч, LiFePO4/AGM/NMC подписи), генератор, сеть-pylon в grid/hybrid, дерево+тень при затенении (partial/heavy полигоны), компас со стрелкой азимута, чертёжный pattern-фон (useId), энергопоток панели→инвертор→АКБ; живые статы: панели/площадь/выработка/покрытие/резерв/смета «от» (formatRub) + бейдж «крепления усилены снег IV+»; контраст сметы #9a5207 (AA)
+- src/components/calc/sun-path.tsx (новый, №6): дуги 21 июн / 21 мар / 21 дек + «сегодня» (реальная дата), проекция x=азимут (1.93 px/°), y=sin(высота); янтарные сегменты «сегодня»-дуги = cosIncidence>0 (реагируют на ориентацию И тип монтажа: наклон 35/10/40/90°); точка солнца бежит по дуге rAF 12с (пауза вне вьюпорта, reduced-motion → полдень), луч солнце→панель с color-кодировкой попадания; мини-компас панелей, метки часов по равноденствию, восход/закат (полярные день/ночь обработаны), бейдж «ЮВ · 96% от южной», легенда; ария-подписи
+- src/components/common/psh-heatmap.tsx (новый): 12 столбиков PSH на общей шкале 6.5 ч/сут (сравнимость регионов), тултипы значений
+- Интеграция визарда (calc-wizard.tsx): сетка lg:grid-cols-[1fr_330px] xl 375px, sticky-сцена top-20 справа, компактная сцена сверху на <lg; результат остался max-w-3xl; calculator-page max-w-3xl→max-w-6xl
+- wizard-steps.tsx: SunPathCard под ориентацией/затенением в шаге 3 (tooltip расширен), убран hidden-хак region.code
+- dacha-calc-page.tsx: dachaInput через useMemo (тот же объект идёт в calc() и в сцену), сцена над формой («дачный = весь как конфигуратор»), контейнер max-w-2xl→max-w-3xl
+- regions-page.tsx: PshHeatmap в каждую из 32 карточек (под clima-строкой, над кнопкой «Рассчитать»)
+- Верификация agent-browser: сцена в aside 375×392 sticky ✓; статы 10 панелей/26 м²/4789 кВт·ч/от 667 550 ₽ ✓; 12 кВт → 22 панели + бейдж «+5 → КАРКАС» ✓; «Восток» → 22 янтарных сегмента из 32 (утро до ~14:45 — физика наклона 35°), компас rotate(-90), бейдж «В · 88%» ✓; наземный каркас + частичное затенение → caption «НАЗЕМНЫЙ КАРКАС · 40°», «+8 → ВТОРОЙ РЯД», 3 круга дерева, 1 полигон тени ✓; дача: бойлер → 6→10 панелей, смета 650 583 ₽ ✓; 32/32 карточки регионов с heatmap (12 столбиков) ✓; полный проход 6 шагов → результат рендерится ✓; мобайл 390: scrollW=clientW=390 ✓; консоль и page errors пусты; lint чист
+- VLM-контроль: шаг 3 — 6/10 → фикс контраста сметы/бейджа (text-solar-deep → #9a5207) → 9/10; мобайл — H-scroll нет, наложение только штатного sticky-CTA; дача/регионы — без критичных дефектов
+- Скриншоты: download/w2-{calc-step1,calc-step3,calc-step3-scrolled,calc-step3-mobile,calc-result,dacha,regions}-desktop.png + w2-calc-step3-mobile.png
+
+Stage Summary:
+- Волна 2 С10 внедрена: калькулятор стал «живым инструментом» — SVG-усадьба перестраивается на каждом шаге (панели/конструкции/АКБ/генератор/сеть/смета «от»), шаг ориентации объясняет выбор научной дугой солнца (астрономия честная, облака — в PSH), регионы получили сезонные heatmap
+- Дисциплина данных: сцена и дуги питаются тем же computeCalc/справочником, что результат — «схема не врёт»; CWV: SVG без CLS (viewBox), анимации CSS/rAF с паузой вне вьюпорта и reduced-motion
+- Новые файлы: src/lib/calc/solar.ts, src/hooks/use-in-view.ts, src/components/calc/{solar-house,sun-path}.tsx, src/components/common/psh-heatmap.tsx
+- Изменены: globals.css, calc-wizard.tsx, wizard-steps.tsx, pages/{calculator,dacha-calc,regions}-page.tsx
+- Осталось на волну 3 (кв. 2): №2 canvas-частицы энергопотока, №7 3D-усадьба (lazy), №9 неоморфные приборы; опционально: sun-path в карточке региона, share-превью сцены

@@ -365,3 +365,50 @@
   html { scroll-behavior: auto; }
   .card-premium-hover:hover { transform: none; }
 }
+
+/* ===== Волна 2 С10: живой конфигуратор №4 + sun-path №6 ===== */
+
+/* Энергопоток: пунктир «бежит» по линиям схемы (панели → инвертор → дом/АКБ) */
+.energy-flow {
+  stroke-dasharray: 5 7;
+  animation: flowdash 1.15s linear infinite;
+}
+@keyframes flowdash {
+  to { stroke-dashoffset: -12; }
+}
+/* Пауза, когда сцена вне вьюпорта (IntersectionObserver вешает класс) */
+.flow-paused .energy-flow {
+  animation-play-state: paused;
+}
+
+/* Панели «вырастают» на схеме с пружинкой (сигнатура №4) */
+.scene-panel {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.scene-panel--off {
+  opacity: 0.26;
+  transform: scale(0.72);
+}
+
+/* Точка солнца в sun-path: мягкая пульсация свечения */
+.sun-dot-halo {
+  animation: sunHalo 2.6s ease-in-out infinite;
+}
+@keyframes sunHalo {
+  50% { opacity: 0.55; }
+}
+
+/* Подписи в SVG-схемах — технический моно */
+.svg-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .energy-flow { animation: none; }
+  .scene-panel { transition: none; }
+  .sun-dot-halo { animation: none; }
+}

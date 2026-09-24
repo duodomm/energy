@@ -4,7 +4,7 @@
 // Выдача: типовой комплект 1–6 кВт, цена «от–до», кнопка «усложнить расчёт»
 // ведёт в профессиональный калькулятор с перенесёнными данными.
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -18,6 +18,7 @@ import { LOAD_PRESETS, APPLIANCE_PRESETS } from "@/lib/calc/constants"
 import type { CalcInput, CalcResult, RefBundle } from "@/lib/calc/types"
 import { formatRub } from "@/lib/calc/ref-bundle"
 import { LeadForm } from "@/components/lead/lead-form"
+import { SolarHouseCard } from "@/components/calc/solar-house"
 import { navigate } from "@/lib/router"
 import { trackGoal } from "@/lib/analytics"
 import { PageHero } from "@/components/common/page-hero"
@@ -51,32 +52,39 @@ export function DachaCalcPage() {
   const dailyKwh = Math.max(1, APPLIANCE_LIST.filter((a) => checked.includes(a.id)).reduce((s, a) => s + a.kwh, 0))
   const hasStart = APPLIANCE_LIST.some((a) => checked.includes(a.id) && a.start)
 
+  // Живой конфигуратор №4 (дачный = «весь как конфигуратор»): тот же вход,
+  // что и у расчёта — сцена меняется, пока отмечаете приборы и выбираете регион
+  const dachaInput = useMemo<CalcInput>(
+    () =>
+      normalizeInput({
+        objectType: "dacha",
+        mode: "autonomous",
+        regionCode,
+        voltage: "220",
+        dailyKwh,
+        tariffPlan: "flat",
+        peakKw: hasStart ? 2.5 : 1.5,
+        startK: 3,
+        powerMode: "kw",
+        panelKw: dailyKwh <= 2 ? 1.1 : dailyKwh <= 3.5 ? 2.2 : dailyKwh <= 5 ? 3.3 : 5.5,
+        panelClass: "std",
+        installType: "ground",
+        orientation: "south",
+        shading: "none",
+        autonomyHours: 12,
+        batteryTech: "lifepo4",
+        generator: "none",
+        cableM: 15,
+        switchboard: true,
+        loadProfile: [...LOAD_PRESETS.dacha],
+      }),
+    [regionCode, dailyKwh, hasStart],
+  )
+
   const calc = () => {
     if (!bundle) return
-    const input: CalcInput = normalizeInput({
-      objectType: "dacha",
-      mode: "autonomous",
-      regionCode,
-      voltage: "220",
-      dailyKwh,
-      tariffPlan: "flat",
-      peakKw: hasStart ? 2.5 : 1.5,
-      startK: 3,
-      powerMode: "kw",
-      panelKw: dailyKwh <= 2 ? 1.1 : dailyKwh <= 3.5 ? 2.2 : dailyKwh <= 5 ? 3.3 : 5.5,
-      panelClass: "std",
-      installType: "ground",
-      orientation: "south",
-      shading: "none",
-      autonomyHours: 12,
-      batteryTech: "lifepo4",
-      generator: "none",
-      cableM: 15,
-      switchboard: true,
-      loadProfile: [...LOAD_PRESETS.dacha],
-    })
-    setResult(computeCalc(input, bundle))
-    saveInput(input)
+    setResult(computeCalc(dachaInput, bundle))
+    saveInput(dachaInput)
     trackGoal("dacha_calc_complete", { region: regionCode, dailyKwh })
   }
 
@@ -108,7 +116,7 @@ export function DachaCalcPage() {
         title="Дачный комплект «под ключ» за минуту"
         description="Отметьте приборы — получите типовой комплект (панели, АКБ, инвертор) и вилку цены. Хотите точности — один клик до профессионального расчёта."
       />
-      <div className="mx-auto max-w-2xl px-4 pb-10 sm:px-6">
+      <div className="mx-auto max-w-3xl px-4 pb-10 sm:px-6">
         {result ? (
           <DachaResult
             result={result}
@@ -119,6 +127,11 @@ export function DachaCalcPage() {
             regionCode={regionCode}
           />
         ) : (
+          <div>
+          {/* Живой конфигуратор №4: усадьба перестраивается под отмеченные приборы */}
+          <div className="mb-5">
+            <SolarHouseCard input={dachaInput} bundle={bundle} />
+          </div>
           <div className="card-premium p-5 md:p-7">
             <div className="mb-6">
               <div className="mb-2 flex items-center justify-between text-xs text-muted-foreground">
@@ -220,6 +233,7 @@ export function DachaCalcPage() {
               </Button>
             </div>
           </div>
+        </div>
         )}
       </div>
       <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6">
