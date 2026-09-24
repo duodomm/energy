@@ -52,3 +52,12 @@ prompt
 server.log
 # Skills directory
 /skills/
+# ── Экспорт на GitHub: тяжёлые промежуточные артефакты ──
+# фото-кандидаты уголков (финал уже в public/photos/corner/)
+/scripts/corner-src/
+# скриншоты проверки и мудборды (не исходники сайта)
+/download/
+# выхлоп инструментов
+/tool-results/
+# локальная D1-подобная песочница воркера
+.wrangler/

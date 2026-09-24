@@ -3,15 +3,15 @@
 // Здесь: in-memory кэш 1 ч + fetch /api/reference.
 
 import type { RefBundle } from "./types"
+import { apiGet } from "@/lib/api-static"
 
 let cache: { bundle: RefBundle; at: number } | null = null
 const TTL = 60 * 60 * 1000 // 1 ч — как кэш KV по ТЗ
 
 export async function loadRefBundle(force = false): Promise<RefBundle> {
   if (!force && cache && Date.now() - cache.at < TTL) return cache.bundle
-  const res = await fetch("/api/reference", { cache: "no-store" })
-  if (!res.ok) throw new Error(`Справочник недоступен (${res.status})`)
-  const bundle = (await res.json()) as RefBundle
+  // dev: живой /api/reference; статика (Cloudflare): JSON-бандл /api-data/reference.json
+  const bundle = await apiGet<RefBundle>("/api/reference", "/api-data/reference.json")
   cache = { bundle, at: Date.now() }
   return bundle
 }

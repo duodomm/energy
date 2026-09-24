@@ -242,10 +242,12 @@ export function EnergyFlowStrip({ className }: { className?: string }) {
             continue
           }
           if (s.next.length > 1) {
-            // распределение: пока АКБ не полон — заметная доля энергии идёт в
-            // батарею, у полной — всё в дом (физика, а не рандом)
+            // распределение на развилке инвертора: пока АКБ не полон — заметная
+            // доля энергии идёт в батарею (сег 3), у полной — всё в дом (сег 2).
+            // ВАЖНО: индексы веток = номера сегментов next[0]=дом, next[1]=АКБ,
+            // а не 0/1 — иначе частицы навсегда зацикливаются слева от инвертора.
             const toBatt = Math.max(0.08, 0.55 * (1 - charge / 100))
-            nx = Math.random() < toBatt ? 1 : 0
+            nx = s.next[Math.random() < toBatt ? 1 : 0]
           }
           p.seg = nx
           p.t = 0
@@ -301,12 +303,29 @@ export function EnergyFlowStrip({ className }: { className?: string }) {
     }
 
     if (reduced) {
-      // Один статичный кадр «полдень» — движение отключено; перерисовка при resize
+      // Один статичный кадр «полдень» — движение отключено; перерисовка при resize.
+      // Замороженные частицы на всех ветках показывают потоки без анимации.
       redrawStatic = () => {
         ctx.clearRect(0, 0, W, H)
         const S = segs()
         charge = 78 // условный «полдень» без анимации
         drawScene(S, true)
+        const frozen: Array<[number, number]> = [
+          [0, 0.25], [0, 0.6], [0, 0.85], [1, 0.2], [1, 0.55], [1, 0.9],
+          [2, 0.35], [2, 0.7], [3, 0.3], [3, 0.75], [0, 0.45], [2, 0.1],
+        ]
+        frozen.forEach(([si, t]) => {
+          const s = S[si]
+          const pos = qp(s, t)
+          ctx.save()
+          ctx.shadowColor = "rgba(" + s.col + ",0.9)"
+          ctx.shadowBlur = 9
+          ctx.fillStyle = "rgba(" + s.col + ",0.9)"
+          ctx.beginPath()
+          ctx.arc(pos.x, pos.y, 2.4, 0, RAD)
+          ctx.fill()
+          ctx.restore()
+        })
         updateKpi(performance.now(), true)
       }
       redrawStatic()

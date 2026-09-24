@@ -12,6 +12,7 @@ import { BookOpen, ShieldCheck, HelpCircle, FileSpreadsheet, ShieldAlert, CheckC
 import { PageHero } from "@/components/common/page-hero"
 import { HeroCorner } from "@/components/common/hero-corner"
 import { AdSlot } from "@/components/common/ad-slot"
+import { apiGet } from "@/lib/api-static"
 
 interface GlossaryItem { term: string; category: string; definition: string }
 interface FaqItem { question: string; answer: string; category: string }
@@ -58,9 +59,11 @@ export function ReferencePage() {
   const [fcat, setFcat] = useState("")
 
   useEffect(() => {
-    fetch("/api/glossary").then((r) => r.json()).then(setGlossary).catch(() => setGlossary([]))
-    fetch("/api/faq").then((r) => r.json()).then(setFaqs).catch(() => setFaqs([]))
-    fetch("/api/catalog").then((r) => r.json()).then(setCatalog).catch(() => setCatalog(null))
+    apiGet<GlossaryItem[]>("/api/glossary", "/api-data/glossary.json").then(setGlossary).catch(() => setGlossary([]))
+    apiGet<FaqItem[]>("/api/faq", "/api-data/faq.json").then(setFaqs).catch(() => setFaqs([]))
+    apiGet<{ items: CatalogItem[]; updatedAt: string }>("/api/catalog", "/api-data/catalog.json")
+      .then(setCatalog)
+      .catch(() => setCatalog(null))
   }, [])
 
   const gl = useMemo(() => (glossary ?? []).filter((g) => !gcat || g.category === gcat), [glossary, gcat])

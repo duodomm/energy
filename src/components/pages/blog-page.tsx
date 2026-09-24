@@ -10,6 +10,7 @@ import { PageHero } from "@/components/common/page-hero"
 import { HeroCorner } from "@/components/common/hero-corner"
 import { AdSlot } from "@/components/common/ad-slot"
 import { navigate } from "@/lib/router"
+import { apiGet } from "@/lib/api-static"
 
 interface ArticleListItem {
   slug: string; hub: string; kind: string; title: string; teaser: string
@@ -31,9 +32,8 @@ export function BlogPage() {
   const [rubric, setRubric] = useState("")
 
   useEffect(() => {
-    fetch("/api/articles")
-      .then((r) => r.json())
-      .then((d) => setItems(d as ArticleListItem[]))
+    apiGet<ArticleListItem[]>("/api/articles", "/api-data/articles.json")
+      .then((d) => setItems(d))
       .catch(() => setItems([]))
   }, [])
 

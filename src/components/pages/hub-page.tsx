@@ -12,6 +12,7 @@ import { PageHero } from "@/components/common/page-hero"
 import { HeroCorner } from "@/components/common/hero-corner"
 import { AdSlot } from "@/components/common/ad-slot"
 import { navigate } from "@/lib/router"
+import { apiGet } from "@/lib/api-static"
 
 interface ArticleListItem {
   slug: string; hub: string; kind: string; title: string; teaser: string
@@ -74,9 +75,9 @@ export function HubPage({ hub }: { hub: string; slug?: string | null }) {
   const [items, setItems] = useState<ArticleListItem[] | null>(null)
 
   useEffect(() => {
-    fetch(`/api/articles?hub=${hub}`)
-      .then((r) => r.json())
-      .then((d) => setItems(d as ArticleListItem[]))
+    // dev: живой API с фильтром; статика: бандл хаба (клиент ещё раз фильтрует)
+    apiGet<ArticleListItem[]>(`/api/articles?hub=${hub}`, `/api-data/articles-hub-${hub}.json`)
+      .then((d) => setItems(d.filter((i) => i.hub === hub)))
       .catch(() => setItems([]))
   }, [hub])
 

@@ -11,6 +11,7 @@ import { PageHero } from "@/components/common/page-hero"
 import { HeroCorner } from "@/components/common/hero-corner"
 import { AdSlot } from "@/components/common/ad-slot"
 import { navigate } from "@/lib/router"
+import { apiGet } from "@/lib/api-static"
 
 interface ArticleListItem {
   slug: string; hub: string; kind: string; title: string; teaser: string
@@ -31,9 +32,8 @@ export function CasesPage() {
   const [filter, setFilter] = useState("")
 
   useEffect(() => {
-    fetch("/api/articles?hub=cases")
-      .then((r) => r.json())
-      .then((d) => setItems(d as ArticleListItem[]))
+    apiGet<ArticleListItem[]>("/api/articles?hub=cases", "/api-data/articles-hub-cases.json")
+      .then((d) => setItems(d.filter((i) => i.hub === "cases")))
       .catch(() => setItems([]))
   }, [])
 

@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge"
 import { CalendarDays, Clock, Eye, PlayCircle, ArrowLeft, TrendingUp, Box } from "lucide-react"
 import { saveInput, normalizeInput } from "@/lib/calc/share"
 import { navigate } from "@/lib/router"
+import { apiGet } from "@/lib/api-static"
 import { AdSlot } from "@/components/common/ad-slot"
 import { LeadForm } from "@/components/lead/lead-form"
 import { Estate3D } from "@/components/common/estate-3d"
@@ -57,9 +58,11 @@ export function ArticlePage({ slug }: { slug: string }) {
     const raf = requestAnimationFrame(() => {
       setArticle(null)
       setNotFound(false)
-      fetch(`/api/articles?slug=${encodeURIComponent(slug)}`)
-        .then((r) => (r.ok ? r.json() : Promise.reject(new Error("404"))))
-        .then((a) => setArticle(a as ArticleData))
+      apiGet<ArticleData>(
+        `/api/articles?slug=${encodeURIComponent(slug)}`,
+        `/api-data/articles/${encodeURIComponent(slug)}.json`,
+      )
+        .then((a) => setArticle(a))
         .catch(() => setNotFound(true))
     })
     return () => cancelAnimationFrame(raf)
