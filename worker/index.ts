@@ -121,7 +121,7 @@ async function insertLead(env: Env, lead: LeadBody, status: string): Promise<boo
   }
 }
 
-export default {
+const worker = {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url)
 
@@ -174,3 +174,5 @@ export default {
     return json({ ok: false, error: "Not Found" }, 404)
   },
 }
+
+export default worker
