@@ -27,6 +27,7 @@ COMMIT_MSG="Альтернативная энергетика РФ: кальку
 32 регионов (проекция Альберса, Natural Earth), хабы-статьи с дата-визами,
 тёплые дуотон-уголки страниц, Cloudflare-контур (static export + Worker)."
 
+trap 'rm -rf "$TMP"' EXIT
 rm -rf "$TMP"
 mkdir -p "$TMP/work"
 
@@ -55,8 +56,8 @@ git -c user.name="AltEnergo RF" \
       -c user.email="altenergo-rf@users.noreply.github.com" \
       commit -q -m "$COMMIT_MSG"
 
-# 4. Bundle (полный git-репозиторий) и zip (исходники без .git)
-git bundle create -q "$OUT/altenergo-rf.git.bundle" main
+# 4. Bundle (полный git-репозиторий: ветка + HEAD) и zip (исходники без .git)
+git bundle create -q "$OUT/altenergo-rf.git.bundle" --all
 cd "$TMP"
 rm -rf altenergo-rf
 cp -a work altenergo-rf
@@ -80,4 +81,3 @@ grep -q 'file:../db/custom.db' prisma/schema.prisma \
 
 echo "---- Экспорт готов ----"
 ls -lh "$OUT/altenergo-rf.git.bundle" "$OUT/altenergo-rf-src.zip" | awk '{print $9, $5}'
-rm -rf "$TMP"
