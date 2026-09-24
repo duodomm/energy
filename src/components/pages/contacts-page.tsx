@@ -3,6 +3,7 @@
 import { useEffect } from "react"
 import { Phone, Mail, MapPin, Clock, MessageSquare } from "lucide-react"
 import { PageHero } from "@/components/common/page-hero"
+import { HeroCorner } from "@/components/common/hero-corner"
 import { LeadForm } from "@/components/lead/lead-form"
 import { AdSlot } from "@/components/common/ad-slot"
 
@@ -20,6 +21,7 @@ export function ContactsPage({ openForm }: { openForm?: boolean }) {
         eyebrow="Контакты"
         title="Обсудим ваш объект"
         description="Инженеры на связи с 9:00 до 21:00 МСК, без выходных. Аудит объекта и предварительная смета — бесплатно."
+        corner={<HeroCorner variant="contacts" />}
       />
       <div className="mx-auto grid max-w-5xl gap-8 px-4 pb-12 sm:px-6 md:grid-cols-[1fr_1.1fr]">
         <div className="space-y-5">

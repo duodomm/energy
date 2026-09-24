@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { BookOpen, ShieldCheck, HelpCircle, FileSpreadsheet, ShieldAlert, CheckCircle2 } from "lucide-react"
 import { PageHero } from "@/components/common/page-hero"
+import { HeroCorner } from "@/components/common/hero-corner"
 import { AdSlot } from "@/components/common/ad-slot"
 
 interface GlossaryItem { term: string; category: string; definition: string }
@@ -72,6 +73,7 @@ export function ReferencePage() {
         eyebrow="Справочник"
         title="Глоссарий, нормативка, FAQ и цены"
         description="42 термина с инженерными определениями, 30 ответов на частые вопросы, выжимка нормативной базы и каталог ценовых диапазонов с датой актуальности."
+        corner={<HeroCorner variant="reference" />}
       />
       <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6">
         <Tabs defaultValue="glossary">

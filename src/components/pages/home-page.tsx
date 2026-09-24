@@ -8,7 +8,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {
-  Sun, Home, Building2, ShieldCheck, Clock, FileDown, MapPin, Wrench,
+  Sun, Home, Building2, Clock, FileDown, MapPin, Wrench,
   TrendingUp, ArrowRight, CheckCircle2, Phone, BatteryCharging, Sparkles, Ruler,
 } from "lucide-react"
 import { navigate } from "@/lib/router"
@@ -37,8 +37,8 @@ const ENTRIES = [
     href: "#/kalkulyator",
     cta: "Считать дом",
     stat: "от 1,2 млн ₽",
-    photo: "/photos/hero-roof.jpg",
-    photoAlt: "Солнечные панели на крыше частного дома",
+    photo: "/photos/house-modern.jpg",
+    photoAlt: "Современный двухэтажный дом с солнечными панелями на крыше",
   },
   {
     icon: Sun,
@@ -56,7 +56,6 @@ const ADVANTAGES = [
   { icon: MapPin, title: "Регионы — по данным", text: "PSH 12 месяцев, тарифы с зонами день/ночь, снеговые и ветровые районы СП 20.13330, ставки монтажа по округам — 32 региона РФ в справочнике." },
   { icon: Wrench, title: "Смета как у сметчика", text: "Нормо-часы по позициям, коэффициенты сложности, минимальный выезд бригады. Никаких «монтаж 100 000 ₽» без расшифровки." },
   { icon: TrendingUp, title: "Экономика без розовых очков", text: "LCOE с дисконтированием и без, две модели окупаемости, двухтарифный арбитраж, микрогенерация до 15 кВт — честные цифры." },
-  { icon: ShieldCheck, title: "152-ФЗ по-взрослому", text: "Персональные данные из форм уходят только в CRM на территории РФ. В базе сайта — технические записи без ПДн." },
 ]
 
 const STEPS = [
@@ -125,21 +124,21 @@ export function HomePage() {
             >
               <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-[0_24px_60px_-28px_rgba(34,39,46,0.35)]">
                 <img
-                  src="/photos/hero-roof.jpg"
-                  alt="Солнечные панели на крыше частного дома"
-                  width={1600}
-                  height={1067}
+                  src="/photos/hero-house.jpg"
+                  alt="Современный дом с солнечными панелями на крыше"
+                  width={1344}
+                  height={768}
                   loading="eager"
                   fetchPriority="high"
                   decoding="async"
-                  className="aspect-[3/2] w-full object-cover"
+                  className="aspect-[7/4] w-full object-cover"
                 />
               </div>
               <figcaption className="absolute bottom-3 left-3 rounded-lg border border-scene-border/60 bg-scene/90 px-3 py-1.5 text-[11px] font-medium text-scene-foreground backdrop-blur-sm">
-                Объект 10 кВт · наклонная кровля · юг
+                СЭС 10 кВт · наклонная кровля · юг
               </figcaption>
               <div className="absolute -right-2 -top-2 rounded-lg border border-border bg-card px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground shadow-sm">
-                Фото: реальный монтаж
+                Визуализация объекта
               </div>
             </motion.figure>
           </div>
@@ -241,7 +240,7 @@ export function HomePage() {
           Методологию согласовали инженер, сметчик, экономист-снабженец и монтажник.
           Каждый параметр, влияющий на цену, объясняется прямо в калькуляторе.
         </p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {ADVANTAGES.map((a) => (
             <Card key={a.title} className="card-premium border-border/60">
               <CardContent className="p-5">

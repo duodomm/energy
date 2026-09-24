@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Badge } from "@/components/ui/badge"
 import { MountainSnow, Wind, Sun, Zap, Fuel, Search, TrendingUp, MapPin, MousePointerClick } from "lucide-react"
 import { PageHero } from "@/components/common/page-hero"
+import { HeroCorner } from "@/components/common/hero-corner"
 import { AdSlot } from "@/components/common/ad-slot"
 import { PshHeatmap } from "@/components/common/psh-heatmap"
 import { SunPathMini } from "@/components/common/sun-path-mini"
@@ -55,6 +56,7 @@ export function RegionsPage() {
         eyebrow="Справочник регионов"
         title="Карта солнечного ресурса России"
         description="32 региона на интерактивной карте: маркеры показывают пик-солнце-часы цветом, клик раскрывает сезонность (PSH-heatmap, дуги солнца), тарифы и нагрузки СП 20.13330. Данные подставляются в калькулятор автоматически."
+        corner={<HeroCorner variant="regions" />}
       />
       <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6">
         {/* ===== Карта ===== */}

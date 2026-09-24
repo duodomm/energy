@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { PageHero } from "@/components/common/page-hero"
+import { HeroCorner } from "@/components/common/hero-corner"
 import { Sun, TrendingUp, ShieldCheck, Users, Database, Gauge, FileDown, BookOpen } from "lucide-react"
 import { navigate } from "@/lib/router"
 
@@ -19,6 +20,7 @@ export function AboutPage() {
         eyebrow="О проекте"
         title="Инженерный подход к альтернативной энергетике"
         description="«Альтернативная энергетика РФ» — информационно-расчётный ресурс: профессиональный калькулятор, справочники и хабы по солнечной генерации, накопителям и резерву. Мы считаем честно и объясняем каждый параметр, влияющий на цену."
+        corner={<HeroCorner variant="about" />}
       />
       <div className="mx-auto max-w-4xl px-4 pb-12 sm:px-6">
         <div className="grid gap-4 sm:grid-cols-2">

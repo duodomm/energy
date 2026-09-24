@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ArrowRight, Home, Building2, Warehouse, Tractor, Factory, Clock } from "lucide-react"
 import { PageHero } from "@/components/common/page-hero"
+import { HeroCorner } from "@/components/common/hero-corner"
 import { AdSlot } from "@/components/common/ad-slot"
 import { navigate } from "@/lib/router"
 
@@ -47,6 +48,7 @@ export function CasesPage() {
         eyebrow="Кейсы и типовые проекты"
         title="Пять объектов, пять полных смет"
         description="Дача 3 кВт, дом 10 кВт, ферма 30 кВт, склад 100 кВт, производство 250 кВт: расшифровка каждой позиции «от–до», генерация по месяцам и честная окупаемость. Каждый кейс воспроизводится в калькуляторе с живыми ценами."
+        corner={<HeroCorner variant="cases" />}
       />
       <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6">
         <div className="mb-6 flex flex-wrap gap-2">

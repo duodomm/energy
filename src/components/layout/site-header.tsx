@@ -55,7 +55,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6">
         <Link
           href="#/"
-          className="flex items-center gap-2.5"
+          className="flex shrink-0 items-center gap-2.5"
           onClick={() => navigate("#/")}
           aria-label="Главная — Альтернативная энергетика РФ"
         >
@@ -68,12 +68,12 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="ml-4 hidden flex-1 items-center gap-1 lg:flex" aria-label="Основная навигация">
-          {NAV.map((group) => (
-            <NavigationMenu key={group.label} viewport={false}>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="h-9 bg-transparent text-sm font-medium data-[state=open]:bg-secondary">
+        <nav className="ml-3 hidden flex-1 items-center lg:flex" aria-label="Основная навигация">
+          <NavigationMenu viewport={false}>
+            <NavigationMenuList className="flex-1 justify-start gap-0.5 xl:gap-1">
+              {NAV.map((group) => (
+                <NavigationMenuItem key={group.label}>
+                  <NavigationMenuTrigger className="h-9 whitespace-nowrap bg-transparent px-3.5 text-sm font-medium data-[state=open]:bg-secondary">
                     {group.label}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="w-[440px] p-2">
@@ -100,27 +100,30 @@ export function SiteHeader() {
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-          ))}
-          {LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className={cn(
-                "rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground",
-                current === l.href.replace("#", "") && "bg-secondary text-foreground",
-              )}
-            >
-              {l.label}
-            </a>
-          ))}
+              ))}
+              {LINKS.map((l) => (
+                <NavigationMenuItem key={l.href}>
+                  <NavigationMenuLink asChild>
+                    <a
+                      href={l.href}
+                      className={cn(
+                        "inline-flex h-9 items-center whitespace-nowrap rounded-md px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground",
+                        current === l.href.replace("#", "") && "bg-secondary text-foreground",
+                      )}
+                    >
+                      {l.label}
+                    </a>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
         </nav>
 
         <div className="ml-auto flex items-center gap-2.5 lg:ml-0">
           <a
             href="tel:+74951234567"
-            className="hidden items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground md:flex"
+            className="hidden items-center gap-2 whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground xl:flex"
             onClick={() => trackGoal("phone_click")}
             aria-label="Позвонить +7 495 123-45-67"
           >
@@ -128,14 +131,15 @@ export function SiteHeader() {
             <span className="tracking-tight">+7 (495) 123-45-67</span>
           </a>
           <Button
-            className="hidden bg-gradient-solar shadow-[0_6px_18px_-6px_rgba(232,148,10,0.55)] hover:opacity-95 sm:inline-flex"
+            className="hidden whitespace-nowrap bg-gradient-solar shadow-[0_6px_18px_-6px_rgba(232,148,10,0.55)] hover:opacity-95 sm:inline-flex"
             onClick={() => {
               trackGoal("lead_form_open", { form: "header" })
               navigate("#/kontakty?form=1")
             }}
           >
             <Lightbulb className="mr-1.5 h-4 w-4" />
-            Получить расчёт
+            <span className="hidden xl:inline">Получить расчёт</span>
+            <span className="xl:hidden">Расчёт</span>
           </Button>
 
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>

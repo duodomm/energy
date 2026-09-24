@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Sun, BatteryCharging, Fuel, TrendingUp, ArrowRight, Clock, Calculator, MapPin, BookOpen } from "lucide-react"
 import { PageHero } from "@/components/common/page-hero"
+import { HeroCorner } from "@/components/common/hero-corner"
 import { AdSlot } from "@/components/common/ad-slot"
 import { navigate } from "@/lib/router"
 
@@ -85,6 +86,7 @@ export function HubPage({ hub }: { hub: string; slug?: string | null }) {
         eyebrow={meta.eyebrow}
         title={meta.title}
         description={meta.description}
+        corner={<HeroCorner variant={hub === "solnce" ? "sun" : hub === "nakopiteli" ? "battery" : hub === "generatory" ? "generator" : "economics"} />}
       >
         <div className="mt-6 flex flex-wrap gap-2.5">
           {meta.quick.map((q) => (

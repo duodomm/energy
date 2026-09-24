@@ -95,9 +95,22 @@ export function EnergyFlowStrip({ className }: { className?: string }) {
     }
 
     const parts: P[] = []
-    let charge = 61
+    let charge = 30
+    // Заряд АКБ — плавная функция фазы цикла (не счётчик частиц): 30% → 100% за
+    // день (насыщение к вечеру), 100% → 30% за ночь. Баланс: сколько пришло днём,
+    // столько ушло ночью — батарея «дышит» ровно, без прилипания к 100%.
     let day = true
     const t0 = performance.now()
+    const chargeAt = (cyc: number) => {
+      if (cyc < 0.68) {
+        // день: 30 → 100, ease-out (утром быстро, к вечеру насыщение)
+        const d = cyc / 0.68
+        return 30 + 70 * (1 - Math.pow(1 - d, 1.7))
+      }
+      // ночь: 100 → 30, почти линейно
+      const n = (cyc - 0.68) / 0.32
+      return 100 - 70 * n
+    }
 
     const spawn = () => {
       parts.push({
@@ -223,16 +236,17 @@ export function EnergyFlowStrip({ className }: { className?: string }) {
         const s = S[p.seg]
         if (p.t >= 1) {
           let nx = s.next[0]
-          if (nx === -1) {
+          if (nx === -1 || nx === -2) {
+            // частица дошла до дома или АКБ — поглощена
             parts.splice(i, 1)
             continue
           }
-          if (nx === -2) {
-            charge = Math.min(100, charge + 1.4)
-            parts.splice(i, 1)
-            continue
+          if (s.next.length > 1) {
+            // распределение: пока АКБ не полон — заметная доля энергии идёт в
+            // батарею, у полной — всё в дом (физика, а не рандом)
+            const toBatt = Math.max(0.08, 0.55 * (1 - charge / 100))
+            nx = Math.random() < toBatt ? 1 : 0
           }
-          if (s.next.length > 1) nx = s.next[Math.random() < 0.6 ? 0 : 1]
           p.seg = nx
           p.t = 0
           continue
@@ -255,26 +269,29 @@ export function EnergyFlowStrip({ className }: { className?: string }) {
       if (capRef.current) capRef.current.textContent = pw.toFixed(1).replace(".", ",") + " кВт"
       if (battRef.current) battRef.current.textContent = Math.round(charge) + "%"
       if (modeRef.current) {
-        modeRef.current.textContent = daylight ? "день · заряд АКБ" : "вечер · разряд АКБ"
+        const label = !daylight
+          ? "вечер · разряд АКБ"
+          : charge > 97
+            ? "день · АКБ полон"
+            : "день · заряд АКБ"
+        modeRef.current.textContent = label
         modeRef.current.style.color = daylight ? "" : "#8AB6FF"
       }
     }
 
     let raf = 0
-    // Кадр: цикл дня/ночи 9 с (68% — день); частицы, KPI, сцена
+    // Кадр: цикл дня/ночи 9 с (68% — день); заряд — плавная функция фазы,
+    // частицы и KPI — отражение; ночью АКБ → дом
     const frame = (now: number) => {
       ctx.clearRect(0, 0, W, H)
       const S = segs()
       const cyc = ((now - t0) / 9000) % 1
       const daylight = cyc < 0.68
       if (daylight !== day) day = daylight
+      charge = chargeAt(cyc)
       if (daylight && parts.length < 120 && Math.random() < 0.68) spawn()
-      if (daylight && Math.random() < 0.3) charge = Math.min(100, charge + 0.08)
-      if (!daylight) {
-        charge = Math.max(8, charge - 0.15)
-        if (parts.length < 120 && Math.random() < 0.5) {
-          parts.push({ seg: 4, t: Math.random() * 0.1, sp: 0.005 + Math.random() * 0.004, r: 2, drift: Math.random() * RAD })
-        }
+      if (!daylight && parts.length < 120 && Math.random() < 0.5) {
+        parts.push({ seg: 4, t: Math.random() * 0.1, sp: 0.005 + Math.random() * 0.004, r: 2, drift: Math.random() * RAD })
       }
       drawScene(S, daylight)
       drawParticles(S, now, daylight)
@@ -288,8 +305,8 @@ export function EnergyFlowStrip({ className }: { className?: string }) {
       redrawStatic = () => {
         ctx.clearRect(0, 0, W, H)
         const S = segs()
+        charge = 78 // условный «полдень» без анимации
         drawScene(S, true)
-        drawParticles(S, performance.now(), true)
         updateKpi(performance.now(), true)
       }
       redrawStatic()
@@ -310,7 +327,7 @@ export function EnergyFlowStrip({ className }: { className?: string }) {
         <span className="svg-mono tracking-[0.14em] uppercase">Поток энергии · демо</span>
         <span className="svg-mono">
           <b ref={capRef} className="font-semibold text-scene-amber">3,1 кВт</b> · АКБ{" "}
-          <b ref={battRef} className="font-semibold text-scene-amber">61%</b>
+          <b ref={battRef} className="font-semibold text-scene-amber">30%</b>
         </span>
       </div>
       <span

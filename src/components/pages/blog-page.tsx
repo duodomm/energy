@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Clock, CalendarDays, ArrowRight } from "lucide-react"
 import { PageHero } from "@/components/common/page-hero"
+import { HeroCorner } from "@/components/common/hero-corner"
 import { AdSlot } from "@/components/common/ad-slot"
 import { navigate } from "@/lib/router"
 
@@ -44,6 +45,7 @@ export function BlogPage() {
         eyebrow="Блог"
         title="Статьи инженеров и экономистов"
         description="Технологии, экономика, монтаж и обзоры — глубокие материалы вместо инфошума. Автор каждой статьи — практик: инженер, сметчик или экономист-снабженец."
+        corner={<HeroCorner variant="blog" />}
       />
       <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6">
         <div className="mb-6 flex flex-wrap gap-2">

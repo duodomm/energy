@@ -12,7 +12,7 @@
 // ~1050 кВт·ч/кВт·год для средней полосы — точный расчёт в калькуляторе.
 
 import { useEffect, useRef, useState } from "react"
-import { Sun, Snowflake, Hand, ArrowRight } from "lucide-react"
+import { Sun, Snowflake, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useInView, useReducedMotion } from "@/hooks/use-in-view"
 import { trackGoal } from "@/lib/analytics"
@@ -91,8 +91,9 @@ function roofPanelQuad(cx: number, v: number): Quad {
 }
 function groundPanelQuad(cx: number): Quad {
   const hw = 0.19
-  const pts = [P(cx - hw, 0.12, 3.85), P(cx + hw, 0.12, 3.85), P(cx + hw, 1.0, 4.75), P(cx - hw, 1.0, 4.75)]
-  return { pts, base: "#1E2E38", n: norm(P(0, 0.716, -0.699)), stroke: "#14657B", kind: "panel" }
+  // Панель смотрит НА ЮГ (+z): нижний (южный) край ниже, верхний (северный) выше
+  const pts = [P(cx - hw, 0.12, 4.75), P(cx + hw, 0.12, 4.75), P(cx + hw, 1.0, 3.85), P(cx - hw, 1.0, 3.85)]
+  return { pts, base: "#1E2E38", n: norm(P(0, 0.716, 0.699)), stroke: "#14657B", kind: "panel" }
 }
 
 const ROOF_CAPACITY = 16
@@ -174,6 +175,7 @@ export function Estate3D({
     let W = 0
     let H = 0
     let yaw = 3.64
+    let restYaw = 3.64
     let pitch = 0.44
     let drag = false
     let lx = 0
@@ -253,31 +255,6 @@ export function Estate3D({
       ctx.fillStyle = bg
       ctx.fillRect(0, 0, W, H)
 
-      // Солнце по направлению света (клампим в кадр, чтобы свечение не терялось)
-      const rawSun = project(P(L.x * 30, L.y * 30, L.z * 30))
-      const sp = {
-        x: Math.max(70, Math.min(W - 70, rawSun.x)),
-        y: Math.max(60, Math.min(H - 80, rawSun.y)),
-      }
-      {
-        const g = ctx.createRadialGradient(sp.x, sp.y, 2, sp.x, sp.y, 56)
-        g.addColorStop(0, "rgba(255,222,140,0.95)")
-        g.addColorStop(0.3, "rgba(255,176,32,0.55)")
-        g.addColorStop(1, "rgba(255,176,32,0)")
-        ctx.fillStyle = g
-        ctx.beginPath()
-        ctx.arc(sp.x, sp.y, 56, 0, Math.PI * 2)
-        ctx.fill()
-        ctx.strokeStyle = "rgba(232,148,10,0.5)"
-        ctx.lineWidth = 1.2
-        for (let k = 0; k < 8; k++) {
-          const a = (k / 8) * Math.PI * 2
-          ctx.beginPath()
-          ctx.moveTo(sp.x + Math.cos(a) * 42, sp.y + Math.sin(a) * 42)
-          ctx.lineTo(sp.x + Math.cos(a) * 52, sp.y + Math.sin(a) * 52)
-          ctx.stroke()
-        }
-      }
 
       // Земля-сетка
       ctx.strokeStyle = winter ? "rgba(120,130,145,0.12)" : "rgba(20,101,123,0.11)"
@@ -340,12 +317,12 @@ export function Estate3D({
       }))
       all.sort((a, b) => b.z - a.z)
 
-      // Ножки наземных панелей (рисуем после — тонкие линии поверх)
+      // Ножки наземных панелей — под верхним (северным) краем
       const legs: [P3, P3][] = []
       for (let c = 0; c < groundCount; c++) {
         const cx = -1.5 + c * 0.43
-        legs.push([P(cx - 0.19, 1.0, 4.75), P(cx - 0.19, 0, 4.75)])
-        legs.push([P(cx + 0.19, 1.0, 4.75), P(cx + 0.19, 0, 4.75)])
+        legs.push([P(cx - 0.19, 1.0, 3.85), P(cx - 0.19, 0, 3.85)])
+        legs.push([P(cx + 0.19, 1.0, 3.85), P(cx + 0.19, 0, 3.85)])
       }
 
       all.forEach(({ q }) => {
@@ -389,16 +366,57 @@ export function Estate3D({
       if (yawRef.current) {
         yawRef.current.textContent = Math.round((yaw * 57.3) % 360) + "°"
       }
+
+      // Солнце — экранная метка, а не 3D-точка: при вращении сцены свет (и тени)
+      // остаётся на юге, а «солнце» не прыгает по экрану. Высота метки — высота
+      // солнца в сезон (лето ~58°, зима ~29°)
+      {
+        const winter = seasonRef.current === "winter"
+        const sx = W - 96
+        const sy = winter ? Math.round(H * 0.34) : Math.round(H * 0.16)
+        const elev = winter ? "29°" : "58°"
+        const g = ctx.createRadialGradient(sx, sy, 2, sx, sy, 46)
+        g.addColorStop(0, winter ? "rgba(255,226,150,0.75)" : "rgba(255,222,140,0.95)")
+        g.addColorStop(0.3, "rgba(255,176,32,0.4)")
+        g.addColorStop(1, "rgba(255,176,32,0)")
+        ctx.fillStyle = g
+        ctx.beginPath()
+        ctx.arc(sx, sy, 46, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.strokeStyle = winter ? "rgba(200,150,60,0.55)" : "rgba(232,148,10,0.6)"
+        ctx.lineWidth = 1.2
+        ctx.beginPath()
+        ctx.arc(sx, sy, 11, 0, Math.PI * 2)
+        ctx.stroke()
+        for (let k = 0; k < 8; k++) {
+          const a = (k / 8) * Math.PI * 2
+          ctx.beginPath()
+          ctx.moveTo(sx + Math.cos(a) * 15, sy + Math.sin(a) * 15)
+          ctx.lineTo(sx + Math.cos(a) * 20, sy + Math.sin(a) * 20)
+          ctx.stroke()
+        }
+        ctx.font = "9.5px ui-monospace, SFMono-Regular, Menlo, monospace"
+        ctx.fillStyle = "#6C7077"
+        ctx.textAlign = "center"
+        ctx.fillText("СОЛНЦЕ · ЮГ", sx, sy + 34)
+        ctx.fillText(elev + " над горизонтом", sx, sy + 46)
+        ctx.textAlign = "left"
+      }
     }
 
-    const loop = () => {
+    const loop = (now: number) => {
       if (!inView) {
         raf = 0
         return
       }
       if (!drag) {
         idle++
-        if (idle > 240) yaw += 0.0012
+        // Вместо полного вращения — мягкое покачивание ±0.09 рад вокруг точки
+        // отдыха: южный скат с панелями всегда в кадре, солнце не «прыгает»
+        if (idle > 240) {
+          const k = Math.min(1, (idle - 240) / 180)
+          yaw = restYaw + Math.sin(now * 0.0006) * 0.09 * k
+        }
       }
       draw()
       raf = requestAnimationFrame(loop)
@@ -420,6 +438,7 @@ export function Estate3D({
     }
     const stop = () => {
       drag = false
+      restYaw = yaw
     }
 
     const onMDown = (e: MouseEvent) => down(e.offsetX, e.offsetY)
@@ -503,8 +522,8 @@ export function Estate3D({
           YAW <b ref={yawRef} className="font-semibold text-foreground">209°</b> · тяните мышью
         </span>
         <span className="pointer-events-none absolute bottom-3 left-3.5 flex items-center gap-1.5 rounded-full border border-border bg-card/85 px-2.5 py-1 text-[10px] text-muted-foreground backdrop-blur-sm">
-          <Hand className="h-3 w-3" />
-          сцена — собственный canvas-рендер, без 3D-библиотек
+          <Sun className="h-3 w-3 text-solar" />
+          солнце всегда на юге — вращайте сцену, свет не меняется
         </span>
       </div>
 
