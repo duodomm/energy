@@ -1,0 +1,86 @@
+<!-- ======================= 07 3D-УСАДЬБА ======================= -->
+<section class="concept wrap" id="k7">
+  <div class="concept-head">
+    <span class="cnum">07</span>
+    <div><h2>«3D-усадьба»</h2><p class="ctag">Интерактивная 3D-сцена: дом с панелями на скате, вращение мышью, тени и солнце. Демо ниже — на собственном canvas-рендере, без Three.js</p></div>
+    <span class="badge badge-red">Тяжёлый · v2</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c7">
+        <canvas id="c7cv"></canvas>
+        <div class="c7-hud">ОБЪЕКТ: ДОМ 10×6 м<br>СКАТ 38° ЮГ · <b>8 ПАНЕЛЕЙ</b><br><b id="c7yaw">YAW 32°</b> · тяните мышью</div>
+        <span class="c7-tag">собственный рендер canvas · 60 fps</span>
+      </div>
+      <span class="demo-hint">Тяните мышью / пальцем — сцена вращается; панели затеняются по солнцу</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#1a2233"></i>сцена</span><span class="chip"><i style="background:#24457a"></i>панели</span><span class="chip"><i style="background:#ffb020"></i>солнце</span></div>
+      <h4>Типографика</h4><div class="val">HUD-подписи моно 10px по углам — стиль аэрокосмических симуляторов</div>
+      <h4>JS / TS</h4><div class="val">В проде — <code>Three.js</code> + React Three Fiber (lazy import по кнопке «посмотреть в 3D», ~600 КБ gzip); демо здесь — самописный рендер с painter's algorithm, 0 зависимостей</div>
+      <h4>Фото</h4><div class="val">Скриншот сцены становится og:image для шеринга; фоторежим «как вживую» → фото кейса</div>
+      <h4>Куда в проекте</h4><div class="val">Шаг 3 визарда (кнопка «посмотреть станцию в 3D»), страница кейса; НЕ в hero — только по клику</div>
+      <h4>Плюсы</h4><ul><li class="p">Максимальный вау в нише — у конкурентов нет</li><li class="p">Визуализирует взаимное затенение и ориентацию</li><li class="p">Шер-скриншоты = органический трафик</li></ul>
+      <h4>Минусы</h4><ul><li class="c">600 КБ JS против бюджета CWV — только lazy по клику</li><li class="c">8–12 дней разработки + поддержка на мобильных</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="95" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>95</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="75" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>75</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="65" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>65</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="85" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>высокий</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>8–12</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= 08 ПЛАКАТ ======================= -->
+<section class="concept wrap" id="k8">
+  <div class="concept-head">
+    <span class="cnum">08</span>
+    <div><h2>«Плакат»</h2><p class="ctag">Швейцарская типографика: гигантские цифры с count-up, жёсткая модульная сетка, два цвета + бумага. Дёшево, быстро, мощно</p></div>
+    <span class="badge badge-amber">Быстро и дёшево</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c8">
+        <div class="c8-head"><span>Альтернативная энергетика РФ</span><span>Расчёт №4512 · Краснодар</span></div>
+        <div class="c8-main">
+          <div>
+            <div class="c8-big"><span id="c8n1">0</span><span class="u">₽</span></div>
+            <p class="c8-big-cap">Смета «под ключ»: 12 кВт на скатной кровле, АКБ 15 кВт·ч, монтаж и пусконаладка. Диапазон цен фиксируется на дату расчёта.</p>
+          </div>
+          <div class="c8-right">
+            <div class="row"><span class="k">Генерация в год</span><span class="v"><span id="c8n2">0</span> кВт·ч</span></div>
+            <div class="row"><span class="k">Покрытие потребления</span><span class="v"><span id="c8n3">0</span>%</span></div>
+            <div class="row"><span class="k">Окупаемость</span><span class="v"><span id="c8n4" class="acc" style="color:#e30613">0</span> лет</span></div>
+            <div class="row"><span class="k">LCOE</span><span class="v">6,9 ₽/кВт·ч</span></div>
+          </div>
+        </div>
+        <div class="c8-foot">
+          <div><b id="c8n5">0</b><span>м² кровли</span></div>
+          <div><b id="c8n6">0</b><span>лет гарантии панелей</span></div>
+          <div><b id="c8n7">0</b><span>циклов АКБ</span></div>
+        </div>
+      </div>
+      <span class="demo-hint">Числа «накручиваются» при появлении в кадре — count-up 1,3 с, easing-out</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#fafaf7"></i>бумага</span><span class="chip"><i style="background:#111111"></i>чернила</span><span class="chip"><i style="background:#e30613"></i>акцент</span></div>
+      <h4>Типографика</h4><div class="val">Кегль результата 64–96px, tracking −4,5%;_caption 13px. Один гротеск (Inter/Manrope), табличные цифры</div>
+      <h4>JS / TS</h4><div class="val"><code>requestAnimationFrame</code> count-up (число, форматирование пробелами); <code>IntersectionObserver</code> триггер; итог — 40 строк</div>
+      <h4>Фото</h4><div class="val">Не используются. Максимум — одна строгая ч/б фотография объекта сбоку от числа</div>
+      <h4>Куда в проекте</h4><div class="val"><b>Первый экран результата</b> (смета одной гигантской цифрой + 3 метрики), тизеры кейсов на главной, OG-карточки для соцсетей</div>
+      <h4>Плюсы</h4><ul><li class="p">Лечит диагноз №1 за один вечер: цена видна с трёх метров</li><li class="p">Нулевой риск CWV — чистый текст и CSS</li><li class="p">Скриншот такого блока идеален для WhatsApp-шеринга сметы</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Эмоционально нейтрален — «уверенность», а не «восторг»</li><li class="c">Требует безупречной вёрстки: типографика не прощает ошибок</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="60" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>60</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="55" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>55</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="65" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>65</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="10" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>минимальный</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>2–4</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>

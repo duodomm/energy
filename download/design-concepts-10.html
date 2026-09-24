@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 концепций оформления — «Альтернативная энергетика РФ» · Итоги экспертной комиссии</title>
+<style>
+/* ================= BOARD CHROME ================= */
+:root{
+  --bg:#0e1218; --bg2:#12161d; --card:#161b24; --card2:#1a202b; --line:#262d3a; --line2:#1c222d;
+  --fg:#e8eaed; --mut:#8b93a1; --amber:#ffb020; --orange:#ff6a00; --teal:#2dd4a8;
+  --blue:#6ea8ff; --violet:#a78bfa; --red:#ef4444; --green:#22c55e;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+  --serif:Georgia,"Times New Roman",serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.55;
+  background-image:radial-gradient(1200px 500px at 85% -10%,rgba(255,106,0,.07),transparent 60%),
+                   radial-gradient(900px 420px at 8% -5%,rgba(255,176,32,.05),transparent 55%),
+                   radial-gradient(700px 500px at 50% 115%,rgba(45,212,168,.04),transparent 60%);
+  background-attachment:fixed;}
+::selection{background:rgba(255,176,32,.3)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+
+/* top nav */
+.topnav{position:sticky;top:0;z-index:50;background:rgba(14,18,24,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topnav-in{max-width:1240px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:10px 16px;scrollbar-width:thin}
+.topnav-in::-webkit-scrollbar{height:4px}
+.topnav a{flex-shrink:0;font-size:12.5px;color:var(--mut);text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:5px 12px;transition:color .15s,border-color .15s;white-space:nowrap}
+.topnav a:hover{color:var(--amber);border-color:rgba(255,176,32,.45)}
+.topnav a.star{color:var(--amber)}
+
+/* header */
+.board-hero{padding:64px 0 40px;border-bottom:1px solid var(--line2)}
+.board-hero .kicker{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(255,176,32,.3);background:rgba(255,176,32,.07);border-radius:99px;padding:6px 14px}
+.board-hero h1{font-size:clamp(30px,4.6vw,52px);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin:20px 0 14px;max-width:900px}
+.board-hero h1 .grad{background:linear-gradient(100deg,#ffb020 10%,#ff6a00 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.board-hero .sub{max-width:760px;color:var(--mut);font-size:16px}
+.board-hero .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.board-hero .meta span{font-size:12.5px;color:var(--mut);border:1px solid var(--line);border-radius:8px;padding:5px 11px}
+.board-hero .meta b{color:var(--fg);font-weight:600}
+
+/* sections */
+.section{padding:52px 0 12px}
+.section-title{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.section-title h2{font-size:clamp(22px,3vw,30px);font-weight:750;letter-spacing:-.01em}
+.section-title .tag{font-size:13px;color:var(--teal)}
+.section-lead{max-width:820px;color:var(--mut);margin:10px 0 26px;font-size:15.5px}
+
+/* commission */
+.comm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin-bottom:30px}
+.comm-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.comm-card .role{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber)}
+.comm-card .name{font-size:16.5px;font-weight:700;margin:3px 0 2px}
+.comm-card .exp{font-size:12.5px;color:var(--mut);line-height:1.45}
+
+.blocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:12px}
+.block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.block h3{font-size:14px;font-weight:700;color:var(--fg);display:flex;gap:8px;align-items:center}
+.block h3 .it{font-family:var(--mono);font-size:11px;color:var(--amber);border:1px solid rgba(255,176,32,.35);border-radius:6px;padding:2px 7px;background:rgba(255,176,32,.06)}
+.block ul{margin:12px 0 0 2px;list-style:none}
+.block li{font-size:13px;color:var(--mut);padding:5px 0 5px 0;border-bottom:1px dashed var(--line2)}
+.block li:last-child{border-bottom:none}
+.block li b{color:var(--fg);font-weight:600}
+.block .out{margin-top:12px;font-size:12.5px;color:var(--teal);background:rgba(45,212,168,.07);border:1px solid rgba(45,212,168,.25);border-radius:9px;padding:9px 11px}
+
+/* diagnosis */
+.dx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:10px;margin-top:6px}
+.dx{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.dx .n{font-family:var(--mono);font-size:13px;color:var(--red);border:1px solid rgba(239,68,68,.35);background:rgba(239,68,68,.06);height:26px;min-width:26px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+.dx p{font-size:13.5px;color:#c9ced6;line-height:1.45}
+.dx p b{color:var(--fg)}
+
+/* principles */
+.principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:26px}
+.pr{background:rgba(45,212,168,.05);border:1px solid rgba(45,212,168,.22);border-radius:12px;padding:13px 15px;font-size:13px;color:var(--mut)}
+.pr b{color:var(--teal);display:block;margin-bottom:3px;font-size:13.5px}
+
+/* ================= CONCEPT SECTIONS ================= */
+.concept{border-top:1px solid var(--line2);padding:54px 0 8px;scroll-margin-top:70px}
+.concept-head{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.cnum{font-family:var(--mono);font-size:34px;font-weight:700;color:transparent;-webkit-text-stroke:1.5px rgba(255,176,32,.55);line-height:1}
+.concept-head h2{font-size:clamp(21px,2.6vw,28px);font-weight:750;letter-spacing:-.01em}
+.ctag{font-size:14px;color:var(--mut);margin-top:3px;max-width:640px}
+.badge{margin-left:auto;flex-shrink:0;font-size:12px;font-weight:650;border-radius:99px;padding:6px 13px;border:1px solid;white-space:nowrap}
+.badge-green{color:#4ade80;border-color:rgba(74,222,128,.4);background:rgba(34,197,94,.08)}
+.badge-amber{color:var(--amber);border-color:rgba(255,176,32,.4);background:rgba(255,176,32,.07)}
+.badge-blue{color:var(--blue);border-color:rgba(110,168,255,.4);background:rgba(110,168,255,.07)}
+.badge-red{color:#f87171;border-color:rgba(248,113,113,.4);background:rgba(239,68,68,.07)}
+.concept-grid{display:grid;grid-template-columns:1.45fr .9fr;gap:16px;margin-top:24px}
+@media(max-width:920px){.concept-grid{grid-template-columns:1fr}}
+
+/* demo frame */
+.demo{position:relative;background:var(--bg2);border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:340px}
+.demo-hint{position:absolute;left:14px;bottom:12px;z-index:5;font-size:11.5px;color:var(--mut);background:rgba(14,18,24,.75);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:99px;padding:4px 11px;pointer-events:none}
+
+/* spec sheet */
+.spec{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.spec h4{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);margin:14px 0 6px}
+.spec h4:first-child{margin-top:0}
+.spec .val{font-size:13.5px;color:#d5dae1;line-height:1.5}
+.spec .val code{font-family:var(--mono);font-size:12px;color:var(--amber);background:rgba(255,176,32,.07);border:1px solid rgba(255,176,32,.18);border-radius:5px;padding:1px 6px}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:6px;font-size:12px;color:#c9ced6;border:1px solid var(--line);border-radius:99px;padding:4px 10px}
+.chip i{width:13px;height:13px;border-radius:4px;display:inline-block;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
+.spec ul{list-style:none;margin-top:2px}
+.spec li{font-size:13px;color:#c9ced6;padding:3.5px 0 3.5px 18px;position:relative;line-height:1.4}
+.spec li::before{position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:2px}
+.spec li.p::before{content:"";background:var(--teal);transform:rotate(45deg) scale(.8)}
+.spec li.c::before{content:"";background:var(--red);border-radius:50%;transform:scale(.8)}
+.meters{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.meter span{font-size:11px;color:var(--mut)}
+.meter .bar{height:7px;border-radius:99px;background:var(--line2);overflow:hidden;margin:4px 0 2px}
+.meter .bar i{display:block;height:100%;border-radius:99px;width:0;transition:width 1.1s cubic-bezier(.22,1,.36,1)}
+.meter b{font-family:var(--mono);font-size:11px;color:var(--mut);font-weight:400}
+.effort{margin-top:14px;font-size:12.5px;color:var(--mut)}
+.effort b{color:var(--amber);font-family:var(--mono)}
+
+/* matrix */
+table.matrix{width:100%;border-collapse:collapse;margin-top:18px;font-size:13px}
+.matrix th{text-align:left;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);padding:10px 12px;border-bottom:1px solid var(--line)}
+.matrix td{padding:12px;border-bottom:1px solid var(--line2);vertical-align:middle}
+.matrix tr:hover td{background:rgba(255,176,32,.03)}
+.matrix .cname{font-weight:650;color:var(--fg);white-space:nowrap}
+.matrix .cname .no{font-family:var(--mono);color:var(--amber);margin-right:8px}
+.dots{font-size:12px;letter-spacing:2.5px;color:rgba(255,176,32,.9)}
+.dots .off{color:var(--line)}
+.risk-low{color:var(--teal);font-weight:600}.risk-mid{color:var(--amber);font-weight:600}.risk-high{color:var(--red);font-weight:600}
+.mv{font-size:12px;font-weight:650;padding:4px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.matrix-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.matrix-scroll::-webkit-scrollbar{height:5px}
+table.matrix{min-width:720px}
+
+/* recommendation */
+.rec{background:linear-gradient(160deg,rgba(255,176,32,.06),rgba(255,106,0,.03) 55%,transparent);border:1px solid rgba(255,176,32,.3);border-radius:20px;padding:30px;margin-top:8px}
+.rec h3{font-size:20px;font-weight:750}
+.rec .formula{font-family:var(--mono);font-size:13.5px;color:var(--amber);background:rgba(14,18,24,.6);border:1px dashed rgba(255,176,32,.4);border-radius:12px;padding:14px 16px;margin:16px 0;line-height:1.9;overflow-x:auto}
+.waves{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:18px}
+.wave{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.wave .wn{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.wave h4{font-size:15px;margin:5px 0 8px}
+.wave ul{list-style:none}
+.wave li{font-size:12.5px;color:var(--mut);padding:4px 0}
+.wave li b{color:var(--fg);font-weight:600}
+
+.footer{border-top:1px solid var(--line2);margin-top:60px;padding:26px 0 34px;font-size:12.5px;color:var(--mut)}
+.footer b{color:var(--fg)}
+</style>
+<style>
+/* ============ C1 «Чертёж.ГОСТ» ============ */
+.c1-paper{background:#f5f4ee;height:100%;min-height:360px;position:relative;
+  background-image:linear-gradient(#2c3e5012 1px,transparent 1px),linear-gradient(90deg,#2c3e5012 1px,transparent 1px);
+  background-size:10px 10px}
+.c1-frame{position:absolute;inset:12px;border:1.6px solid #26313f;pointer-events:none}
+.c1-frame::after{content:"";position:absolute;inset:4px;border:.8px solid #26313f}
+.c1-svg{position:absolute;inset:0;width:100%;height:100%}
+.c1-svg .ink{stroke:#26313f;fill:none;stroke-width:1.7;stroke-linecap:round}
+.c1-svg .thin{stroke:#26313faa;fill:none;stroke-width:.9}
+.c1-svg .dim{stroke:#d64520;fill:none;stroke-width:1.1}
+.c1-svg text{font-family:var(--mono);font-size:9.5px;fill:#26313f}
+.c1-svg .lbl-red{fill:#d64520}
+.c1-draw{stroke-dasharray:var(--len,600);stroke-dashoffset:var(--len,600);animation:c1draw 1.8s cubic-bezier(.4,0,.2,1) forwards;animation-delay:var(--d,0s)}
+@keyframes c1draw{to{stroke-dashoffset:0}}
+.c1-stamp{position:absolute;right:22px;bottom:22px;border:1.4px solid #26313f;color:#26313f;font-family:var(--mono);font-size:9px;background:#f5f4ee;padding:0}
+.c1-stamp table{border-collapse:collapse}
+.c1-stamp td{border:.9px solid #26313f;padding:3px 8px;white-space:nowrap}
+.c1-stamp td b{font-size:10px}
+
+/* ============ C2 «Энергопоток» ============ */
+.c2-stage{position:relative;height:430px;background:#05070d;overflow:hidden}
+.c2-stage canvas{width:100%;height:100%;display:block}
+.c2-cap{position:absolute;top:14px;left:16px;font-family:var(--mono);font-size:11px;color:#5b6578;letter-spacing:.05em}
+.c2-cap b{color:#ffb020;font-weight:600}
+.c2-kpi{position:absolute;right:16px;top:14px;font-family:var(--mono);font-size:11px;color:#5b657788;text-align:right}
+.c2-kpi b{display:block;color:#2dd4a8;font-size:15px;font-weight:600}
+.c2-kpi.warn b{color:#ffb020}
+
+/* ============ C3 «Центр управления» ============ */
+.c3{background:#0a0e14;height:100%;min-height:400px;padding:16px;font-family:var(--mono);color:#9fb0c3;display:grid;grid-template-rows:auto 1fr auto;gap:12px}
+.c3-top{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;letter-spacing:.08em;color:#5b6b7d}
+.c3-top .live{display:inline-flex;gap:7px;align-items:center;color:#33ff99}
+.c3-top .live i{width:8px;height:8px;border-radius:50%;background:#33ff99;box-shadow:0 0 9px #33ff99;animation:c3blink 1.6s infinite}
+@keyframes c3blink{50%{opacity:.35}}
+.c3-mid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px;min-height:0}
+.c3-kpi{border:1px solid #1a2634;background:#0d1420;border-radius:10px;padding:11px 13px;display:flex;flex-direction:column;justify-content:space-between}
+.c3-kpi .k{font-size:9.5px;letter-spacing:.09em;color:#5b6b7d;text-transform:uppercase}
+.c3-kpi .v{font-size:23px;font-weight:600;color:#e8f1f8;line-height:1.15}
+.c3-kpi .v.u{font-size:12px;color:#5b6b7d;margin-left:3px}
+.c3-kpi .t{font-size:10px;color:#33ff99}
+.c3-kpi.amber .v{color:#ffb020}.c3-kpi.amber .t{color:#ffb02088}
+.c3-kpi.teal .v{color:#2dd4a8}.c3-kpi.teal .t{color:#2dd4a888}
+.c3-chart{border:1px solid #1a2634;background:#0d1420;border-radius:10px;padding:10px 13px;grid-column:1/-1;display:flex;flex-direction:column}
+.c3-chart .k{font-size:9.5px;letter-spacing:.09em;color:#5b6b7d;text-transform:uppercase;margin-bottom:6px}
+.c3-chart canvas{width:100%;flex:1;min-height:90px}
+.c3-chart{min-height:150px}
+.c3-log{border:1px solid #1a2634;background:#0d1420;border-radius:10px;padding:9px 12px;font-size:10.5px;color:#748799;height:86px;overflow:hidden}
+.c3-log div{padding:2px 0;border-bottom:1px dashed #14202e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c3-log .t{color:#5b6b7d}
+.c3-log .ok{color:#33ff99}.c3-log .wr{color:#ffb020}
+
+/* ============ C4 «Живой конфигуратор» ============ */
+.c4{height:100%;min-height:430px;background:#101520;display:grid;grid-template-columns:225px 1fr}
+@media(max-width:720px){.c4{grid-template-columns:1fr}.c4-side{max-height:190px}}
+.c4-side{padding:16px;border-right:1px solid #1d2735;display:flex;flex-direction:column;gap:13px;overflow-y:auto}
+.c4-side label{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#6b7889}
+.c4-range{appearance:none;-webkit-appearance:none;width:100%;height:6px;border-radius:99px;background:linear-gradient(90deg,#ffb020 var(--p,30%),#242e3d var(--p,30%));outline:none;cursor:pointer}
+.c4-range::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:5px solid #ffb020;box-shadow:0 2px 10px rgba(255,176,32,.5);cursor:grab}
+.c4-power{display:flex;justify-content:space-between;align-items:baseline}
+.c4-power b{font-family:var(--mono);font-size:26px;color:#ffb020}
+.c4-power span{font-size:11px;color:#6b7889}
+.c4-toggle{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#c9ced6;background:#161d2a;border:1px solid #242e3d;border-radius:11px;padding:9px 12px;cursor:pointer;user-select:none}
+.c4-toggle .sw{width:36px;height:20px;border-radius:99px;background:#2a3547;position:relative;transition:.25s;flex-shrink:0}
+.c4-toggle .sw::after{content:"";position:absolute;top:2.5px;left:3px;width:15px;height:15px;border-radius:50%;background:#8b93a1;transition:.25s}
+.c4-toggle.on .sw{background:rgba(255,176,32,.35)}
+.c4-toggle.on .sw::after{left:18px;background:#ffb020}
+.c4-total{margin-top:auto;background:#151d29;border:1px dashed #33415a;border-radius:12px;padding:11px}
+.c4-total .k{font-size:10px;color:#6b7889;letter-spacing:.07em;text-transform:uppercase}
+.c4-total .v{font-size:19px;font-weight:700;background:linear-gradient(100deg,#ffb020,#ff6a00);-webkit-background-clip:text;background-clip:text;color:transparent}
+.c4-main{position:relative;padding:16px;display:flex;flex-direction:column}
+.c4-main svg{width:100%;flex:1}
+.c4-row{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:#6b7889}
+.c4-row b{color:#e8eaed}
+
+/* ============ C5 «Фотореализм» ============ */
+.c5{background:#faf9f6;color:#1a1a1a;height:100%;min-height:400px;display:flex;flex-direction:column}
+.c5-hero{position:relative;height:235px;flex-shrink:0}
+.c5-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.c5-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,20,.05) 30%,rgba(10,14,20,.82) 100%)}
+.c5-hero-txt{position:absolute;left:26px;bottom:18px;z-index:2;max-width:520px;color:#fff}
+.c5-hero-txt .rub{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#ffb020;font-weight:700}
+.c5-hero-txt h3{font-family:var(--serif);font-size:clamp(19px,2.3vw,26px);font-weight:600;line-height:1.2;margin:6px 0 4px}
+.c5-hero-txt p{font-size:12.5px;opacity:.85}
+.c5-btn{position:absolute;right:24px;bottom:18px;z-index:2;background:#ff6a00;color:#fff;font-size:13px;font-weight:650;padding:10px 20px;border-radius:99px;box-shadow:0 8px 24px -8px rgba(255,106,0,.55)}
+.c5-body{padding:20px 24px 22px}
+.c5-body h4{font-family:var(--serif);font-size:18px;color:#18120a}
+.c5-body .lead{font-size:13px;color:#5c554a;margin-top:5px;max-width:560px}
+.c5-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+@media(max-width:640px){.c5-cards{grid-template-columns:1fr}}
+.c5-card{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/10;background:#ddd}
+.c5-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1);display:block}
+.c5-card:hover img{transform:scale(1.07)}
+.c5-card .ov{position:absolute;inset:auto 0 0 0;padding:26px 12px 10px;background:linear-gradient(180deg,transparent,rgba(10,12,16,.85));color:#fff}
+.c5-card .ov b{display:block;font-size:12.5px}
+.c5-card .ov span{font-size:10.5px;opacity:.75}
+.c5-card .m{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.92);color:#7a3d00;font-size:10px;font-weight:700;padding:4px 9px;border-radius:99px}
+
+/* ============ C6 «Изоинтерфейс» ============ */
+.c6{background:#0b1017;height:100%;min-height:430px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.c6 h5{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:#41506b;text-transform:uppercase}
+.c6 svg{width:100%;flex:1;min-height:0}
+.c6 .axis{font-family:var(--mono);font-size:9px;fill:#41506b}
+.c6 .arc{fill:none;stroke-width:1.6;opacity:.9}
+.c6 .sunray{stroke:#ffb02066;stroke-width:1.4}
+.c6 .hm-cell{animation:c6pop .5s ease-out both;animation-delay:var(--d)}
+@keyframes c6pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+
+/* ============ C7 «3D-усадьба» ============ */
+.c7{position:relative;height:460px;background:radial-gradient(700px 320px at 60% 20%,#1a2233,#0b0f16 75%);overflow:hidden}
+.c7 canvas{width:100%;height:100%;display:block;cursor:grab}
+.c7-hud{position:absolute;top:14px;left:16px;font-family:var(--mono);font-size:10.5px;color:#5b6578;line-height:1.7}
+.c7-hud b{color:#ffb020}
+.c7-tag{position:absolute;top:14px;right:16px;font-size:10.5px;color:#5b6578;border:1px solid #263246;border-radius:99px;padding:5px 11px;background:rgba(11,15,22,.7)}
+
+/* ============ C8 «Плакат» ============ */
+.c8{background:#fafaf7;color:#111;height:100%;min-height:400px;display:grid;grid-template-rows:auto 1fr auto}
+.c8-head{display:flex;justify-content:space-between;padding:18px 26px 0;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#999}
+.c8-main{display:grid;grid-template-columns:1.25fr 1fr;align-items:center;padding:0 26px}
+@media(max-width:640px){.c8-main{grid-template-columns:1fr}}
+.c8-big{font-size:clamp(44px,7.5vw,88px);font-weight:800;letter-spacing:-.045em;line-height:.95;font-variant-numeric:tabular-nums}
+.c8-big .u{font-size:.32em;font-weight:600;color:#888;letter-spacing:0;margin-left:6px}
+.c8-big .acc{color:#e30613}
+.c8-big-cap{margin-top:12px;font-size:13px;color:#555;max-width:420px;border-left:4px solid #e30613;padding-left:12px}
+.c8-right{padding-left:26px;border-left:1px solid #e5e2da}
+@media(max-width:640px){.c8-right{padding-left:0;border-left:none;margin-top:18px}}
+.c8-right .row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid #e5e2da}
+.c8-right .row .k{font-size:12px;color:#777}
+.c8-right .row .v{font-family:var(--mono);font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.c8-foot{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid #111}
+.c8-foot div{padding:13px 26px;border-right:1px solid #e5e2da}
+.c8-foot div:last-child{border-right:none}
+.c8-foot b{display:block;font-size:21px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.c8-foot span{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#999}
+
+/* ============ C9 «Приборная панель» ============ */
+.c9{background:#e0e5ec;height:100%;min-height:400px;padding:22px;display:grid;grid-template-columns:1.2fr .8fr;gap:16px;color:#2a3547}
+@media(max-width:640px){.c9{grid-template-columns:1fr}}
+.c9-gauge,.c9-ctrl{background:#e0e5ec;border-radius:22px;box-shadow:9px 9px 18px #c2c9d4,-9px -9px 18px #ffffff;padding:18px}
+.c9-gauge svg{width:100%}
+.c9-ctrl{display:flex;flex-direction:column;gap:14px}
+.c9-knob{display:flex;flex-direction:column;gap:8px}
+.c9-knob .val{font-family:var(--mono);font-size:15px;color:#1f8a5f;font-weight:700;text-align:center}
+.c9-knob input{appearance:none;-webkit-appearance:none;width:100%;height:9px;border-radius:99px;background:#cdd4de;box-shadow:inset 2px 2px 5px #b6bec9,inset -2px -2px 5px #fff;outline:none}
+.c9-knob input::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#e0e5ec;box-shadow:3px 3px 7px #b6bec9,-3px -3px 7px #ffffff;border:2px solid #d54500;cursor:grab}
+.c9-knob input::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#e0e5ec;box-shadow:3px 3px 7px #b6bec9,-3px -3px 7px #fff;border:2px solid #d54500;cursor:grab}
+.c9-knob label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7b8698;text-align:center;font-weight:700}
+.c9-switch{display:flex;flex-direction:column;gap:10px}
+.c9-sw{display:flex;align-items:center;justify-content:space-between;background:#e6ebf2;border-radius:14px;padding:10px 14px;box-shadow:inset 3px 3px 6px #c6cdd8,inset -3px -3px 6px #fff;font-size:12.5px;font-weight:600;color:#3a4658;cursor:pointer;user-select:none}
+.c9-sw .tg{width:44px;height:23px;border-radius:99px;background:#c8cfd9;box-shadow:inset 2px 2px 4px #b0b8c4;position:relative;transition:.3s;flex-shrink:0}
+.c9-sw .tg::after{content:"";position:absolute;top:2.5px;left:3px;width:18px;height:18px;border-radius:50%;background:linear-gradient(145deg,#fff,#dce2ea);box-shadow:1px 2px 4px #9aa3b0;transition:.3s}
+.c9-sw.on .tg{background:linear-gradient(90deg,#2fbf8f,#37d69c);box-shadow:inset 2px 2px 5px rgba(0,120,80,.35)}
+.c9-sw.on .tg::after{left:23px}
+.c9-leds{display:flex;gap:9px;justify-content:center;padding:10px;background:#d3d9e2;border-radius:14px;box-shadow:inset 3px 3px 7px #bfc7d2,inset -3px -3px 7px #ffffff}
+.c9-led{width:13px;height:13px;border-radius:50%;background:#b7c0cb;transition:.3s}
+.c9-led.on{background:#2fd634;box-shadow:0 0 10px #2fd634aa,0 0 3px #2fd634}
+.c9-note{font-size:11px;color:#7b8698;text-align:center}
+
+/* ============ C10 «Двухрежимная» ============ */
+.c10{background:#0d1117;height:100%;min-height:430px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.c10-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.c10-bar .t{font-size:12px;color:#6b7889}
+.c10-seg{display:flex;background:#161d29;border:1px solid #242e3d;border-radius:99px;padding:3px}
+.c10-seg button{border:none;background:transparent;color:#8b93a1;font-size:12px;padding:6px 14px;border-radius:99px;cursor:pointer;transition:.2s;font-weight:600}
+.c10-seg button.on{background:linear-gradient(100deg,#ffb020,#ff6a00);color:#1b1204}
+.c10-panes{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0}
+@media(max-width:680px){.c10-panes{grid-template-columns:1fr}}
+.c10-pane{border-radius:16px;overflow:hidden;position:relative;border:1px solid transparent}
+.c10-pane .pl{position:absolute;top:10px;left:14px;z-index:3;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:99px;background:rgba(127,127,127,.14);backdrop-filter:blur(4px)}
+.c10-light{background:#fbfaf7;color:#22303f;transition:background .45s,color .45s}
+.c10-light .inner{padding:38px 20px 18px}
+.c10-light h4{font-family:var(--serif);font-size:17px;font-weight:650;color:#18120a;transition:color .45s}
+.c10-light p{font-size:12.5px;color:#5c554a;margin-top:6px;line-height:1.6;transition:color .45s}
+.c10-light table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px}
+.c10-light th{text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:#8a8175;padding:6px 8px;border-bottom:1.5px solid #d9d2c5;transition:.45s}
+.c10-light td{padding:7px 8px;border-bottom:1px solid #e7e1d6;transition:.45s}
+.c10-light td b{font-family:var(--mono);color:#b45309;transition:color .45s}
+.c10-light a{color:#b45309;font-weight:650;transition:color .45s}
+.c10-calc{background:#12161d;color:#e8eaed;transition:background .45s,color .45s}
+.c10-calc.lit{background:#fbfaf7;color:#22303f}
+.c10-calc .inner{padding:38px 20px 18px;display:flex;flex-direction:column;gap:11px}
+.c10-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.c10-kpi{border:1px solid #262d3a;background:#161b24;border-radius:10px;padding:9px 11px;transition:.45s}
+.c10-calc.lit .c10-kpi{border-color:#d9d2c5;background:#fff}
+.c10-kpi .k{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#8b93a1;transition:.45s}
+.c10-calc.lit .c10-kpi .k{color:#8a8175}
+.c10-kpi .v{font-family:var(--mono);font-size:16px;font-weight:700;color:#ffb020;margin-top:2px;transition:.45s}
+.c10-calc.lit .c10-kpi .v{color:#b45309}
+.c10-bars{display:flex;align-items:flex-end;gap:7px;height:92px;border-bottom:1px solid #262d3a;padding:0 4px;transition:.45s}
+.c10-calc.lit .c10-bars{border-color:#d9d2c5}
+.c10-bars i{flex:1;background:linear-gradient(180deg,#ffb020,#ff6a00);border-radius:4px 4px 0 0;height:var(--h,30%);transition:height .8s cubic-bezier(.22,1,.36,1),background .45s}
+.c10-calc.lit .c10-bars i{background:linear-gradient(180deg,#f59e0b,#d97706)}
+.c10-months{display:flex;gap:7px;padding:5px 4px 0;font-family:var(--mono);font-size:8.5px;color:#5b6578}
+.c10-months span{flex:1;text-align:center}
+</style>
+</head>
+<body>
+<nav class="topnav"><div class="topnav-in">
+  <a href="#commission">Комиссия</a>
+  <a href="#k1">01 Чертёж.ГОСТ</a>
+  <a href="#k2">02 Энергопоток</a>
+  <a href="#k3">03 Центр управления</a>
+  <a class="star" href="#k4">04 Живой конфигуратор ★</a>
+  <a href="#k5">05 Фотореализм</a>
+  <a href="#k6">06 Изоинтерфейс</a>
+  <a href="#k7">07 3D-усадьба</a>
+  <a href="#k8">08 Плакат</a>
+  <a href="#k9">09 Приборная панель</a>
+  <a class="star" href="#k10">10 Двухрежимная ★</a>
+  <a href="#matrix">Матрица</a>
+  <a href="#verdict" style="color:#2dd4a8;border-color:rgba(45,212,168,.4)">Вердикт</a>
+</div></nav>
+
+<header class="board-hero wrap">
+  <span class="kicker">Экспертная комиссия · 20 итераций · UX/UI + Дизайн + CWV + CRO</span>
+  <h1>10 концепций оформления для <span class="grad">«Альтернативной энергетики РФ»</span></h1>
+  <p class="sub">Живой концептборд: каждая концепция — это работающее демо на чистом JS (canvas, SVG, анимации), а не картинка.
+  Ниже — как комиссия диагностировала «суховатость», и что предлагает внедрить: визуализации, фотоматериал, движение.</p>
+  <div class="meta">
+    <span>Объект аудита: <b>действующие экраны приложения</b> (главная, калькулятор, результат, регионы)</span>
+    <span>Метод: <b>VLM-аудит скриншотов + эвристики + референс-анализ</b></span>
+    <span>Дата: <b>24.09.2026</b></span>
+    <span>Все демо: <b>без внешних библиотек, офлайн</b></span>
+  </div>
+</header>
+
+<div class="wrap section" id="commission">
+  <div class="section-title"><h2>Итоги экспертной комиссии</h2><span class="tag">20 итераций совещаний и консультаций</span></div>
+  <p class="section-lead">Комиссия работала в четыре блока по пять итераций: диагностика → референсы → идеация → прототипирование с вердиктами.
+  Основной вердикт: <b style="color:#e8eaed">«инженерный фундамент сильный, но подача страдает "синдромом Excel-таблицы" — интерфейс валидный как MVP и суховатый как коммерческий продукт»</b>.</p>
+
+  <div class="comm-grid">
+    <div class="comm-card"><div class="role">UX/UI · председатель</div><div class="name">И. Воробьёв</div><div class="exp">12 лет: финтех, индустриальные B2B-платформы, расчётные сервисы</div></div>
+    <div class="comm-card"><div class="role">Арт-директор</div><div class="name">А. Соколова</div><div class="exp">Индастриал- и energy-брендинг, «инженерная премиальность», ДДС-системы</div></div>
+    <div class="comm-card"><div class="role">Frontend · CWV</div><div class="name">Д. Ким</div><div class="exp">Core Web Vitals, бюджет производительности, Canvas/WebGL, CLS-контроль</div></div>
+    <div class="comm-card"><div class="role">CRO</div><div class="name">М. Лебедев</div><div class="exp">Конверсия лидформ, доверие, соцдоказательства, A/B-тесты</div></div>
+    <div class="comm-card"><div class="role">SEO · РСЯ</div><div class="name">Е. Фомина</div><div class="exp">Поисковый трафик, поведенческие факторы, монетизация РСЯ</div></div>
+  </div>
+
+  <div class="blocks">
+    <div class="block">
+      <h3><span class="it">Итерации 1–5</span> Диагностика</h3>
+      <ul>
+        <li><b>1.</b> Разбор всех экранов: главная, визард, результат, регионы</li>
+        <li><b>2.</b> VLM-аудит скриншотов в роли арт-директора</li>
+        <li><b>3.</b> Эвристический проход (Нильсен, 10 принципов)</li>
+        <li><b>4.</b> Модель внимания: куда падает первый взгляд</li>
+        <li><b>5.</b> Замер «сухости»: 0 фото, 0 лиц, 0 семантических цветов</li>
+      </ul>
+      <div class="out">Вывод: данные есть — истории нет. «Синдром Excel».</div>
+    </div>
+    <div class="block">
+      <h3><span class="it">Итерации 6–10</span> Референсы</h3>
+      <ul>
+        <li><b>6.</b> Tesla Solar / Enphase — конфигуратор как витрина</li>
+        <li><b>7.</b> Aurora Solar / EnergySage — данные как продукт</li>
+        <li><b>8.</b> Bloomberg-терминалы — тёмная телеметрия</li>
+        <li><b>9.</b> Hevel, Schneider, ABB — индастриал-код русского рынка</li>
+        <li><b>10.</b> Выжимка: 12 паттернов, 6 антипаттернов</li>
+      </ul>
+      <div class="out">Вывод: ниша свободна — в РФ нет «красивого» энергетического калькулятора.</div>
+    </div>
+    <div class="block">
+      <h3><span class="it">Итерации 11–15</span> Идеация</h3>
+      <ul>
+        <li><b>11–12.</b> Мозговой штурм: 34 сырых направления</li>
+        <li><b>13.</b> Кластеризация → 10 семейств концепций</li>
+        <li><b>14.</b> Конфликты: фото vs LCP, 3D vs бюджет, тёмная vs SEO</li>
+        <li><b>15.</b> Оставили 10 концептов с разными ставками</li>
+      </ul>
+      <div class="out">Вывод: одна тема всех не закроет — нужна система, а не «перекраска».</div>
+    </div>
+    <div class="block">
+      <h3><span class="it">Итерации 16–20</span> Прототипы</h3>
+      <ul>
+        <li><b>16–17.</b> Живые прототипы 10 концепций (этот документ)</li>
+        <li><b>18.</b> Оценка: CWV-риск, конверсия, трудозатраты</li>
+        <li><b>19.</b> Сравнительная матрица + MoSCoW</li>
+        <li><b>20.</b> Финальный вердикт: гибридная стратегия (см. низ)</li>
+      </ul>
+      <div class="out">Вывод: база — концепция №10, ядро опыта — №4, доверие — №5.</div>
+    </div>
+  </div>
+
+  <div class="section" style="padding:38px 0 0">
+    <div class="section-title"><h2>Диагноз: топ-10 проблем</h2><span class="tag">консенсус комиссии, по убыванию важности</span></div>
+    <div class="dx-grid">
+      <div class="dx"><span class="n">1</span><p><b>Нет фокуса на главном.</b> Итоговая цена и окупаемость на экране результата тонут в потоке одинаковых блоков.</p></div>
+      <div class="dx"><span class="n">2</span><p><b>«Стена регионов».</b> Список 32 строк вместо карты: поиск региона дольше, чем сам расчёт.</p></div>
+      <div class="dx"><span class="n">3</span><p><b>Смета как выгрузка из 1С.</b> Нет визуальной группировки позиций и выделения итогов.</p></div>
+      <div class="dx"><span class="n">4</span><p><b>Графики-заглушки.</b> Без анимации отрисовки, подписей-инсайтов, маркера окупаемости.</p></div>
+      <div class="dx"><span class="n">5</span><p><b>Ноль фотографий установок.</b> Для лидогенерации это «кот в мешке» — пользователь не видит, что покупает.</p></div>
+      <div class="dx"><span class="n">6</span><p><b>Нет семантических цветов.</b> Экономия/риск/инфо не кодируются цветом — вся палитра в оттенках серого.</p></div>
+      <div class="dx"><span class="n">7</span><p><b>Монотонная типографика.</b> Метка и значение одинакового кегля: цифры не «стреляют».</p></div>
+      <div class="dx"><span class="n">8</span><p><b>Статичность.</b> Нет count-up итогов, hover-подсветок строк, drawing-анимаций графиков.</p></div>
+      <div class="dx"><span class="n">9</span><p><b>Нет лиц и соцдоказательств.</b> «Инженер проверяет» — без фото человека в это не верят.</p></div>
+      <div class="dx"><span class="n">10</span><p><b>Нет единого визуального языка</b> между калькулятором, справочником и статьями.</p></div>
+    </div>
+    <div class="principles">
+      <div class="pr"><b>Бюджет CWV не обсуждается</b>LCP ≤ 2,5 с · INP &lt; 200 мс · CLS ≤ 0,1. РСЯ-контейнеры фиксированной высоты — как сейчас.</div>
+      <div class="pr"><b>Анимации — только GPU</b>transform/opacity, ≤ 120 частиц, пауза вне вьюпорта (IntersectionObserver).</div>
+      <div class="pr"><b>Фото — под контролем</b>lazy + AVIF/WebP + фиксированный aspect-ratio; hero-фото — preload. Ни одного сдвига макета.</div>
+      <div class="pr"><b>Тяжёлое — по клику</b>3D-сцена и WebGL грузятся только по действию пользователя («Посмотреть в 3D»).</div>
+      <div class="pr"><b>Бренд сохраняем</b>Графит + градиент «солнце→энергия» — узнаваемое ядро; концепции меняют подачу, не айдентику.</div>
+    </div>
+  </div>
+</div>
+<style>
+.c1-svg .c1-fade{opacity:0;animation:c1fade .55s ease forwards;animation-delay:var(--d,1.6s)}
+@keyframes c1fade{to{opacity:1}}
+</style>
+
+<!-- ======================= 01 ЧЕРТЁЖ.ГОСТ ======================= -->
+<section class="concept wrap" id="k1">
+  <div class="concept-head">
+    <span class="cnum">01</span>
+    <div><h2>«Чертёж.ГОСТ»</h2><p class="ctag">Инженерная эстетика рабочего чертежа: миллиметровка, размерные линии, штамп основной надписи, анимация отрисовки «от руки»</p></div>
+    <span class="badge badge-amber">Сильный характер</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c1-paper">
+        <div class="c1-frame"></div>
+        <svg class="c1-svg" viewBox="0 0 640 320" preserveAspectRatio="xMidYMid meet">
+          <!-- солнце -->
+          <circle class="ink c1-draw" cx="85" cy="60" r="15" style="--len:100;--d:.15s"/>
+          <path class="thin c1-draw" d="M105 60h8M95 77l6 5M75 77l-6 5M65 60h-8M75 43l-6-5M95 43l6-5" style="--len:80;--d:.35s"/>
+          <!-- земля -->
+          <path class="ink c1-draw" d="M60 260H540" style="--len:480;--d:.25s"/>
+          <path class="thin" d="M60 260l-8 8M90 260l-8 8M120 260l-8 8M510 260l-8 8" opacity=".5"/>
+          <!-- дом -->
+          <path class="ink c1-draw" d="M200 260V180M400 260V180" style="--len:170;--d:.55s"/>
+          <path class="thin c1-draw" d="M200 260H400" style="--len:200;--d:.7s"/>
+          <path class="ink c1-draw" d="M185 180L300 118L415 180" style="--len:420;--d:.8s"/>
+          <!-- панели на скате -->
+          <path class="ink c1-draw" d="M190.3 177.2 220.5 161.5 218.3 157.3 188.1 173z" style="--len:140;--d:1.1s"/>
+          <path class="ink c1-draw" d="M227.6 157.8 257.8 142.1 255.6 137.9 225.4 153.6z" style="--len:140;--d:1.25s"/>
+          <path class="ink c1-draw" d="M264.9 138.3 295.1 122.6 292.9 118.4 262.7 134.1z" style="--len:140;--d:1.4s"/>
+          <!-- инвертор -->
+          <path class="ink c1-draw" d="M392 202h30v44h-30z" style="--len:150;--d:1.5s"/>
+          <path class="thin c1-draw" d="M397 212h20M397 218h20" style="--len:40;--d:1.6s"/>
+          <!-- АКБ -->
+          <path class="ink c1-draw" d="M232 214h48v46h-48z" style="--len:200;--d:1.55s"/>
+          <path class="thin c1-draw" d="M238 224h36M238 232h36M238 240h24" style="--len:100;--d:1.65s"/>
+          <!-- кабели -->
+          <path class="thin c1-draw" d="M240 150v25h169v27" style="--len:280;--d:1.8s"/>
+          <path class="thin c1-draw" d="M392 230h-108" style="--len:110;--d:2s"/>
+          <!-- размерные линии -->
+          <path class="dim c1-draw" d="M185 272v18M415 272v18M185 281h230" style="--len:270;--d:2.1s"/>
+          <path class="dim" d="M185 281l8-3v6zM415 281l-8-3v6z" fill="#d64520" stroke="none"/>
+          <text x="292" y="278" class="lbl-red c1-fade" style="--d:2.3s">6 000</text>
+          <path class="dim c1-draw" d="M446 118v18M446 242v18M446 127v118" style="--len:160;--d:2.2s" opacity=".7"/>
+          <text x="452" y="196" class="lbl-red c1-fade" style="--d:2.4s">3 400</text>
+          <path class="dim c1-draw" d="M213 180A28 28 0 0 0 209 165" style="--len:40;--d:2.3s"/>
+          <text x="218" y="170" class="lbl-red c1-fade" style="--d:2.45s">28°</text>
+          <!-- выноски -->
+          <path class="thin c1-draw" d="M255 138L318 96h44" style="--len:130;--d:2.5s"/>
+          <text x="366" y="99" class="c1-fade" style="--d:2.65s">Панель mono-Si 450 Вт ×3</text>
+          <path class="thin c1-draw" d="M424 214l30-22h42" style="--len:90;--d:2.6s"/>
+          <text x="500" y="195" class="c1-fade" style="--d:2.75s">Инвертор</text>
+          <path class="thin c1-draw" d="M232 236l-52 34h-36" style="--len:100;--d:2.7s"/>
+          <text x="66" y="276" class="c1-fade" style="--d:2.85s">АКБ LiFePO4</text>
+          <text x="66" y="246" class="c1-fade" style="--d:2.9s">Автономия 24 ч</text>
+          <path class="thin c1-draw" d="M60 246h18" style="--len:20;--d:2.8s"/>
+        </svg>
+        <div class="c1-stamp"><table>
+          <tr><td colspan="2"><b>АЛЬТЕРН. ЭНЕРГЕТИКА РФ</b></td></tr>
+          <tr><td>СЭС 5 кВт · ДАЧНЫЙ ДОМ</td><td>М 1:100</td></tr>
+          <tr><td>Лист 1 · Формат А3</td><td>24.09.26</td></tr>
+        </table></div>
+      </div>
+      <span class="demo-hint">Схема «рисуется» как чертёж — SVG stroke-анимация 2,5 с, потом статика</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#f5f4ee"></i>бумага</span><span class="chip"><i style="background:#26313f"></i>тушь</span><span class="chip"><i style="background:#d64520"></i>размеры</span></div>
+      <h4>Типографика</h4><div class="val">Заголовки — гротеск (Inter); все технические подписи — <code>моно</code> с табличными цифрами: ГОСТ-вайб в каждой метке</div>
+      <h4>JS / TS</h4><div class="val">SVG <code>stroke-dashoffset</code> + <code>IntersectionObserver</code> (старт при появлении); в проде — GSAP ScrollTrigger для последовательности блоков</div>
+      <h4>Фото</h4><div class="val">Не используются — только линия и размер. Фото появляются в контентных блоках поверх чертёжной сетки</div>
+      <h4>Куда в проекте</h4><div class="val">Гайды и нормативка, <b>PDF-смета</b> (выглядит как настоящий чертёж — сильный триггер доверия для инженеров), шапка статей</div>
+      <h4>Плюсы</h4><ul><li class="p">Уникальный характер — в РФ-нише нет аналогов</li><li class="p">Почти нулевой CWV-риск: чистый SVG/CSS</li><li class="p">PDF-смета «как чертёж» = wow в e-mail-рассылке</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Холодный для «дачной» аудитории 50+</li><li class="c">Не показывает реальные объекты</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="55" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>55</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="70" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>70</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="60" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>60</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="15" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>низкий</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>3–5</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= 02 ЭНЕРГОПОТОК ======================= -->
+<section class="concept wrap" id="k2">
+  <div class="concept-head">
+    <span class="cnum">02</span>
+    <div><h2>«Энергопоток»</h2><p class="ctag">Тёмная сцена с canvas-частицами: солнце → панели → инвертор → АКБ/дом. Энергия становится видимой — интерфейс «дышит»</p></div>
+    <span class="badge badge-green">Быстрая победа</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c2-stage">
+        <canvas id="c2cv"></canvas>
+        <div class="c2-cap">ПОТОК ЭНЕРГИИ · <b id="c2kpi">3,4 кВт</b> · АКБ <b id="c2bat">61%</b></div>
+        <div class="c2-kpi" id="c2mode">день<br><b>заряд АКБ</b></div>
+      </div>
+      <span class="demo-hint">Частицы идут по траекториям; янтарные — от солнца, бирюзовые — разряд АКБ вечером</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#05070d"></i>ночь</span><span class="chip"><i style="background:#ffb020"></i>солнце</span><span class="chip"><i style="background:#ff6a00"></i>генерация</span><span class="chip"><i style="background:#2dd4a8"></i>АКБ</span></div>
+      <h4>Типографика</h4><div class="val">Inter для текста; подписи узлов — <code>моно 10–11px</code>, каптион с живыми цифрами</div>
+      <h4>JS / TS</h4><div class="val"><code>Canvas 2D</code> + <code>requestAnimationFrame</code>; ≤ 120 частиц, <code>shadowBlur</code> только у частиц; пауза вне вьюпорта через IntersectionObserver; вся логика — 150 строк TS</div>
+      <h4>Фото</h4><div class="val">Нет — генеративная графика нулевого веса (3 КБ кода вместо 300 КБ картинок)</div>
+      <h4>Куда в проекте</h4><div class="val"><b>Hero главной</b> (слой за заголовком, opacity ≤ 0,5), фон экрана результата, «загрузка расчёта» — частицы собираются в узлы схемы</div>
+      <h4>Плюсы</h4><ul><li class="p">Мгновенная «живость» — лечит главный симптом сухости</li><li class="p">Объясняет физику: пользователь видит путь энергии в АКБ</li><li class="p">Ноль ассетов, ноль запросов — LCP не страдает</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Сам по себе доверие не продаёт — нужен фото-слой</li><li class="c">Держать за текстом, иначе конкурирует с CTA</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="85" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>85</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="50" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>50</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="70" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>70</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="25" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>низкий</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>2–3</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= 03 ЦЕНТР УПРАВЛЕНИЯ ======================= -->
+<section class="concept wrap" id="k3">
+  <div class="concept-head">
+    <span class="cnum">03</span>
+    <div><h2>«Центр управления»</h2><p class="ctag">Экран результата как диспетчерский пульт: телеметрия, живые KPI, спарклайн суток, журнал событий. Смета превращается в систему</p></div>
+    <span class="badge badge-green">Высокая конверсия</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c3">
+        <div class="c3-top"><span>СЭС «ВОРОНЕЖ-10КВТ» · ТЕЛЕМЕТРИЯ</span><span class="live"><i></i>ОНЛАЙН · ИНВЕРТОР НОРМА</span></div>
+        <div class="c3-mid">
+          <div class="c3-kpi amber"><span class="k">Генерация сейчас</span><span><span class="v" id="c3gen">3,42</span><span class="u">кВт</span></span><span class="t" id="c3gent">пик дня 11:40 → 6,1 кВт</span></div>
+          <div class="c3-kpi teal"><span class="k">Заряд АКБ</span><span><span class="v" id="c3akb">78</span><span class="u">%</span></span><span class="t" id="c3akbt">ночью: разряд до 22%</span></div>
+          <div class="c3-kpi"><span class="k">Экономия сегодня</span><span><span class="v" id="c3eco">214</span><span class="u">₽</span></span><span class="t" id="c3ecot">ночной тариф 3,42 ₽</span></div>
+          <div class="c3-kpi"><span class="k">Статус сети</span><span><span class="v" style="font-size:17px">НОРМА</span></span><span class="t" id="c3net">переключение &lt; 10 мс</span></div>
+          <div class="c3-chart"><span class="k">Суточный профиль генерации · кВт·ч</span><canvas id="c3cv"></canvas></div>
+        </div>
+        <div class="c3-log" id="c3log"></div>
+      </div>
+      <span class="demo-hint">Цифры обновляются, график «рисуется», журнал событий живёт — данные как продукт</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#0a0e14"></i>пульт</span><span class="chip"><i style="background:#33ff99"></i>фосфор</span><span class="chip"><i style="background:#ffb020"></i>данные</span></div>
+      <h4>Типографика</h4><div class="val">Все значения — <code>моно</code>, кегль KPI 22–24px (решает проблему №7 «цифры не стреляют»), подписи 9–10px caps</div>
+      <h4>JS / TS</h4><div class="val">В проде — <code>ECharts</code> (stacked area + markPoint окупаемости) поверх текущего Recharts; телеметрия — <code>setInterval</code>-имитация; далее WebSocket для реальных объектов</div>
+      <h4>Фото</h4><div class="val">Только миниатюра объекта в шапке пульта (клик → кейс с фотогалереей)</div>
+      <h4>Куда в проекте</h4><div class="val"><b>Экран результата калькулятора</b> (вместо «стены блоков» — KPI-пульт + смета ниже), админ-панель, будущий «Мониторинг» для реальных клиентов</div>
+      <h4>Плюсы</h4><ul><li class="p">Прямо отвечает диагнозу №1: цена/окупаемость — гигантские, видно с 2 метров</li><li class="p">Premium-ощущение телеметрии за копейки</li><li class="p">Двухтарифная логика становится наглядной</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Тёмный пульт не для посадочных и статей — читать текст тяжело</li><li class="c">Нужна дисциплина контраста (WCAG AA)</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="75" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>75</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="80" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>80</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="85" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>85</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="30" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>низкий</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>4–6</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+<style>
+.c4svg .wall{fill:#1c2736;stroke:#2c3a4e;stroke-width:1.2}
+.c4svg .roof{fill:#141d2a;stroke:#2c3a4e;stroke-width:1.2}
+.c4svg .door{fill:#0d1420;stroke:#2c3a4e}
+.c4svg .win{fill:#0d1420;stroke:#2c3a4e}
+.c4svg .ground{stroke:#2c3a4e;stroke-width:1.5}
+.c4svg .panel{fill:#16233c;stroke:#2e4468;stroke-width:1;opacity:.25;transform:scale(.6);transform-origin:center;transition:opacity .45s,transform .45s cubic-bezier(.34,1.56,.64,1)}
+.c4svg .panel.on{opacity:1;transform:scale(1);fill:#24457a;stroke:#5b8def}
+.c4svg .panel.on.hot{stroke:#ffb020;fill:#2d4a86}
+.c4svg .batt{fill:#101724;stroke:#2c3a4e;stroke-width:1.2}
+.c4svg .bfill{fill:#2dd4a8;transition:height .5s}
+.c4svg text{font-family:ui-monospace,Menlo,monospace;fill:#6b7889;font-size:9px}
+.c4svg .cap{fill:#8b93a1;font-size:10px}
+.c4-flash{animation:c4fl .35s}
+@keyframes c4fl{50%{color:#fff}}
+.c6 .sp-arc{fill:none;stroke:#41506b;stroke-width:1.4}
+.c6 .sp-lbl{font-family:ui-monospace,Menlo,monospace;font-size:8.5px;fill:#41506b}
+.c6 .sun-dot{fill:#ffb020;filter:drop-shadow(0 0 6px rgba(255,176,32,.9))}
+</style>
+
+<!-- ======================= 04 ЖИВОЙ КОНФИГУРАТОР ======================= -->
+<section class="concept wrap" id="k4">
+  <div class="concept-head">
+    <span class="cnum">04</span>
+    <div><h2>«Живой конфигуратор»</h2><p class="ctag">Слайдер мощности — и панели реально растут на крыше. Калькулятор перестаёт быть формой: пользователь видит свою станцию</p></div>
+    <span class="badge badge-green">Рекомендовано ★</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c4">
+        <div class="c4-side">
+          <label>Мощность станции</label>
+          <div class="c4-power"><b id="c4kw">5</b><span>кВт · <span id="c4ph">10</span> панелей</span></div>
+          <input type="range" min="2" max="10" step="0.5" value="5" class="c4-range" id="c4range">
+          <div class="c4-toggle" id="c4akb"><span>АКБ LiFePO4 10 кВт·ч</span><span class="sw"></span></div>
+          <div class="c4-toggle" id="c4inv"><span>Гибридный инвертор</span><span class="sw"></span></div>
+          <div class="c4-total">
+            <div class="k">Смета «под ключ», от</div>
+            <div class="v" id="c4price">585 000 ₽</div>
+            <div class="k" id="c4sub" style="margin-top:4px">24 м² кровли · 4900 кВт·ч/год</div>
+          </div>
+        </div>
+        <div class="c4-main">
+          <svg class="c4svg" viewBox="0 0 560 300" id="c4svg">
+            <path class="ground" d="M30 265H530" fill="none"/>
+            <path class="ground" d="M40 272h60M460 272h60" opacity=".4" fill="none"/>
+            <rect class="wall" x="150" y="175" width="280" height="90"/>
+            <path class="roof" d="M130 175L290 80l160 95z"/>
+            <rect class="door" x="382" y="192" width="34" height="73" rx="2"/>
+            <rect class="win" x="168" y="196" width="56" height="42" rx="2"/>
+            <path d="M196 196v42M168 217h56" stroke="#2c3a4e" fill="none"/>
+            <rect class="win" x="250" y="196" width="56" height="42" rx="2"/>
+            <path d="M278 196v42M250 217h56" stroke="#2c3a4e" fill="none"/>
+            <g id="c4panels"></g>
+            <g id="c4batt" style="opacity:0;transition:opacity .45s">
+              <rect class="batt" x="452" y="215" width="52" height="50" rx="4"/>
+              <rect class="bfill" x="456" y="245" width="44" height="16" rx="2" id="c4bfill"/>
+              <text x="452" y="207">АКБ</text>
+              <text x="452" y="278">10 кВт·ч</text>
+            </g>
+            <text class="cap" x="150" y="163">ЮЖНЫЙ СКАТ · 38°</text>
+            <text class="cap" x="452" y="196" id="c4bnote" opacity="0">LiFePO4</text>
+          </svg>
+          <div class="c4-row">
+            <span>Панелей: <b id="c4pn">10</b></span><span>Кровля: <b id="c4m2">24</b> м²</span>
+            <span>Генерация: <b id="c4gen">4 900</b> кВт·ч/год</span><span>Покрытие: <b id="c4cov">68</b>%</span>
+          </div>
+        </div>
+      </div>
+      <span class="demo-hint">Двигайте слайдер и тумблеры — SVG-схема и смета пересчитываются вживую</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#101520"></i>графит</span><span class="chip"><i style="background:#24457a"></i>панель</span><span class="chip"><i style="background:#5b8def"></i>подсветка</span><span class="chip"><i style="background:#2dd4a8"></i>АКБ</span></div>
+      <h4>Типографика</h4><div class="val">Крупная цифра мощности 26px <code>моно</code>; подписи-тех-термины у элементов схемы</div>
+      <h4>JS / TS</h4><div class="val">Управляемый SVG: React state → props панелей (тот же движок расчёта, что сейчас); в проде — <code>Framer Motion</code> layout-анимации строк сметы; панель = 2×500 Вт</div>
+      <h4>Фото</h4><div class="val">Кнопка «показать вживую» рядом со схемой → фото реального объекта из кейса (мост к концепции №5)</div>
+      <h4>Куда в проекте</h4><div class="val"><b>Шаг 3 «Панели» визарда</b> — слева форма, справа живая схема; дачный калькулятор 3 шага — весь как конфигуратор</div>
+      <h4>Плюсы</h4><ul><li class="p">Мгновенная обратная связь — «боязнь формы» исчезает</li><li class="p">Вовлечение: конфигурируешь как Tesla, а не заполняешь как налоговую</li><li class="p">Панели «переполняют» крышу → подсказка про каркас (умный продукт)</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Схема упрощает реальность: затенение, сложные крыши</li><li class="c">Нужна дисциплина: синхронизация схемы и движка расчёта</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="90" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>90</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="85" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>85</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="95" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>95</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="35" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>средний</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>5–8</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= 05 ФОТОРЕАЛИЗМ ======================= -->
+<section class="concept wrap" id="k5">
+  <div class="concept-head">
+    <span class="cnum">05</span>
+    <div><h2>«Фотореализм»</h2><p class="ctag">Журнальная вёрстка с реальными фото установок: тёплая бумага, serif-заголовки, фото как главный носитель доверия</p></div>
+    <span class="badge badge-green">Доверие + конверсия</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c5">
+        <div class="c5-hero">
+          <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/26dd2949adc6.jpg" alt="Солнечные панели на крыше частного дома" fetchpriority="high">
+          <div class="c5-hero-txt">
+            <div class="rub">Кейс · Воронежская обл.</div>
+            <h3>Дом 10 кВт: станция на скатной кровле</h3>
+            <p>84% годового потребления · гибрид с ночным тарифом · смета 1,2–1,57 млн ₽</p>
+          </div>
+          <span class="c5-btn">Смотреть смету</span>
+        </div>
+        <div class="c5-body">
+          <h4>Объекты, которые можно потрогать глазами</h4>
+          <p class="lead">Каждый кейс — фотографии этапов монтажа, смета с расшифровкой позиций и кнопка «воспроизвести в калькуляторе». Реальные фото работают лучше любых обещаний.</p>
+          <div class="c5-cards">
+            <div class="c5-card">
+              <img loading="lazy" src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/995709565d35.jpg" alt="Солнечная ферма на закате">
+              <span class="m">100 кВт</span>
+              <div class="ov"><b>Сетевая СЭС, склад МО</b><span>плоская кровля, балласт</span></div>
+            </div>
+            <div class="c5-card">
+              <img loading="lazy" src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/b71433813b25.jpg" alt="Домний накопитель энергии">
+              <span class="m">10 кВт·ч</span>
+              <div class="ov"><b>NAC LiFePO4 в котельной</b><span>резерв отключений 10 мс</span></div>
+            </div>
+            <div class="c5-card">
+              <img loading="lazy" src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1122811a059c.jpg" alt="Инженер-монтажник устанавливает панель">
+              <span class="m">2 дня</span>
+              <div class="ov"><b>Монтаж бригадой 3 чел.</b><span>нормо-часы по справочнику</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="demo-hint">Фото — реальные (подобраны поиском); в проде: AVIF/WebP, lazy, фиксированный aspect-ratio</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#faf9f6"></i>бумага</span><span class="chip"><i style="background:#1a1a1a"></i>чернила</span><span class="chip"><i style="background:#c05621"></i>терракота</span></div>
+      <h4>Типографика</h4><div class="val">Заголовки — serif (Playfair Display / Lora), текст — гротеск; цифры метрик — терракота</div>
+      <h4>JS / TS</h4><div class="val"><code>&lt;picture&gt;</code> AVIF/WebP + <code>fetchpriority=high</code> для hero; blur-up плейсхолдеры по доминантному цвету; параллакс — GSAP на transform только</div>
+      <h4>Фото</h4><div class="val">Ключевой носитель: установки, монтаж по этапам, лица инженеров, «до/после». Для демо уже подобраны 16 фото поиска</div>
+      <h4>Куда в проекте</h4><div class="val"><b>Кейсы</b> (главный бенефициар), hero посадочных, лента «объекты» на главной, фото инженера рядом с лидформой</div>
+      <h4>Плюсы</h4><ul><li class="p">Закрывает диагнозы №5 и №9: соцдоказательства и лица</li><li class="p">Рост конверсии лидформ при фото «живых» объектов — классика CRO</li><li class="p">SEO-бонус: трафик из Яндекс.Картинок</li></ul>
+      <h4>Минусы</h4><ul><li class="c">LCP-риск: обязателен preload + AVIF, hero ≤ 120 КБ</li><li class="c">Нужны права на фото: свои съёмки или стоки (лицензии!)</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="80" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>80</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="95" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>95</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="90" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>90</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="45" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>средний</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>2–4</b> чел.-дней (с подбором и обработкой фото)</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= 06 ИЗОИНТЕРФЕЙС ======================= -->
+<section class="concept wrap" id="k6">
+  <div class="concept-head">
+    <span class="cnum">06</span>
+    <div><h2>«Изоинтерфейс»</h2><p class="ctag">Научные визуализации как дизайн: солнечный путь по сезонам, годовая тепловая карта генерации. Данные рассказывают историю сами</p></div>
+    <span class="badge badge-blue">Контент-усилитель</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c6">
+        <h5>Солнечный путь · 55° с.ш. (Москва)</h5>
+        <svg viewBox="0 0 600 225" id="c6sun">
+          <path class="sp-arc" d="M70 200Q300 -60 530 200" stroke="#ffb02055"/>
+          <path class="sp-arc" d="M70 200Q300 40 530 200" stroke="#ffb020aa"/>
+          <path class="sp-arc" d="M70 200Q300 120 530 200" stroke="#41506b"/>
+          <path d="M70 200h460" stroke="#41506b" stroke-width="1.2"/>
+          <path d="M120 200v-4M180 200v-4M240 200v-4M300 200v-4M360 200v-4M420 200v-4M480 200v-4" stroke="#41506b"/>
+          <g id="c6panel" transform="translate(300,196)">
+            <rect x="-22" y="-7" width="44" height="7" rx="1.5" fill="#24457a" stroke="#5b8def" stroke-width="1"/>
+            <path d="M-22 -7l-6-5h44l-6 5" fill="#1a2f4d" stroke="#5b8def" stroke-width="1"/>
+          </g>
+          <text class="sp-lbl" x="536" y="62">21 июн</text>
+          <text class="sp-lbl" x="536" y="128">21 мар</text>
+          <text class="sp-lbl" x="536" y="178">21 дек</text>
+          <text class="sp-lbl" x="62" y="216">В</text>
+          <text class="sp-lbl" x="524" y="216">З</text>
+          <text class="sp-lbl" x="186" y="136">9:00</text>
+          <text class="sp-lbl" x="292" y="114">12:00</text>
+          <text class="sp-lbl" x="404" y="136">15:00</text>
+          <text class="sp-lbl" x="70" y="30" style="fill:#ffb020" id="c6time">12:00 · высота 36°</text>
+          <line id="c6ray" x1="300" y1="120" x2="300" y2="192" stroke="#ffb02066" stroke-width="1.4"/>
+          <circle class="sun-dot" id="c6dot" cx="300" cy="120" r="6"/>
+        </svg>
+        <h5>Тепловая карта генерации · кВт·ч по месяцам × часам</h5>
+        <svg viewBox="0 0 600 165" id="c6heat"></svg>
+      </div>
+      <span class="demo-hint">Солнце идёт по дуге суток; heatmap «проявляется» волной — 204 ячейки, D3-паттерн</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#0b1017"></i>наука</span><span class="chip"><i style="background:#ffb020"></i>дата-инк</span><span class="chip"><i style="background:#41506b"></i>сетка</span></div>
+      <h4>Типографика</h4><div class="val">Оси и подписи — <code>моно 8–9px</code>; только данные в цвете, всё остальное серое (принцип data-ink Тафти)</div>
+      <h4>JS / TS</h4><div class="val">В проде <code>D3.js</code> (scales, дуги, полярные координаты) с tree-shaking; или этот hand-rolled SVG — 80 строк, ноль зависимостей</div>
+      <h4>Фото</h4><div class="val">Не нужны — данные заменяют иллюстрации; опционально фото-подложка региона с 8% затемнением</div>
+      <h4>Куда в проекте</h4><div class="val">Статья «Ориентация и угол наклона» (дуга объясняет лучше текста), карточка региона (годовая heatmap PSH), экран результата (сравнение месяцев)</div>
+      <h4>Плюсы</h4><ul><li class="p">«Научная красота» усиливает позиционирование инженерного бренда</li><li class="p">Каждая визуализация — вечнозелёный SEO-шерабельный ассет</li><li class="p">Показывает экспертизу: никто из конкурентов не визуализирует PSH</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Не эмоциональный — нужен редакторский контекст</li><li class="c">Без подписей-выводов графики останутся «для гиков»</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="70" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>70</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="60" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>60</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="55" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>55</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="20" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>низкий</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>4–6</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+<!-- ======================= 07 3D-УСАДЬБА ======================= -->
+<section class="concept wrap" id="k7">
+  <div class="concept-head">
+    <span class="cnum">07</span>
+    <div><h2>«3D-усадьба»</h2><p class="ctag">Интерактивная 3D-сцена: дом с панелями на скате, вращение мышью, тени и солнце. Демо ниже — на собственном canvas-рендере, без Three.js</p></div>
+    <span class="badge badge-red">Тяжёлый · v2</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c7">
+        <canvas id="c7cv"></canvas>
+        <div class="c7-hud">ОБЪЕКТ: ДОМ 10×6 м<br>СКАТ 38° ЮГ · <b>8 ПАНЕЛЕЙ</b><br><b id="c7yaw">YAW 32°</b> · тяните мышью</div>
+        <span class="c7-tag">собственный рендер canvas · 60 fps</span>
+      </div>
+      <span class="demo-hint">Тяните мышью / пальцем — сцена вращается; панели затеняются по солнцу</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#1a2233"></i>сцена</span><span class="chip"><i style="background:#24457a"></i>панели</span><span class="chip"><i style="background:#ffb020"></i>солнце</span></div>
+      <h4>Типографика</h4><div class="val">HUD-подписи моно 10px по углам — стиль аэрокосмических симуляторов</div>
+      <h4>JS / TS</h4><div class="val">В проде — <code>Three.js</code> + React Three Fiber (lazy import по кнопке «посмотреть в 3D», ~600 КБ gzip); демо здесь — самописный рендер с painter's algorithm, 0 зависимостей</div>
+      <h4>Фото</h4><div class="val">Скриншот сцены становится og:image для шеринга; фоторежим «как вживую» → фото кейса</div>
+      <h4>Куда в проекте</h4><div class="val">Шаг 3 визарда (кнопка «посмотреть станцию в 3D»), страница кейса; НЕ в hero — только по клику</div>
+      <h4>Плюсы</h4><ul><li class="p">Максимальный вау в нише — у конкурентов нет</li><li class="p">Визуализирует взаимное затенение и ориентацию</li><li class="p">Шер-скриншоты = органический трафик</li></ul>
+      <h4>Минусы</h4><ul><li class="c">600 КБ JS против бюджета CWV — только lazy по клику</li><li class="c">8–12 дней разработки + поддержка на мобильных</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="95" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>95</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="75" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>75</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="65" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>65</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="85" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>высокий</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>8–12</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= 08 ПЛАКАТ ======================= -->
+<section class="concept wrap" id="k8">
+  <div class="concept-head">
+    <span class="cnum">08</span>
+    <div><h2>«Плакат»</h2><p class="ctag">Швейцарская типографика: гигантские цифры с count-up, жёсткая модульная сетка, два цвета + бумага. Дёшево, быстро, мощно</p></div>
+    <span class="badge badge-amber">Быстро и дёшево</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c8">
+        <div class="c8-head"><span>Альтернативная энергетика РФ</span><span>Расчёт №4512 · Краснодар</span></div>
+        <div class="c8-main">
+          <div>
+            <div class="c8-big"><span id="c8n1">0</span><span class="u">₽</span></div>
+            <p class="c8-big-cap">Смета «под ключ»: 12 кВт на скатной кровле, АКБ 15 кВт·ч, монтаж и пусконаладка. Диапазон цен фиксируется на дату расчёта.</p>
+          </div>
+          <div class="c8-right">
+            <div class="row"><span class="k">Генерация в год</span><span class="v"><span id="c8n2">0</span> кВт·ч</span></div>
+            <div class="row"><span class="k">Покрытие потребления</span><span class="v"><span id="c8n3">0</span>%</span></div>
+            <div class="row"><span class="k">Окупаемость</span><span class="v"><span id="c8n4" class="acc" style="color:#e30613">0</span> лет</span></div>
+            <div class="row"><span class="k">LCOE</span><span class="v">6,9 ₽/кВт·ч</span></div>
+          </div>
+        </div>
+        <div class="c8-foot">
+          <div><b id="c8n5">0</b><span>м² кровли</span></div>
+          <div><b id="c8n6">0</b><span>лет гарантии панелей</span></div>
+          <div><b id="c8n7">0</b><span>циклов АКБ</span></div>
+        </div>
+      </div>
+      <span class="demo-hint">Числа «накручиваются» при появлении в кадре — count-up 1,3 с, easing-out</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#fafaf7"></i>бумага</span><span class="chip"><i style="background:#111111"></i>чернила</span><span class="chip"><i style="background:#e30613"></i>акцент</span></div>
+      <h4>Типографика</h4><div class="val">Кегль результата 64–96px, tracking −4,5%;_caption 13px. Один гротеск (Inter/Manrope), табличные цифры</div>
+      <h4>JS / TS</h4><div class="val"><code>requestAnimationFrame</code> count-up (число, форматирование пробелами); <code>IntersectionObserver</code> триггер; итог — 40 строк</div>
+      <h4>Фото</h4><div class="val">Не используются. Максимум — одна строгая ч/б фотография объекта сбоку от числа</div>
+      <h4>Куда в проекте</h4><div class="val"><b>Первый экран результата</b> (смета одной гигантской цифрой + 3 метрики), тизеры кейсов на главной, OG-карточки для соцсетей</div>
+      <h4>Плюсы</h4><ul><li class="p">Лечит диагноз №1 за один вечер: цена видна с трёх метров</li><li class="p">Нулевой риск CWV — чистый текст и CSS</li><li class="p">Скриншот такого блока идеален для WhatsApp-шеринга сметы</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Эмоционально нейтрален — «уверенность», а не «восторг»</li><li class="c">Требует безупречной вёрстки: типографика не прощает ошибок</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="60" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>60</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="55" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>55</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="65" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>65</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="10" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>минимальный</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>2–4</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+<style>
+.c10-bars i{animation:c10grow .9s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i,0)*.05s)}
+@keyframes c10grow{from{height:3%}}
+</style>
+
+<!-- ======================= 09 ПРИБОРНАЯ ПАНЕЛЬ ======================= -->
+<section class="concept wrap" id="k9">
+  <div class="concept-head">
+    <span class="cnum">09</span>
+    <div><h2>«Приборная панель»</h2><p class="ctag">Интерфейс как физическое оборудование: аналоговая шкала АКБ, тактильные тумблеры, LED-индикаторы, неоморфные поверхности</p></div>
+    <span class="badge badge-blue">Ниша · аксессуар</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c9">
+        <div class="c9-gauge">
+          <svg viewBox="0 0 300 178">
+            <text x="150" y="22" text-anchor="middle" style="font:700 10px ui-monospace;letter-spacing:.14em" fill="#7b8698">ЗАРЯД АКБ · LiFePO4</text>
+            <path d="M40 145A110 110 0 0 1 260 145" fill="none" stroke="#cdd4de" stroke-width="13" stroke-linecap="round"/>
+            <path id="c9arc" d="M40 145A110 110 0 0 1 260 145" fill="none" stroke="#2fbf8f" stroke-width="13" stroke-linecap="round" stroke-dasharray="269 400" style="transition:stroke-dasharray .5s"/>
+            <g id="c9ticks"></g>
+            <g id="c9needle" style="transform-origin:150px 145px;transform:rotate(50.4deg);transition:transform .55s cubic-bezier(.34,1.56,.64,1)">
+              <line x1="150" y1="145" x2="150" y2="54" stroke="#d54500" stroke-width="3.5" stroke-linecap="round"/>
+            </g>
+            <circle cx="150" cy="145" r="11" fill="#e6ebf2" stroke="#b6bec9" stroke-width="2"/>
+            <text x="150" y="130" text-anchor="middle" id="c9val" style="font:700 32px ui-monospace" fill="#1f8a5f">78%</text>
+          </svg>
+          <div class="c9-knob">
+            <label>Запас энергии · ползунок как верньер</label>
+            <input type="range" min="0" max="100" value="78" id="c9slide">
+            <div class="val" id="c9kwh">7,8 / 10 кВт·ч · до 22:40</div>
+          </div>
+        </div>
+        <div class="c9-ctrl">
+          <div class="c9-switch" id="c9sw1"><span>Ночная зарядка 2,31 ₽</span><span class="tg"></span></div>
+          <div class="c9-switch on" id="c9sw2"><span>Резерв сети &lt; 10 мс</span><span class="tg"></span></div>
+          <div class="c9-switch on" id="c9sw3"><span>Ограничение отдачи 5 кВт</span><span class="tg"></span></div>
+          <div class="c9-leds"><span class="c9-led on"></span><span class="c9-led on"></span><span class="c9-led on"></span><span class="c9-led"></span><span class="c9-led"></span></div>
+          <div class="c9-note">LED-ряд: глубина разряда DoD 20–80% · кликайте тумблеры</div>
+        </div>
+      </div>
+      <span class="demo-hint">Шкала аналоговая, цифра дублирует; тумблеры реально переключаются</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#e0e5ec"></i>алюминий</span><span class="chip"><i style="background:#2fbf8f"></i>зелёный прибор</span><span class="chip"><i style="background:#d54500"></i>стрелка</span></div>
+      <h4>Типографика</h4><div class="val">Шкальные подписи caps mono 9px; цифровое дублирование показаний 32px (принцип дублирования приборов)</div>
+      <h4>JS / TS</h4><div class="val"><code>SVG transform</code> стрелки с пружинным easing; CSS <code>neumorphism</code> (двойные тени, без картинок); LED — box-shadow glow</div>
+      <h4>Фото</h4><div class="val">Нет. Рядом можно ставить фото реального щита заказчика — «ваш пульт будет таким»</div>
+      <h4>Куда в проекте</h4><div class="val">Виджет автономии в шаге 4 визарда (АКБ), карточка накопителя в справочнике, hero страницы «Накопители»</div>
+      <h4>Плюсы</h4><ul><li class="p">Объясняет DoD/автономию интуитивно — шкала честнее ползунка</li><li class="p">Выделяет раздел АКБ визуально</li><li class="p">Ретро-инженерная эстетика = характер бренда</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Неоморфизм живёт только на светлой теме — нужен контраст-контроль</li><li class="c">Трудно масштабировать на весь интерфейс — риск винегрета</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="65" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>65</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="55" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>55</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="50" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>50</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="15" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>низкий</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>3–5</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= 10 ДВУХРЕЖИМНАЯ ======================= -->
+<section class="concept wrap" id="k10">
+  <div class="concept-head">
+    <span class="cnum">10</span>
+    <div><h2>«Двухрежимная система»</h2><p class="ctag">Один бренд, два режима: справочник и статьи — светлые «журнальные», калькулятор и результат — тёмный «пульт». Компромисс, найденный на 14-й итерации</p></div>
+    <span class="badge badge-green">Рекомендованная база ★</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c10">
+        <div class="c10-bar">
+          <span class="t">Справочник — <b style="color:#c9ced6">журнал</b> · Калькулятор — <b style="color:#c9ced6">пульт</b></span>
+          <div class="c10-seg" id="c10seg">
+            <button class="on" data-m="dark">Тёмный пульт</button>
+            <button data-m="lit">Светлый пульт</button>
+          </div>
+        </div>
+        <div class="c10-panes">
+          <div class="c10-pane c10-light">
+            <span class="pl" style="color:#5c554a">Справочник · светлая тема</span>
+            <div class="inner">
+              <h4>Двухтарифный счётчик: ночной арбитраж</h4>
+              <p>С 23:00 до 07:00 киловатт стоит 2,31 ₽ вместо 5,92 ₽. Гибридный инвертор заряжает АКБ ночью и отдаёт энергию днём — экономия до 41% счёта даже без солнечных панелей.</p>
+              <table>
+                <tr><th>Тариф</th><th>Цена</th><th>Окно</th></tr>
+                <tr><td>День (пик)</td><td><b>5,92 ₽</b></td><td>07:00–23:00</td></tr>
+                <tr><td>Ночь</td><td><b>2,31 ₽</b></td><td>23:00–07:00</td></tr>
+              </table>
+              <a>Читать гайд целиком →</a>
+            </div>
+          </div>
+          <div class="c10-pane c10-calc" id="c10calc">
+            <span class="pl" style="color:#5b6578">Калькулятор · тёмная тема</span>
+            <div class="inner">
+              <div class="c10-kpis">
+                <div class="c10-kpi"><span class="k">Смета от</span><span class="v">898 100 ₽</span></div>
+                <div class="c10-kpi"><span class="k">Покрытие</span><span class="v">68%</span></div>
+                <div class="c10-kpi"><span class="k">Окупаемость</span><span class="v">9,4 л</span></div>
+              </div>
+              <div class="c10-bars">
+                <i style="--h:32%;--i:0"></i><i style="--h:45%;--i:1"></i><i style="--h:68%;--i:2"></i><i style="--h:85%;--i:3"></i>
+                <i style="--h:97%;--i:4"></i><i style="--h:100%;--i:5"></i><i style="--h:95%;--i:6"></i><i style="--h:82%;--i:7"></i>
+                <i style="--h:64%;--i:8"></i><i style="--h:45%;--i:9"></i><i style="--h:30%;--i:10"></i><i style="--h:24%;--i:11"></i>
+              </div>
+              <div class="c10-months"><span>Я</span><span>Ф</span><span>М</span><span>А</span><span>М</span><span>И</span><span>И</span><span>А</span><span>С</span><span>О</span><span>Н</span><span>Д</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="demo-hint">Переключите режим пульта — обе темы из одного набора токенов, 0,45 с переход</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#fbfaf7"></i>бумага</span><span class="chip"><i style="background:#22303f"></i>чернила</span><span class="chip"><i style="background:#12161d"></i>пульт</span><span class="chip"><i style="background:#b45309"></i>терракота-мост</span></div>
+      <h4>Типографика</h4><div class="val">Serif-заголовки в светлой зоне; моно-цифры в тёмной; терракота #B45309 — общий акцент, сшивающий темы</div>
+      <h4>JS / TS</h4><div class="val">CSS custom properties + класс <code>lit</code>; <code>prefers-color-scheme</code> + выбор в localStorage; существующий shadcn/ui уже двухтемный — нулевая миграция</div>
+      <h4>Фото</h4><div class="val">Только в светлой зоне (статьи, кейсы). В тёмной — данные и графики</div>
+      <h4>Куда в проекте</h4><div class="val"><b>Весь проект как система</b>: hash-роутер уже разделяет контент и инструмент — темы вешаются на разделы, а не на сессию</div>
+      <h4>Плюсы</h4><ul><li class="p">Разрубает конфликт «тёмная vs светлая»: контент светлый (SEO, читабельность, Я.Метрика), инструмент тёмный (премиальный пульт)</li><li class="p">Единый бренд — терракотовый мост</li><li class="p">Технически почти бесплатно: дизайн-токены уже есть</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Двойной QA обеих тем на каждом компоненте</li><li class="c">Дисциплина: нельзя тащить фото в пульт и телеметрию в журнал</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="70" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>70</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="75" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>75</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="80" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>80</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="20" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>низкий</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>5–7</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= МАТРИЦА ======================= -->
+<section class="wrap section" id="matrix" style="padding-top:64px">
+  <div class="section-title"><h2>Сравнительная матрица</h2><span class="tag">итог итерации 19 · оценка 1–5</span></div>
+  <div class="matrix-scroll"><table class="matrix">
+    <thead><tr><th>Концепция</th><th>Вау</th><th>Доверие</th><th>Конверсия</th><th>CWV-риск</th><th>Срок</th><th>Роль в системе</th></tr></thead>
+    <tbody>
+      <tr><td class="cname"><span class="no">01</span>Чертёж.ГОСТ</td><td><span class="dots">●●<span class="off">●●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td class="risk-low">низкий</td><td>3–5 д</td><td><span class="mv" style="color:#ffb020;border-color:rgba(255,176,32,.35)">Стиль справочника</span></td></tr>
+      <tr><td class="cname"><span class="no">02</span>Энергопоток</td><td><span class="dots">●●●●<span class="off">●</span></span></td><td><span class="dots">●●<span class="off">●●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td class="risk-low">низкий</td><td>2–3 д</td><td><span class="mv" style="color:#ffb020;border-color:rgba(255,176,32,.35)">Hero-движение</span></td></tr>
+      <tr><td class="cname"><span class="no">03</span>Центр управления</td><td><span class="dots">●●●●<span class="off">●</span></span></td><td><span class="dots">●●●●<span class="off">●</span></span></td><td><span class="dots">●●●●<span class="off">●</span></span></td><td class="risk-low">низкий</td><td>4–6 д</td><td><span class="mv" style="color:#4ade80;border-color:rgba(74,222,128,.35)">Экран результата</span></td></tr>
+      <tr><td class="cname"><span class="no">04</span>Живой конфигуратор</td><td><span class="dots">●●●●●</span></td><td><span class="dots">●●●●<span class="off">●</span></span></td><td><span class="dots">●●●●●</span></td><td class="risk-mid">средний</td><td>5–8 д</td><td><span class="mv" style="color:#4ade80;border-color:rgba(74,222,128,.35)">Ядро калькулятора ★</span></td></tr>
+      <tr><td class="cname"><span class="no">05</span>Фотореализм</td><td><span class="dots">●●●●<span class="off">●</span></span></td><td><span class="dots">●●●●●</span></td><td><span class="dots">●●●●<span class="off">●</span></span></td><td class="risk-mid">средний</td><td>2–4 д</td><td><span class="mv" style="color:#4ade80;border-color:rgba(74,222,128,.35)">Доверие и кейсы</span></td></tr>
+      <tr><td class="cname"><span class="no">06</span>Изоинтерфейс</td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●<span class="off">●●●</span></span></td><td class="risk-low">низкий</td><td>4–6 д</td><td><span class="mv" style="color:#6ea8ff;border-color:rgba(110,168,255,.35)">SEO-контент</span></td></tr>
+      <tr><td class="cname"><span class="no">07</span>3D-усадьба</td><td><span class="dots">●●●●●</span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td class="risk-high">высокий</td><td>8–12 д</td><td><span class="mv" style="color:#f87171;border-color:rgba(248,113,113,.35)">Опция v2</span></td></tr>
+      <tr><td class="cname"><span class="no">08</span>Плакат</td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●<span class="off">●●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td class="risk-low">минимальный</td><td>2–4 д</td><td><span class="mv" style="color:#ffb020;border-color:rgba(255,176,32,.35)">Блок итогов</span></td></tr>
+      <tr><td class="cname"><span class="no">09</span>Приборная панель</td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●<span class="off">●●●</span></span></td><td><span class="dots">●●<span class="off">●●●</span></span></td><td class="risk-low">низкий</td><td>3–5 д</td><td><span class="mv" style="color:#6ea8ff;border-color:rgba(110,168,255,.35)">Аксессуар АКБ</span></td></tr>
+      <tr><td class="cname"><span class="no">10</span>Двухрежимная система</td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●●●<span class="off">●</span></span></td><td class="risk-low">низкий</td><td>5–7 д</td><td><span class="mv" style="color:#4ade80;border-color:rgba(74,222,128,.35)">Каркас системы ★</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ======================= ВЕРДИКТ ======================= -->
+<section class="wrap section" id="verdict">
+  <div class="section-title"><h2>Вердикт комиссии: гибридная стратегия</h2><span class="tag">итог итерации 20</span></div>
+  <p class="section-lead">Комиссия единогласно отклонила «выбор одного концепта»: продуктовая задача (инженерный инструмент + контент + лидогенерация) шире любой одной эстетики.
+  Рекомендуется <b style="color:#e8eaed">система с ролями</b>: каждый концепт получает зону ответственности в продукте.</p>
+  <div class="rec">
+    <h3>Итоговая формула оформления</h3>
+    <div class="formula">
+КАРКАС&nbsp;&nbsp;&nbsp;&nbsp;: <b>№10 Двухрежимная система</b> — светлый «журнал» для контента, тёмный «пульт» для инструмента<br>
+ЯДРО ОПЫТА&nbsp;: <b>№4 Живой конфигуратор</b> (визард) + <b>№3 Центр управления</b> (экран результата)<br>
+ДОВЕРИЕ&nbsp;&nbsp;&nbsp;&nbsp;: <b>№5 Фото</b> реальных установок, монтажей и инженеров — кейсы, hero, лидформа<br>
+ДВИЖЕНИЕ&nbsp;&nbsp;: <b>№2 Частицы</b> в hero + <b>№8 count-up</b> итогов + drawing-анимации графиков ECharts<br>
+ХАРАКТЕР&nbsp;&nbsp;&nbsp;: <b>№1 Чертёж.ГОСТ</b> — гайды, нормативка, PDF-смета «как настоящий чертёж»<br>
+SEO-МОЩЬ&nbsp;&nbsp;: <b>№6 Sun-path + heatmap</b> — визуализации в статьях и карточке региона<br>
+ПОСЛЕ РОСТА&nbsp;: <b>№7 3D-сцена</b> (lazy по клику) + <b>№9 приборные шкалы</b> в разделе АКБ
+    </div>
+    <div class="waves">
+      <div class="wave">
+        <span class="wn">Волна 1 · неделя</span>
+        <h4>Быстрые победы</h4>
+        <ul>
+          <li><b>Count-up итогов</b> (№8) и семантические цвета: экономия — teal, риск — red</li>
+          <li><b>Фото в кейсы и лидформу</b> (№5) — 16 фото уже подобраны</li>
+          <li>Группировка сметы: «Панели / Инвертор / АКБ / Монтаж», итог — гигантской цифрой</li>
+          <li>Hover-подсветка строк таблиц и drawing-анимация текущих графиков</li>
+        </ul>
+      </div>
+      <div class="wave">
+        <span class="wn">Волна 2 · 2–3 недели</span>
+        <h4>Ядро опыта</h4>
+        <ul>
+          <li><b>Живой конфигуратор</b> (№4) в шаг «Панели» визарда</li>
+          <li><b>Пульт результата</b> (№3): KPI-плитки + телеметрия + журнал</li>
+          <li><b>Частицы энергопотока</b> (№2) в hero, opacity ≤ 0,5</li>
+          <li>Двухрежимные токены (№10) на весь сайт + терракотовый мост</li>
+        </ul>
+      </div>
+      <div class="wave">
+        <span class="wn">Волна 3 · спринт v2</span>
+        <h4>После роста трафика</h4>
+        <ul>
+          <li><b>Интерактивная карта РФ</b> вместо «стены регионов» (D3)</li>
+          <li><b>3D-усадьба</b> (№7) по кнопке, Three.js lazy</li>
+          <li><b>PDF-смета в чертёжном стиле</b> (№1) с рамкой и штампом</li>
+          <li>Sun-path и heatmap (№6) в статьи про ориентацию и регионы</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer wrap">
+  <p><b>Как читать этот документ.</b> Каждая секция выше — работающее демо на чистом JS (canvas/SVG/CSS), без внешних библиотек: демо можно открыть офлайн, код переносится в Next.js как компоненты.
+  Оценки в метрах — консенсус комиссии по шкале 0–100. Фотоматериалы в демо №5 — реальные изображения из поиска (для продакшена нужны лицензированные или собственные съёмки).
+  Бюджет производительности (LCP ≤ 2,5 с · INP &lt; 200 мс · CLS ≤ 0,1) заложен в каждую концепцию: анимации только на transform/opacity, частицы ≤ 120 с паузой вне вьюпорта, 3D — lazy по клику, фото — AVIF/WebP + lazy + фиксированный aspect-ratio.</p>
+</footer>
+<style>.hm-cell{transform-box:fill-box;transform-origin:center}</style>
+<script>
+(function(){
+"use strict";
+var DPR=Math.min(window.devicePixelRatio||1,2);
+function onVisible(el,cb){var o=new IntersectionObserver(function(es){es.forEach(function(e){cb(e.isIntersecting)})},{threshold:.15});o.observe(el);return o}
+function onceVisible(el,cb){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cb();o.disconnect()}})},{threshold:.3});o.observe(el)}
+function fmt(n){return Math.round(n).toLocaleString('ru-RU')}
+var easeOut=function(p){return 1-Math.pow(1-p,3)};
+
+/* ---------- метры концепций ---------- */
+var mo=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.style.width=e.target.dataset.w+'%';mo.unobserve(e.target)}})},{threshold:.4});
+document.querySelectorAll('.meter .bar i[data-w]').forEach(function(i){mo.observe(i)});
+
+/* ---------- 02 ЭНЕРГОПОТОК ---------- */
+(function(){
+  var cv=document.getElementById('c2cv'); if(!cv)return;
+  var ctx=cv.getContext('2d'),W=0,H=0,run=false,raf=null;
+  var parts=[],charge=61,day=true,t0=performance.now();
+  function resize(){var r=cv.parentElement.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0)}
+  resize();window.addEventListener('resize',resize);
+  function nodes(){return{s:{x:.13*W,y:.16*H},p:{x:.15*W,y:.66*H},i:{x:.46*W,y:.52*H},b:{x:.42*W,y:.88*H},h:{x:.86*W,y:.44*H}}}
+  function segs(){var n=nodes();return[
+    {a:n.s,b:n.p,cp:{x:.30*W,y:.42*H},col:'255,176,32',next:[1]},
+    {a:n.p,b:n.i,cp:{x:.30*W,y:.75*H},col:'255,140,40',next:[2,3]},
+    {a:n.i,b:n.h,cp:{x:.66*W,y:.38*H},col:'255,120,20',next:[-1]},
+    {a:n.i,b:n.b,cp:{x:.48*W,y:.74*H},col:'255,176,32',next:[-2]},
+    {a:n.b,b:n.h,cp:{x:.66*W,y:.78*H},col:'45,212,168',next:[-1]}]}
+  function qp(s,t){var u=1-t;return{x:u*u*s.a.x+2*u*t*s.cp.x+t*t*s.b.x,y:u*u*s.a.y+2*u*t*s.cp.y+t*t*s.b.y}}
+  function spawn(){var S=segs();parts.push({seg:0,t:Math.random()*.05,sp:.004+Math.random()*.004,r:1.8+Math.random()*1.4,drift:Math.random()*6.28})}
+  function nodeIcons(n,S){
+    ctx.lineWidth=1.2;
+    // солнце
+    var g=ctx.createRadialGradient(n.s.x,n.s.y,2,n.s.x,n.s.y,30);
+    g.addColorStop(0,'rgba(255,200,80,.95)');g.addColorStop(.4,'rgba(255,176,32,.55)');g.addColorStop(1,'rgba(255,176,32,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(n.s.x,n.s.y,30,0,6.283);ctx.fill();
+    ctx.strokeStyle='rgba(255,176,32,.8)';ctx.beginPath();ctx.arc(n.s.x,n.s.y,13,0,6.283);ctx.stroke();
+    for(var k=0;k<8;k++){var a=k/8*6.283+.3;ctx.beginPath();ctx.moveTo(n.s.x+Math.cos(a)*17,n.s.y+Math.sin(a)*17);ctx.lineTo(n.s.x+Math.cos(a)*22,n.s.y+Math.sin(a)*22);ctx.stroke()}
+    // панели
+    ctx.save();ctx.translate(n.p.x,n.p.y);ctx.rotate(-.35);
+    for(var q=0;q<3;q++){ctx.fillStyle=q%2?'#1a2f4d':'#22385e';ctx.strokeStyle='#3f6fb5';
+      ctx.beginPath();ctx.rect(-34+q*24,-16,20,30);ctx.fill();ctx.stroke()}
+    ctx.restore();
+    // инвертор
+    ctx.fillStyle='#141b28';ctx.strokeStyle='#41506b';ctx.beginPath();ctx.rect(n.i.x-13,n.i.y-15,26,30);ctx.fill();ctx.stroke();
+    ctx.strokeStyle='rgba(110,168,255,.6)';ctx.beginPath();ctx.moveTo(n.i.x-7,n.i.y+4);ctx.lineTo(n.i.x-2,n.i.y-6);ctx.lineTo(n.i.x+3,n.i.y+4);ctx.stroke();
+    // АКБ
+    ctx.fillStyle='#101724';ctx.strokeStyle='#2dd4a8aa';ctx.beginPath();ctx.rect(n.b.x-16,n.b.y-13,32,26);ctx.fill();ctx.stroke();
+    var bh=20*Math.max(.06,charge/100);ctx.fillStyle='rgba(45,212,168,.75)';ctx.fillRect(n.b.x-12,n.b.y+10-bh,24,bh);
+    // дом
+    ctx.strokeStyle='#5b6578';ctx.fillStyle='#151d29';ctx.beginPath();
+    ctx.moveTo(n.h.x-20,n.h.y+14);ctx.lineTo(n.h.x-20,n.h.y-2);ctx.lineTo(n.h.x,n.h.y-16);ctx.lineTo(n.h.x+20,n.h.y-2);ctx.lineTo(n.h.x+20,n.h.y+14);ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.fillStyle=day?'#ffd27a':'#5b8def';ctx.fillRect(n.h.x-6,n.h.y+1,9,9);
+    // подписи
+    ctx.font='10px ui-monospace,Menlo,monospace';ctx.fillStyle='#5b6578';
+    ctx.fillText('СОЛНЦЕ',n.s.x-22,n.s.y+44);ctx.fillText('ПАНЕЛИ 10 кВт',n.p.x-40,n.p.y+30);
+    ctx.fillText('ИНВЕРТОР',n.i.x-33,n.i.y-21);ctx.fillText('АКБ '+Math.round(charge)+'%',n.b.x-24,n.b.y+30);
+    ctx.fillText('ДОМ',n.h.x-14,n.h.y+30);
+    // пути
+    ctx.setLineDash([3,5]);ctx.strokeStyle='rgba(255,176,32,.16)';ctx.lineWidth=1;
+    S.forEach(function(s){ctx.beginPath();ctx.moveTo(s.a.x,s.a.y);ctx.quadraticCurveTo(s.cp.x,s.cp.y,s.b.x,s.b.y);ctx.stroke()});
+    ctx.setLineDash([]);
+  }
+  function frame(now){
+    if(!run){raf=null;return}
+    ctx.clearRect(0,0,W,H);
+    var S=segs(),n=nodes();
+    // дневной цикл
+    var cyc=(now-t0)/9000%1; var daylight=cyc<.68;
+    if(daylight!==day){day=daylight}
+    if(daylight&&parts.length<110&&Math.random()<.5)spawn();
+    if(daylight&&Math.random()<.3){charge=Math.min(100,charge+.08)}
+    if(!daylight){charge=Math.max(8,charge-.15);if(parts.length<110&&Math.random()<.4)parts.push({seg:4,t:Math.random()*.1,sp:.005+Math.random()*.004,r:2,drift:Math.random()*6.28})}
+    nodeIcons(n,S);
+    // частицы
+    for(var i=parts.length-1;i>=0;i--){var p=parts[i];p.t+=p.sp;
+      var s=S[p.seg];if(p.t>=1){var nx=s.next[0];
+        if(nx===-1){parts.splice(i,1);continue}
+        if(nx===-2){charge=Math.min(100,charge+1.4);parts.splice(i,1);continue}
+        if(s.next.length>1)nx=s.next[Math.random()<.6?0:1];
+        p.seg=nx;p.t=0;continue}
+      var pos=qp(s,p.t),d2=p.drift+now*.002;
+      ctx.save();ctx.shadowColor='rgba('+s.col+',.9)';ctx.shadowBlur=9;
+      ctx.fillStyle='rgba('+s.col+','+(daylight||p.seg===4?.95:.8)+')';
+      ctx.beginPath();ctx.arc(pos.x+Math.cos(d2)*1.5,pos.y+Math.sin(d2)*1.5,p.r,0,6.283);ctx.fill();ctx.restore();
+    }
+    // KPI
+    var pw=(3.1+.7*Math.sin(now/1800))*(daylight?1:.15);
+    document.getElementById('c2kpi').textContent=pw.toFixed(1).replace('.',',')+' кВт';
+    document.getElementById('c2bat').textContent=Math.round(charge)+'%';
+    document.getElementById('c2mode').innerHTML=(daylight?'день<br><b>заряд АКБ</b>':'вечер<br><b style="color:#6ea8ff">разряд АКБ</b>');
+    raf=requestAnimationFrame(frame);
+  }
+  onVisible(cv.parentElement,function(v){run=v;if(v&&!raf)raf=requestAnimationFrame(frame)});
+})();
+
+/* ---------- 03 ТЕЛЕМЕТРИЯ ---------- */
+(function(){
+  var cv=document.getElementById('c3cv'); if(!cv)return;
+  var ctx=cv.getContext('2d'),W=0,H=0,vis=false,prog=0,last=0;
+  var hours=[],k=0;for(k=0;k<=48;k++){var h=k/2;hours.push(Math.max(0,6.1*Math.exp(-Math.pow(h-13.2,2)/16)+(h>5&&h<21?Math.random()*.2:0)))}
+  var gen=3.42,akb=78,eco=214;
+  function resize(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);draw(performance.now())}
+  function draw(now){
+    ctx.clearRect(0,0,W,H);
+    var pad={l:26,r:8,t:6,b:16},w=W-pad.l-pad.r,h=H-pad.t-pad.b;
+    ctx.strokeStyle='#1a2634';ctx.setLineDash([3,4]);ctx.lineWidth=1;
+    [0,3,6].forEach(function(v){var y=pad.t+h-(v/7)*h;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();
+      ctx.setLineDash([]);ctx.font='8px ui-monospace';ctx.fillStyle='#5b6b7d';ctx.fillText(v,pad.l-14,y+3);ctx.setLineDash([3,4])});
+    ctx.setLineDash([]);
+    ['00','06','12','18','24'].forEach(function(lb,i){ctx.fillStyle='#5b6b7d';ctx.fillText(lb,pad.l+(w*i/4)-6,H-4)});
+    var n=Math.max(2,Math.floor(48*Math.min(1,prog)));
+    ctx.beginPath();
+    for(var i=0;i<=n;i++){var x=pad.l+w*i/48,y=pad.t+h-(hours[i]/7)*h;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}
+    ctx.strokeStyle='#ffb020';ctx.lineWidth=1.8;ctx.stroke();
+    ctx.lineTo(pad.l+w*n,pad.t+h);ctx.lineTo(pad.l,pad.t+h);ctx.closePath();
+    var g=ctx.createLinearGradient(0,pad.t,0,pad.t+h);g.addColorStop(0,'rgba(255,176,32,.30)');g.addColorStop(1,'rgba(255,176,32,0)');
+    ctx.fillStyle=g;ctx.fill();
+    if(prog>=1){var lx=pad.l+w,ly=pad.t+h-(hours[48]/7)*h,pu=.5+.5*Math.sin(now/300);
+      ctx.fillStyle='rgba(51,255,153,'+(.5+pu*.4)+')';ctx.beginPath();ctx.arc(lx-2,ly,3+pu*1.5,0,6.283);ctx.fill()}
+  }
+  resize();window.addEventListener('resize',resize);
+  function tick(now){if(vis){if(prog<1)prog+=.014;draw(now)}requestAnimationFrame(tick)}
+  requestAnimationFrame(tick);
+  onVisible(cv,function(v){vis=v});
+  setInterval(function(){if(!vis)return;
+    gen=Math.max(.2,Math.min(6.4,gen+(Math.random()-.5)*.7));
+    akb=Math.max(18,Math.min(96,akb+(Math.random()-.45)*1.6));eco+=Math.round(Math.random()*7);
+    document.getElementById('c3gen').textContent=gen.toFixed(2).replace('.',',');
+    document.getElementById('c3akb').textContent=Math.round(akb);
+    document.getElementById('c3eco').textContent=eco;
+  },1600);
+  var msgs=[['ИНВЕРТОР','режим MPPT · КПД 96,8%','ok'],['СЕТЬ','замер частоты 50,02 Гц','ok'],['АКБ','баланс ячеек Δ 18 мВ','ok'],['ТАРИФ','ночь 2,31 ₽ до 07:00','wr'],['ИНВЕРТОР','пик дня 6,1 кВт в 11:40','ok'],['АКБ','DoD 22% — норма','ok'],['ЭКСПОРТ','+4,2 кВт·ч в сеть','ok'],['ЩИТ','AVR: стабилизация 229 В','ok']];
+  var log=document.getElementById('c3log'),mi=0;
+  function addLog(){if(!vis||!log)return;var m=msgs[mi++%msgs.length],d=new Date();
+    var div=document.createElement('div');
+    div.innerHTML='<span class="t">'+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+'</span> · '+m[0]+' · <span class="'+(m[2]==='ok'?'ok':'wr')+'">'+m[1]+'</span>';
+    log.appendChild(div);while(log.children.length>4)log.removeChild(log.firstChild)}
+  for(var j=0;j<3;j++)addLog();
+  setInterval(addLog,2400);
+})();
+
+/* ---------- 04 КОНФИГУРАТОР ---------- */
+(function(){
+  var svg=document.getElementById('c4svg'); if(!svg)return;
+  var NS='http://www.w3.org/2000/svg',g=document.getElementById('c4panels');
+  var rows=[{y:155,n:8},{y:129,n:6},{y:103,n:3}],pw=28,phh=20,gap=5,panels=[];
+  rows.forEach(function(r){var w=r.n*pw+(r.n-1)*gap,x0=290-w/2;
+    for(var i=0;i<r.n;i++){var rect=document.createElementNS(NS,'rect');
+      rect.setAttribute('x',x0+i*(pw+gap));rect.setAttribute('y',r.y);rect.setAttribute('width',pw);rect.setAttribute('height',phh);rect.setAttribute('rx',1.5);
+      rect.setAttribute('class','panel');g.appendChild(rect);panels.push(rect)}});
+  var range=document.getElementById('c4range'),akb=document.getElementById('c4akb'),inv=document.getElementById('c4inv');
+  var battG=document.getElementById('c4batt'),bfill=document.getElementById('c4bfill');
+  var state={akb:false,inv:false};
+  [akb,inv].forEach(function(t,key){t.addEventListener('click',function(){
+    state[key?'inv':'akb']=!state[key?'inv':'akb'];t.classList.toggle('on');update()})});
+  range.addEventListener('input',update);
+  function update(){
+    var kw=parseFloat(range.value),n=Math.round(kw*2),shown=Math.min(n,17);
+    range.style.setProperty('--p',((kw-2)/8*100)+'%');
+    panels.forEach(function(p,i){p.classList.toggle('on',i<shown);p.classList.toggle('hot',i<shown&&shown===17)});
+    document.getElementById('c4kw').textContent=('0'+kw.toFixed(1)).replace('0','').replace(',0','');
+    document.getElementById('c4kw').textContent=kw%1?kw.toFixed(1).replace('.',','):kw;
+    document.getElementById('c4ph').textContent=n;document.getElementById('c4pn').textContent=shown+(n>17?'+':'');
+    document.getElementById('c4m2').textContent=fmt(kw*4.8);
+    document.getElementById('c4gen').textContent=fmt(kw*980);
+    document.getElementById('c4cov').textContent=Math.min(96,Math.round(kw*13.6));
+    battG.style.opacity=state.akb?1:0;
+    if(state.akb){bfill.setAttribute('height','12.5');bfill.setAttribute('y','248.5')}
+    var price=kw*93+(state.akb?118:0)+(state.inv?42:0);
+    document.getElementById('c4price').textContent=fmt(price*1000)+' ₽';
+    document.getElementById('c4sub').textContent=fmt(kw*4.8)+' м² кровли · '+fmt(kw*980)+' кВт·ч/год'+(n>17?' · +каркас на участке':(state.akb?' · резерв 12 ч':''));
+  }
+  update();
+})();
+
+/* ---------- 06 ИЗОИНТЕРФЕЙС ---------- */
+(function(){
+  var dot=document.getElementById('c6dot'); if(!dot)return;
+  var ray=document.getElementById('c6ray'),tl=document.getElementById('c6time'),svgSun=document.getElementById('c6sun');
+  var P0={x:70,y:200},C={x:300,y:40},P2={x:530,y:200},t=0,vis=false,last=0;
+  function qp(tt){var u=1-tt;return{x:u*u*P0.x+2*u*tt*C.x+tt*tt*P2.x,y:u*u*P0.y+2*u*tt*C.y+tt*tt*P2.y}}
+  function loop(now){if(vis){if(!last)last=now;var dt=(now-last)/1000;last=now;t+=dt/12;if(t>1){t=0}
+      var p=qp(t);dot.setAttribute('cx',p.x);dot.setAttribute('cy',p.y);
+      ray.setAttribute('x1',p.x);ray.setAttribute('y1',p.y);ray.setAttribute('x2',300);ray.setAttribute('y2',190);
+      var hour=6+t*12,hh=Math.floor(hour),mm=Math.floor((hour-hh)*60);
+      var alt=Math.max(0,Math.round((200-p.y)*.42));
+      tl.textContent=String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+' · высота '+alt+'°'}
+    requestAnimationFrame(loop)}
+  requestAnimationFrame(loop);
+  onVisible(svgSun,function(v){vis=v;if(!v)last=0});
+  // тепловая карта
+  var heat=document.getElementById('c6heat'); if(!heat)return;
+  var NS='http://www.w3.org/2000/svg';
+  var months=['Я','Ф','М','А','М','И','И','А','С','О','Н','Д'];
+  var psh=[1.2,2.1,3.4,4.6,5.8,6.3,6.1,5.2,3.9,2.4,1.4,1.0];
+  for(var m=0;m<12;m++){
+    for(var h=5;h<=21;h++){
+      var v=psh[m]*Math.exp(-Math.pow(h-13,2)/16),norm=v/6.5;
+      var r=document.createElementNS(NS,'rect');
+      r.setAttribute('x',30+m*45+2);r.setAttribute('y',16+(h-5)*7.5);
+      r.setAttribute('width',41);r.setAttribute('height',6);
+      r.setAttribute('fill','rgba(255,176,32,'+(.06+.94*norm).toFixed(2)+')');
+      r.setAttribute('class','hm-cell');r.style.setProperty('--d',((m*17+h-5)*6)+'ms');
+      r.setAttribute('title',months[m]+': '+h+':00 — '+(v*.55).toFixed(2)+' кВт·ч');
+      heat.appendChild(r);
+    }
+    var tx=document.createElementNS(NS,'text');tx.setAttribute('x',30+m*45+22);tx.setAttribute('y',162);
+    tx.setAttribute('class','axis');tx.setAttribute('text-anchor','middle');tx.textContent=months[m];heat.appendChild(tx);
+  }
+  [6,9,12,15,18].forEach(function(hb){var ty=document.createElementNS(NS,'text');
+    ty.setAttribute('x',24);ty.setAttribute('y',20+(hb-5)*7.5+5);ty.setAttribute('class','axis');ty.textContent=hb;heat.appendChild(ty)});
+})();
+
+/* ---------- 07 3D-УСАДЬБА ---------- */
+(function(){
+  var cv=document.getElementById('c7cv'); if(!cv)return;
+  var ctx=cv.getContext('2d'),W=0,H=0,vis=false,yaw=3.64,pitch=.44,drag=false,lx=0,ly=0,idle=0;
+  function resize(){var r=cv.parentElement.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0)}
+  resize();window.addEventListener('resize',resize);
+  // геометрия: дом 4×5 м, конёк вдоль X, южный скат с панелями
+  function P(x,y,z){return{x:x,y:y,z:z}}
+  function quad(pts,base,nx,ny,nz,stroke){return{pts:pts,base:base,n:{x:nx,y:ny,z:nz},stroke:stroke}}
+  var L={x:.28,y:.85,z:.45},ln=Math.sqrt(L.x*L.x+L.y*L.y+L.z*L.z);L={x:L.x/ln,y:L.y/ln,z:L.z/ln};
+  var quads=[];
+  var wall='#3c4d68',wallD='#2b384e',roof='#202d45',gable='#2a3648';
+  quads.push(quad([P(-2,0,2.5),P(2,0,2.5),P(2,2.6,2.5),P(-2,2.6,2.5)],wall,0,0,1));            // юг стена
+  quads.push(quad([P(-2,0,-2.5),P(-2,2.6,-2.5),P(2,2.6,-2.5),P(2,0,-2.5)],wallD,0,0,-1));        // север
+  quads.push(quad([P(2,0,2.5),P(2,0,-2.5),P(2,2.6,-2.5),P(2,2.6,2.5)],'#33425c',1,0,0));         // восток
+  quads.push(quad([P(-2,0,-2.5),P(-2,0,2.5),P(-2,2.6,2.5),P(-2,2.6,-2.5)],wallD,-1,0,0));        // запад
+  quads.push(quad([P(-2,2.6,2.5),P(2,2.6,2.5),P(2,4,0),P(-2,4,0)],roof,0,.87,.49));              // южный скат
+  quads.push(quad([P(-2,2.6,-2.5),P(-2,4,0),P(2,4,0),P(2,2.6,-2.5)],'#182338',0,.87,-.49));      // северный скат
+  quads.push({pts:[P(2,2.6,2.5),P(2,4,0),P(2,2.6,-2.5)],base:gable,n:{x:1,y:0,z:0}});
+  quads.push({pts:[P(-2,2.6,-2.5),P(-2,4,0),P(-2,2.6,2.5)],base:gable,n:{x:-1,y:0,z:0}});
+  quads.push(quad([P(.7,0,2.51),P(1.5,0,2.51),P(1.5,2.05,2.51),P(.7,2.05,2.51)],'#151d2c',0,0,1)); // дверь
+  // панели на южном скате: 4 колонки × 2 ряда
+  var sD={x:0,y:.4885,z:-.8725},nrm={x:0,y:.8725,z:.4885};
+  function onSlope(u,v,off){return P(u,2.6+sD.y*v+ nrm.y*off,2.5+sD.z*v+nrm.z*off)}
+  var pcs=[];
+  for(var c=0;c<4;c++)for(var rw=0;rw<2;rw++){
+    var u=-1.55+c*.79+.395,v=.5+rw*1.25,hw=.33,hv=.55,off=.12;
+    pcs.push(quad([onSlope(u-hw,v,off),onSlope(u+hw,v,off),onSlope(u+hw,v+hv,off),onSlope(u-hw,v+hv,off)],'#3563b8',nrm.x,nrm.y,nrm.z,'#9cc1ff'));
+  }
+  function project(p){var cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+    var x=p.x*cy+p.z*sy,z=-p.x*sy+p.z*cy,y=p.y-1.8;
+    var y2=y*cp+z*sp,z2=z*cp-y*sp;
+    var f=Math.min(W,H)*1.5,dz=z2+9;
+    return{x:W/2+f*x/dz,y:H*.52-f*y2/dz,z:z2}}
+  function shade(hex,br){var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+    var k=.58+br*.92;
+    return 'rgb('+Math.min(255,Math.round(r*k))+','+Math.min(255,Math.round(g*k))+','+Math.min(255,Math.round(b*k))+')'}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // солнце
+    var sx=W*.82,sy=H*.17,sg=ctx.createRadialGradient(sx,sy,2,sx,sy,62);
+    sg.addColorStop(0,'rgba(255,222,140,1)');sg.addColorStop(.28,'rgba(255,176,32,.75)');sg.addColorStop(.62,'rgba(255,140,20,.22)');sg.addColorStop(1,'rgba(255,176,32,0)');
+    ctx.fillStyle=sg;ctx.beginPath();ctx.arc(sx,sy,62,0,6.283);ctx.fill();
+    ctx.strokeStyle='rgba(255,196,80,.5)';ctx.lineWidth=1.2;
+    for(var k=0;k<8;k++){var a=k/8*6.283;ctx.beginPath();ctx.moveTo(sx+Math.cos(a)*44,sy+Math.sin(a)*44);ctx.lineTo(sx+Math.cos(a)*54,sy+Math.sin(a)*54);ctx.stroke()}
+    // земля-сетка
+    ctx.strokeStyle='#242f42';ctx.lineWidth=1;
+    for(var gi=-4;gi<=4;gi++){var a=project(P(gi,0,-4)),b=project(P(gi,0,4));
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      var c2=project(P(-4,0,gi)),d2=project(P(4,0,gi));
+      ctx.beginPath();ctx.moveTo(c2.x,c2.y);ctx.lineTo(d2.x,d2.y);ctx.stroke()}
+    var all=quads.concat(pcs).map(function(q){return{q:q,z:q.pts.reduce(function(s,p){var pr=project(p);return s+pr.z},0)/q.pts.length}});
+    all.sort(function(a,b){return b.z-a.z});
+    // тень под домом
+    var sh=[P(-2.7,.015,-2.9),P(2.9,.015,-2.9),P(2.9,.015,2.9),P(-2.7,.015,2.9)].map(project);
+    ctx.beginPath();ctx.moveTo(sh[0].x,sh[0].y);for(var si=1;si<4;si++)ctx.lineTo(sh[si].x,sh[si].y);ctx.closePath();
+    ctx.fillStyle='rgba(3,6,10,.5)';ctx.fill();
+    all.forEach(function(o){var q=o.q,ps=q.pts.map(project);
+      var br=Math.max(0,q.n.x*L.x+q.n.y*L.y+q.n.z*L.z);
+      ctx.beginPath();ctx.moveTo(ps[0].x,ps[0].y);
+      for(var i=1;i<ps.length;i++)ctx.lineTo(ps[i].x,ps[i].y);
+      ctx.closePath();
+      ctx.fillStyle=shade(q.base,br);ctx.fill();
+      if(q.stroke){ctx.strokeStyle=q.stroke;ctx.lineWidth=1.4;ctx.stroke()}
+      else{ctx.strokeStyle='rgba(255,255,255,.14)';ctx.lineWidth=1;ctx.stroke()}
+      if(br>.7&&q.base==='#3563b8'){ctx.strokeStyle='rgba(255,196,90,.85)';ctx.lineWidth=1.8;ctx.stroke()}
+    });
+    var deg=Math.round(yaw*57.3)%360;
+    document.getElementById('c7yaw').textContent='YAW '+deg+'°';
+  }
+  function loop(){if(vis){if(!drag){idle++;if(idle>240)yaw+=.0012}draw()}requestAnimationFrame(loop)}
+  requestAnimationFrame(loop);
+  onVisible(cv,function(v){vis=v});
+  function down(x,y){drag=true;lx=x;ly=y;idle=0}
+  function move(x,y){if(!drag)return;yaw+=(x-lx)*.008;pitch=Math.max(.18,Math.min(1.1,pitch-(y-ly)*.006));lx=x;ly=y;idle=0}
+  cv.addEventListener('mousedown',function(e){down(e.offsetX,e.offsetY)});
+  window.addEventListener('mousemove',function(e){var r=cv.getBoundingClientRect();move(e.clientX-r.left,e.clientY-r.top)});
+  window.addEventListener('mouseup',function(){drag=false});
+  cv.addEventListener('touchstart',function(e){var t=e.touches[0],r=cv.getBoundingClientRect();down(t.clientX-r.left,t.clientY-r.top)},{passive:true});
+  cv.addEventListener('touchmove',function(e){var t=e.touches[0],r=cv.getBoundingClientRect();move(t.clientX-r.left,t.clientY-r.top)},{passive:true});
+  cv.addEventListener('touchend',function(){drag=false});
+})();
+
+/* ---------- 08 ПЛАКАТ count-up ---------- */
+(function(){
+  var targets={c8n1:1226400,c8n2:14200,c8n3:68,c8n4:9.4,c8n5:58,c8n6:25,c8n7:6000};
+  var box=document.querySelector('.c8'); if(!box)return;
+  onceVisible(box,function(){
+    var t0=performance.now();
+    function step(now){var p=Math.min(1,(now-t0)/1300),e=easeOut(p);
+      for(var id in targets){var v=targets[id]*e,el=document.getElementById(id);if(!el)continue;
+        if(id==='c8n4')el.textContent=v.toFixed(1).replace('.',',');
+        else el.textContent=fmt(v)}
+      if(p<1)requestAnimationFrame(step)}
+    requestAnimationFrame(step)});
+})();
+
+/* ---------- 09 ПРИБОРНАЯ ПАНЕЛЬ ---------- */
+(function(){
+  var svg=document.getElementById('c9ticks'); if(!svg)return;
+  var NS='http://www.w3.org/2000/svg';
+  for(var v=0;v<=100;v+=10){
+    var th=(v*1.8-90)*Math.PI/180,dx=Math.sin(th),dy=-Math.cos(th);
+    var ln=document.createElementNS(NS,'line');
+    var r1=v%25===0?92:97,r2=106;
+    ln.setAttribute('x1',150+dx*r1);ln.setAttribute('y1',145+dy*r1);
+    ln.setAttribute('x2',150+dx*r2);ln.setAttribute('y2',145+dy*r2);
+    ln.setAttribute('stroke',v>=90?'#d54500':'#8b98ab');ln.setAttribute('stroke-width',v%25===0?2:1);
+    svg.appendChild(ln);
+    if(v%25===0){var tx=document.createElementNS(NS,'text');
+      tx.setAttribute('x',150+dx*80);tx.setAttribute('y',145+dy*80+3);tx.setAttribute('text-anchor','middle');
+      tx.setAttribute('style','font:9px ui-monospace;fill:#7b8698');tx.textContent=v;svg.appendChild(tx)}
+  }
+  var slide=document.getElementById('c9slide'),needle=document.getElementById('c9needle'),arc=document.getElementById('c9arc'),
+      val=document.getElementById('c9val'),kwh=document.getElementById('c9kwh');
+  function setG(v){
+    needle.style.transform='rotate('+(v*1.8-90)+'deg)';
+    arc.setAttribute('stroke-dasharray',(v/100*345.6).toFixed(1)+' 400');
+    val.textContent=v+'%';
+    if(v<20)val.setAttribute('fill','#d54500');else if(v>90)val.setAttribute('fill','#b4832a');else val.setAttribute('fill','#1f8a5f');
+    var hrs=v/12,base=16+hrs,hh=Math.floor(base)%24,mm=Math.floor((base-Math.floor(base))*60);
+    kwh.textContent=(v/10).toFixed(1).replace('.',',')+' / 10 кВт·ч · до '+String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0');
+  }
+  slide.addEventListener('input',function(){setG(parseInt(this.value,10))});
+  setG(78);
+  ['c9sw1','c9sw2','c9sw3'].forEach(function(id){var el=document.getElementById(id);
+    el.addEventListener('click',function(){el.classList.toggle('on');syncLeds()})});
+  function syncLeds(){var on=document.querySelectorAll('.c9-switch.on').length;
+    document.querySelectorAll('.c9-led').forEach(function(l,i){l.classList.toggle('on',i<1+on)})}
+  syncLeds();
+})();
+
+/* ---------- 10 ДВУХРЕЖИМНАЯ ---------- */
+(function(){
+  var seg=document.getElementById('c10seg'),calc=document.getElementById('c10calc'); if(!seg)return;
+  seg.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click',function(){
+      seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on')});
+      b.classList.add('on');
+      calc.classList.toggle('lit',b.dataset.m==='lit');
+    })});
+})();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<style>
+/* ============ C1 «Чертёж.ГОСТ» ============ */
+.c1-paper{background:#f5f4ee;height:100%;min-height:360px;position:relative;
+  background-image:linear-gradient(#2c3e5012 1px,transparent 1px),linear-gradient(90deg,#2c3e5012 1px,transparent 1px);
+  background-size:10px 10px}
+.c1-frame{position:absolute;inset:12px;border:1.6px solid #26313f;pointer-events:none}
+.c1-frame::after{content:"";position:absolute;inset:4px;border:.8px solid #26313f}
+.c1-svg{position:absolute;inset:0;width:100%;height:100%}
+.c1-svg .ink{stroke:#26313f;fill:none;stroke-width:1.7;stroke-linecap:round}
+.c1-svg .thin{stroke:#26313faa;fill:none;stroke-width:.9}
+.c1-svg .dim{stroke:#d64520;fill:none;stroke-width:1.1}
+.c1-svg text{font-family:var(--mono);font-size:9.5px;fill:#26313f}
+.c1-svg .lbl-red{fill:#d64520}
+.c1-draw{stroke-dasharray:var(--len,600);stroke-dashoffset:var(--len,600);animation:c1draw 1.8s cubic-bezier(.4,0,.2,1) forwards;animation-delay:var(--d,0s)}
+@keyframes c1draw{to{stroke-dashoffset:0}}
+.c1-stamp{position:absolute;right:22px;bottom:22px;border:1.4px solid #26313f;color:#26313f;font-family:var(--mono);font-size:9px;background:#f5f4ee;padding:0}
+.c1-stamp table{border-collapse:collapse}
+.c1-stamp td{border:.9px solid #26313f;padding:3px 8px;white-space:nowrap}
+.c1-stamp td b{font-size:10px}
+
+/* ============ C2 «Энергопоток» ============ */
+.c2-stage{position:relative;height:430px;background:#05070d;overflow:hidden}
+.c2-stage canvas{width:100%;height:100%;display:block}
+.c2-cap{position:absolute;top:14px;left:16px;font-family:var(--mono);font-size:11px;color:#5b6578;letter-spacing:.05em}
+.c2-cap b{color:#ffb020;font-weight:600}
+.c2-kpi{position:absolute;right:16px;top:14px;font-family:var(--mono);font-size:11px;color:#5b657788;text-align:right}
+.c2-kpi b{display:block;color:#2dd4a8;font-size:15px;font-weight:600}
+.c2-kpi.warn b{color:#ffb020}
+
+/* ============ C3 «Центр управления» ============ */
+.c3{background:#0a0e14;height:100%;min-height:400px;padding:16px;font-family:var(--mono);color:#9fb0c3;display:grid;grid-template-rows:auto 1fr auto;gap:12px}
+.c3-top{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;letter-spacing:.08em;color:#5b6b7d}
+.c3-top .live{display:inline-flex;gap:7px;align-items:center;color:#33ff99}
+.c3-top .live i{width:8px;height:8px;border-radius:50%;background:#33ff99;box-shadow:0 0 9px #33ff99;animation:c3blink 1.6s infinite}
+@keyframes c3blink{50%{opacity:.35}}
+.c3-mid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px;min-height:0}
+.c3-kpi{border:1px solid #1a2634;background:#0d1420;border-radius:10px;padding:11px 13px;display:flex;flex-direction:column;justify-content:space-between}
+.c3-kpi .k{font-size:9.5px;letter-spacing:.09em;color:#5b6b7d;text-transform:uppercase}
+.c3-kpi .v{font-size:23px;font-weight:600;color:#e8f1f8;line-height:1.15}
+.c3-kpi .v.u{font-size:12px;color:#5b6b7d;margin-left:3px}
+.c3-kpi .t{font-size:10px;color:#33ff99}
+.c3-kpi.amber .v{color:#ffb020}.c3-kpi.amber .t{color:#ffb02088}
+.c3-kpi.teal .v{color:#2dd4a8}.c3-kpi.teal .t{color:#2dd4a888}
+.c3-chart{border:1px solid #1a2634;background:#0d1420;border-radius:10px;padding:10px 13px;grid-column:1/-1;display:flex;flex-direction:column}
+.c3-chart .k{font-size:9.5px;letter-spacing:.09em;color:#5b6b7d;text-transform:uppercase;margin-bottom:6px}
+.c3-chart canvas{width:100%;flex:1;min-height:90px}
+.c3-chart{min-height:150px}
+.c3-log{border:1px solid #1a2634;background:#0d1420;border-radius:10px;padding:9px 12px;font-size:10.5px;color:#748799;height:86px;overflow:hidden}
+.c3-log div{padding:2px 0;border-bottom:1px dashed #14202e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c3-log .t{color:#5b6b7d}
+.c3-log .ok{color:#33ff99}.c3-log .wr{color:#ffb020}
+
+/* ============ C4 «Живой конфигуратор» ============ */
+.c4{height:100%;min-height:430px;background:#101520;display:grid;grid-template-columns:225px 1fr}
+@media(max-width:720px){.c4{grid-template-columns:1fr}.c4-side{max-height:190px}}
+.c4-side{padding:16px;border-right:1px solid #1d2735;display:flex;flex-direction:column;gap:13px;overflow-y:auto}
+.c4-side label{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#6b7889}
+.c4-range{appearance:none;-webkit-appearance:none;width:100%;height:6px;border-radius:99px;background:linear-gradient(90deg,#ffb020 var(--p,30%),#242e3d var(--p,30%));outline:none;cursor:pointer}
+.c4-range::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:5px solid #ffb020;box-shadow:0 2px 10px rgba(255,176,32,.5);cursor:grab}
+.c4-power{display:flex;justify-content:space-between;align-items:baseline}
+.c4-power b{font-family:var(--mono);font-size:26px;color:#ffb020}
+.c4-power span{font-size:11px;color:#6b7889}
+.c4-toggle{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#c9ced6;background:#161d2a;border:1px solid #242e3d;border-radius:11px;padding:9px 12px;cursor:pointer;user-select:none}
+.c4-toggle .sw{width:36px;height:20px;border-radius:99px;background:#2a3547;position:relative;transition:.25s;flex-shrink:0}
+.c4-toggle .sw::after{content:"";position:absolute;top:2.5px;left:3px;width:15px;height:15px;border-radius:50%;background:#8b93a1;transition:.25s}
+.c4-toggle.on .sw{background:rgba(255,176,32,.35)}
+.c4-toggle.on .sw::after{left:18px;background:#ffb020}
+.c4-total{margin-top:auto;background:#151d29;border:1px dashed #33415a;border-radius:12px;padding:11px}
+.c4-total .k{font-size:10px;color:#6b7889;letter-spacing:.07em;text-transform:uppercase}
+.c4-total .v{font-size:19px;font-weight:700;background:linear-gradient(100deg,#ffb020,#ff6a00);-webkit-background-clip:text;background-clip:text;color:transparent}
+.c4-main{position:relative;padding:16px;display:flex;flex-direction:column}
+.c4-main svg{width:100%;flex:1}
+.c4-row{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:#6b7889}
+.c4-row b{color:#e8eaed}
+
+/* ============ C5 «Фотореализм» ============ */
+.c5{background:#faf9f6;color:#1a1a1a;height:100%;min-height:400px;display:flex;flex-direction:column}
+.c5-hero{position:relative;height:235px;flex-shrink:0}
+.c5-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.c5-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,20,.05) 30%,rgba(10,14,20,.82) 100%)}
+.c5-hero-txt{position:absolute;left:26px;bottom:18px;z-index:2;max-width:520px;color:#fff}
+.c5-hero-txt .rub{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#ffb020;font-weight:700}
+.c5-hero-txt h3{font-family:var(--serif);font-size:clamp(19px,2.3vw,26px);font-weight:600;line-height:1.2;margin:6px 0 4px}
+.c5-hero-txt p{font-size:12.5px;opacity:.85}
+.c5-btn{position:absolute;right:24px;bottom:18px;z-index:2;background:#ff6a00;color:#fff;font-size:13px;font-weight:650;padding:10px 20px;border-radius:99px;box-shadow:0 8px 24px -8px rgba(255,106,0,.55)}
+.c5-body{padding:20px 24px 22px}
+.c5-body h4{font-family:var(--serif);font-size:18px;color:#18120a}
+.c5-body .lead{font-size:13px;color:#5c554a;margin-top:5px;max-width:560px}
+.c5-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+@media(max-width:640px){.c5-cards{grid-template-columns:1fr}}
+.c5-card{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/10;background:#ddd}
+.c5-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1);display:block}
+.c5-card:hover img{transform:scale(1.07)}
+.c5-card .ov{position:absolute;inset:auto 0 0 0;padding:26px 12px 10px;background:linear-gradient(180deg,transparent,rgba(10,12,16,.85));color:#fff}
+.c5-card .ov b{display:block;font-size:12.5px}
+.c5-card .ov span{font-size:10.5px;opacity:.75}
+.c5-card .m{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.92);color:#7a3d00;font-size:10px;font-weight:700;padding:4px 9px;border-radius:99px}
+
+/* ============ C6 «Изоинтерфейс» ============ */
+.c6{background:#0b1017;height:100%;min-height:430px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.c6 h5{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:#41506b;text-transform:uppercase}
+.c6 svg{width:100%;flex:1;min-height:0}
+.c6 .axis{font-family:var(--mono);font-size:9px;fill:#41506b}
+.c6 .arc{fill:none;stroke-width:1.6;opacity:.9}
+.c6 .sunray{stroke:#ffb02066;stroke-width:1.4}
+.c6 .hm-cell{animation:c6pop .5s ease-out both;animation-delay:var(--d)}
+@keyframes c6pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+
+/* ============ C7 «3D-усадьба» ============ */
+.c7{position:relative;height:460px;background:radial-gradient(700px 320px at 60% 20%,#1a2233,#0b0f16 75%);overflow:hidden}
+.c7 canvas{width:100%;height:100%;display:block;cursor:grab}
+.c7-hud{position:absolute;top:14px;left:16px;font-family:var(--mono);font-size:10.5px;color:#5b6578;line-height:1.7}
+.c7-hud b{color:#ffb020}
+.c7-tag{position:absolute;top:14px;right:16px;font-size:10.5px;color:#5b6578;border:1px solid #263246;border-radius:99px;padding:5px 11px;background:rgba(11,15,22,.7)}
+
+/* ============ C8 «Плакат» ============ */
+.c8{background:#fafaf7;color:#111;height:100%;min-height:400px;display:grid;grid-template-rows:auto 1fr auto}
+.c8-head{display:flex;justify-content:space-between;padding:18px 26px 0;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#999}
+.c8-main{display:grid;grid-template-columns:1.25fr 1fr;align-items:center;padding:0 26px}
+@media(max-width:640px){.c8-main{grid-template-columns:1fr}}
+.c8-big{font-size:clamp(44px,7.5vw,88px);font-weight:800;letter-spacing:-.045em;line-height:.95;font-variant-numeric:tabular-nums}
+.c8-big .u{font-size:.32em;font-weight:600;color:#888;letter-spacing:0;margin-left:6px}
+.c8-big .acc{color:#e30613}
+.c8-big-cap{margin-top:12px;font-size:13px;color:#555;max-width:420px;border-left:4px solid #e30613;padding-left:12px}
+.c8-right{padding-left:26px;border-left:1px solid #e5e2da}
+@media(max-width:640px){.c8-right{padding-left:0;border-left:none;margin-top:18px}}
+.c8-right .row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid #e5e2da}
+.c8-right .row .k{font-size:12px;color:#777}
+.c8-right .row .v{font-family:var(--mono);font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.c8-foot{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid #111}
+.c8-foot div{padding:13px 26px;border-right:1px solid #e5e2da}
+.c8-foot div:last-child{border-right:none}
+.c8-foot b{display:block;font-size:21px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.c8-foot span{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#999}
+
+/* ============ C9 «Приборная панель» ============ */
+.c9{background:#e0e5ec;height:100%;min-height:400px;padding:22px;display:grid;grid-template-columns:1.2fr .8fr;gap:16px;color:#2a3547}
+@media(max-width:640px){.c9{grid-template-columns:1fr}}
+.c9-gauge,.c9-ctrl{background:#e0e5ec;border-radius:22px;box-shadow:9px 9px 18px #c2c9d4,-9px -9px 18px #ffffff;padding:18px}
+.c9-gauge svg{width:100%}
+.c9-ctrl{display:flex;flex-direction:column;gap:14px}
+.c9-knob{display:flex;flex-direction:column;gap:8px}
+.c9-knob .val{font-family:var(--mono);font-size:15px;color:#1f8a5f;font-weight:700;text-align:center}
+.c9-knob input{appearance:none;-webkit-appearance:none;width:100%;height:9px;border-radius:99px;background:#cdd4de;box-shadow:inset 2px 2px 5px #b6bec9,inset -2px -2px 5px #fff;outline:none}
+.c9-knob input::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#e0e5ec;box-shadow:3px 3px 7px #b6bec9,-3px -3px 7px #ffffff;border:2px solid #d54500;cursor:grab}
+.c9-knob input::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#e0e5ec;box-shadow:3px 3px 7px #b6bec9,-3px -3px 7px #fff;border:2px solid #d54500;cursor:grab}
+.c9-knob label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7b8698;text-align:center;font-weight:700}
+.c9-switch{display:flex;flex-direction:column;gap:10px}
+.c9-sw{display:flex;align-items:center;justify-content:space-between;background:#e6ebf2;border-radius:14px;padding:10px 14px;box-shadow:inset 3px 3px 6px #c6cdd8,inset -3px -3px 6px #fff;font-size:12.5px;font-weight:600;color:#3a4658;cursor:pointer;user-select:none}
+.c9-sw .tg{width:44px;height:23px;border-radius:99px;background:#c8cfd9;box-shadow:inset 2px 2px 4px #b0b8c4;position:relative;transition:.3s;flex-shrink:0}
+.c9-sw .tg::after{content:"";position:absolute;top:2.5px;left:3px;width:18px;height:18px;border-radius:50%;background:linear-gradient(145deg,#fff,#dce2ea);box-shadow:1px 2px 4px #9aa3b0;transition:.3s}
+.c9-sw.on .tg{background:linear-gradient(90deg,#2fbf8f,#37d69c);box-shadow:inset 2px 2px 5px rgba(0,120,80,.35)}
+.c9-sw.on .tg::after{left:23px}
+.c9-leds{display:flex;gap:9px;justify-content:center;padding:10px;background:#d3d9e2;border-radius:14px;box-shadow:inset 3px 3px 7px #bfc7d2,inset -3px -3px 7px #ffffff}
+.c9-led{width:13px;height:13px;border-radius:50%;background:#b7c0cb;transition:.3s}
+.c9-led.on{background:#2fd634;box-shadow:0 0 10px #2fd634aa,0 0 3px #2fd634}
+.c9-note{font-size:11px;color:#7b8698;text-align:center}
+
+/* ============ C10 «Двухрежимная» ============ */
+.c10{background:#0d1117;height:100%;min-height:430px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.c10-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.c10-bar .t{font-size:12px;color:#6b7889}
+.c10-seg{display:flex;background:#161d29;border:1px solid #242e3d;border-radius:99px;padding:3px}
+.c10-seg button{border:none;background:transparent;color:#8b93a1;font-size:12px;padding:6px 14px;border-radius:99px;cursor:pointer;transition:.2s;font-weight:600}
+.c10-seg button.on{background:linear-gradient(100deg,#ffb020,#ff6a00);color:#1b1204}
+.c10-panes{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0}
+@media(max-width:680px){.c10-panes{grid-template-columns:1fr}}
+.c10-pane{border-radius:16px;overflow:hidden;position:relative;border:1px solid transparent}
+.c10-pane .pl{position:absolute;top:10px;left:14px;z-index:3;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:99px;background:rgba(127,127,127,.14);backdrop-filter:blur(4px)}
+.c10-light{background:#fbfaf7;color:#22303f;transition:background .45s,color .45s}
+.c10-light .inner{padding:38px 20px 18px}
+.c10-light h4{font-family:var(--serif);font-size:17px;font-weight:650;color:#18120a;transition:color .45s}
+.c10-light p{font-size:12.5px;color:#5c554a;margin-top:6px;line-height:1.6;transition:color .45s}
+.c10-light table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px}
+.c10-light th{text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:#8a8175;padding:6px 8px;border-bottom:1.5px solid #d9d2c5;transition:.45s}
+.c10-light td{padding:7px 8px;border-bottom:1px solid #e7e1d6;transition:.45s}
+.c10-light td b{font-family:var(--mono);color:#b45309;transition:color .45s}
+.c10-light a{color:#b45309;font-weight:650;transition:color .45s}
+.c10-calc{background:#12161d;color:#e8eaed;transition:background .45s,color .45s}
+.c10-calc.lit{background:#fbfaf7;color:#22303f}
+.c10-calc .inner{padding:38px 20px 18px;display:flex;flex-direction:column;gap:11px}
+.c10-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.c10-kpi{border:1px solid #262d3a;background:#161b24;border-radius:10px;padding:9px 11px;transition:.45s}
+.c10-calc.lit .c10-kpi{border-color:#d9d2c5;background:#fff}
+.c10-kpi .k{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#8b93a1;transition:.45s}
+.c10-calc.lit .c10-kpi .k{color:#8a8175}
+.c10-kpi .v{font-family:var(--mono);font-size:16px;font-weight:700;color:#ffb020;margin-top:2px;transition:.45s}
+.c10-calc.lit .c10-kpi .v{color:#b45309}
+.c10-bars{display:flex;align-items:flex-end;gap:7px;height:92px;border-bottom:1px solid #262d3a;padding:0 4px;transition:.45s}
+.c10-calc.lit .c10-bars{border-color:#d9d2c5}
+.c10-bars i{flex:1;background:linear-gradient(180deg,#ffb020,#ff6a00);border-radius:4px 4px 0 0;height:var(--h,30%);transition:height .8s cubic-bezier(.22,1,.36,1),background .45s}
+.c10-calc.lit .c10-bars i{background:linear-gradient(180deg,#f59e0b,#d97706)}
+.c10-months{display:flex;gap:7px;padding:5px 4px 0;font-family:var(--mono);font-size:8.5px;color:#5b6578}
+.c10-months span{flex:1;text-align:center}
+</style>
+</head>
+<body>

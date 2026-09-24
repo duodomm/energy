@@ -1,0 +1,211 @@
+<style>
+.c4svg .wall{fill:#1c2736;stroke:#2c3a4e;stroke-width:1.2}
+.c4svg .roof{fill:#141d2a;stroke:#2c3a4e;stroke-width:1.2}
+.c4svg .door{fill:#0d1420;stroke:#2c3a4e}
+.c4svg .win{fill:#0d1420;stroke:#2c3a4e}
+.c4svg .ground{stroke:#2c3a4e;stroke-width:1.5}
+.c4svg .panel{fill:#16233c;stroke:#2e4468;stroke-width:1;opacity:.25;transform:scale(.6);transform-origin:center;transition:opacity .45s,transform .45s cubic-bezier(.34,1.56,.64,1)}
+.c4svg .panel.on{opacity:1;transform:scale(1);fill:#24457a;stroke:#5b8def}
+.c4svg .panel.on.hot{stroke:#ffb020;fill:#2d4a86}
+.c4svg .batt{fill:#101724;stroke:#2c3a4e;stroke-width:1.2}
+.c4svg .bfill{fill:#2dd4a8;transition:height .5s}
+.c4svg text{font-family:ui-monospace,Menlo,monospace;fill:#6b7889;font-size:9px}
+.c4svg .cap{fill:#8b93a1;font-size:10px}
+.c4-flash{animation:c4fl .35s}
+@keyframes c4fl{50%{color:#fff}}
+.c6 .sp-arc{fill:none;stroke:#41506b;stroke-width:1.4}
+.c6 .sp-lbl{font-family:ui-monospace,Menlo,monospace;font-size:8.5px;fill:#41506b}
+.c6 .sun-dot{fill:#ffb020;filter:drop-shadow(0 0 6px rgba(255,176,32,.9))}
+</style>
+
+<!-- ======================= 04 ЖИВОЙ КОНФИГУРАТОР ======================= -->
+<section class="concept wrap" id="k4">
+  <div class="concept-head">
+    <span class="cnum">04</span>
+    <div><h2>«Живой конфигуратор»</h2><p class="ctag">Слайдер мощности — и панели реально растут на крыше. Калькулятор перестаёт быть формой: пользователь видит свою станцию</p></div>
+    <span class="badge badge-green">Рекомендовано ★</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c4">
+        <div class="c4-side">
+          <label>Мощность станции</label>
+          <div class="c4-power"><b id="c4kw">5</b><span>кВт · <span id="c4ph">10</span> панелей</span></div>
+          <input type="range" min="2" max="10" step="0.5" value="5" class="c4-range" id="c4range">
+          <div class="c4-toggle" id="c4akb"><span>АКБ LiFePO4 10 кВт·ч</span><span class="sw"></span></div>
+          <div class="c4-toggle" id="c4inv"><span>Гибридный инвертор</span><span class="sw"></span></div>
+          <div class="c4-total">
+            <div class="k">Смета «под ключ», от</div>
+            <div class="v" id="c4price">585 000 ₽</div>
+            <div class="k" id="c4sub" style="margin-top:4px">24 м² кровли · 4900 кВт·ч/год</div>
+          </div>
+        </div>
+        <div class="c4-main">
+          <svg class="c4svg" viewBox="0 0 560 300" id="c4svg">
+            <path class="ground" d="M30 265H530" fill="none"/>
+            <path class="ground" d="M40 272h60M460 272h60" opacity=".4" fill="none"/>
+            <rect class="wall" x="150" y="175" width="280" height="90"/>
+            <path class="roof" d="M130 175L290 80l160 95z"/>
+            <rect class="door" x="382" y="192" width="34" height="73" rx="2"/>
+            <rect class="win" x="168" y="196" width="56" height="42" rx="2"/>
+            <path d="M196 196v42M168 217h56" stroke="#2c3a4e" fill="none"/>
+            <rect class="win" x="250" y="196" width="56" height="42" rx="2"/>
+            <path d="M278 196v42M250 217h56" stroke="#2c3a4e" fill="none"/>
+            <g id="c4panels"></g>
+            <g id="c4batt" style="opacity:0;transition:opacity .45s">
+              <rect class="batt" x="452" y="215" width="52" height="50" rx="4"/>
+              <rect class="bfill" x="456" y="245" width="44" height="16" rx="2" id="c4bfill"/>
+              <text x="452" y="207">АКБ</text>
+              <text x="452" y="278">10 кВт·ч</text>
+            </g>
+            <text class="cap" x="150" y="163">ЮЖНЫЙ СКАТ · 38°</text>
+            <text class="cap" x="452" y="196" id="c4bnote" opacity="0">LiFePO4</text>
+          </svg>
+          <div class="c4-row">
+            <span>Панелей: <b id="c4pn">10</b></span><span>Кровля: <b id="c4m2">24</b> м²</span>
+            <span>Генерация: <b id="c4gen">4 900</b> кВт·ч/год</span><span>Покрытие: <b id="c4cov">68</b>%</span>
+          </div>
+        </div>
+      </div>
+      <span class="demo-hint">Двигайте слайдер и тумблеры — SVG-схема и смета пересчитываются вживую</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#101520"></i>графит</span><span class="chip"><i style="background:#24457a"></i>панель</span><span class="chip"><i style="background:#5b8def"></i>подсветка</span><span class="chip"><i style="background:#2dd4a8"></i>АКБ</span></div>
+      <h4>Типографика</h4><div class="val">Крупная цифра мощности 26px <code>моно</code>; подписи-тех-термины у элементов схемы</div>
+      <h4>JS / TS</h4><div class="val">Управляемый SVG: React state → props панелей (тот же движок расчёта, что сейчас); в проде — <code>Framer Motion</code> layout-анимации строк сметы; панель = 2×500 Вт</div>
+      <h4>Фото</h4><div class="val">Кнопка «показать вживую» рядом со схемой → фото реального объекта из кейса (мост к концепции №5)</div>
+      <h4>Куда в проекте</h4><div class="val"><b>Шаг 3 «Панели» визарда</b> — слева форма, справа живая схема; дачный калькулятор 3 шага — весь как конфигуратор</div>
+      <h4>Плюсы</h4><ul><li class="p">Мгновенная обратная связь — «боязнь формы» исчезает</li><li class="p">Вовлечение: конфигурируешь как Tesla, а не заполняешь как налоговую</li><li class="p">Панели «переполняют» крышу → подсказка про каркас (умный продукт)</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Схема упрощает реальность: затенение, сложные крыши</li><li class="c">Нужна дисциплина: синхронизация схемы и движка расчёта</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="90" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>90</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="85" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>85</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="95" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>95</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="35" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>средний</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>5–8</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= 05 ФОТОРЕАЛИЗМ ======================= -->
+<section class="concept wrap" id="k5">
+  <div class="concept-head">
+    <span class="cnum">05</span>
+    <div><h2>«Фотореализм»</h2><p class="ctag">Журнальная вёрстка с реальными фото установок: тёплая бумага, serif-заголовки, фото как главный носитель доверия</p></div>
+    <span class="badge badge-green">Доверие + конверсия</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c5">
+        <div class="c5-hero">
+          <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/26dd2949adc6.jpg" alt="Солнечные панели на крыше частного дома" fetchpriority="high">
+          <div class="c5-hero-txt">
+            <div class="rub">Кейс · Воронежская обл.</div>
+            <h3>Дом 10 кВт: станция на скатной кровле</h3>
+            <p>84% годового потребления · гибрид с ночным тарифом · смета 1,2–1,57 млн ₽</p>
+          </div>
+          <span class="c5-btn">Смотреть смету</span>
+        </div>
+        <div class="c5-body">
+          <h4>Объекты, которые можно потрогать глазами</h4>
+          <p class="lead">Каждый кейс — фотографии этапов монтажа, смета с расшифровкой позиций и кнопка «воспроизвести в калькуляторе». Реальные фото работают лучше любых обещаний.</p>
+          <div class="c5-cards">
+            <div class="c5-card">
+              <img loading="lazy" src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/995709565d35.jpg" alt="Солнечная ферма на закате">
+              <span class="m">100 кВт</span>
+              <div class="ov"><b>Сетевая СЭС, склад МО</b><span>плоская кровля, балласт</span></div>
+            </div>
+            <div class="c5-card">
+              <img loading="lazy" src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/b71433813b25.jpg" alt="Домний накопитель энергии">
+              <span class="m">10 кВт·ч</span>
+              <div class="ov"><b>NAC LiFePO4 в котельной</b><span>резерв отключений 10 мс</span></div>
+            </div>
+            <div class="c5-card">
+              <img loading="lazy" src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/1122811a059c.jpg" alt="Инженер-монтажник устанавливает панель">
+              <span class="m">2 дня</span>
+              <div class="ov"><b>Монтаж бригадой 3 чел.</b><span>нормо-часы по справочнику</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="demo-hint">Фото — реальные (подобраны поиском); в проде: AVIF/WebP, lazy, фиксированный aspect-ratio</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#faf9f6"></i>бумага</span><span class="chip"><i style="background:#1a1a1a"></i>чернила</span><span class="chip"><i style="background:#c05621"></i>терракота</span></div>
+      <h4>Типографика</h4><div class="val">Заголовки — serif (Playfair Display / Lora), текст — гротеск; цифры метрик — терракота</div>
+      <h4>JS / TS</h4><div class="val"><code>&lt;picture&gt;</code> AVIF/WebP + <code>fetchpriority=high</code> для hero; blur-up плейсхолдеры по доминантному цвету; параллакс — GSAP на transform только</div>
+      <h4>Фото</h4><div class="val">Ключевой носитель: установки, монтаж по этапам, лица инженеров, «до/после». Для демо уже подобраны 16 фото поиска</div>
+      <h4>Куда в проекте</h4><div class="val"><b>Кейсы</b> (главный бенефициар), hero посадочных, лента «объекты» на главной, фото инженера рядом с лидформой</div>
+      <h4>Плюсы</h4><ul><li class="p">Закрывает диагнозы №5 и №9: соцдоказательства и лица</li><li class="p">Рост конверсии лидформ при фото «живых» объектов — классика CRO</li><li class="p">SEO-бонус: трафик из Яндекс.Картинок</li></ul>
+      <h4>Минусы</h4><ul><li class="c">LCP-риск: обязателен preload + AVIF, hero ≤ 120 КБ</li><li class="c">Нужны права на фото: свои съёмки или стоки (лицензии!)</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="80" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>80</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="95" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>95</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="90" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>90</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="45" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>средний</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>2–4</b> чел.-дней (с подбором и обработкой фото)</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= 06 ИЗОИНТЕРФЕЙС ======================= -->
+<section class="concept wrap" id="k6">
+  <div class="concept-head">
+    <span class="cnum">06</span>
+    <div><h2>«Изоинтерфейс»</h2><p class="ctag">Научные визуализации как дизайн: солнечный путь по сезонам, годовая тепловая карта генерации. Данные рассказывают историю сами</p></div>
+    <span class="badge badge-blue">Контент-усилитель</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c6">
+        <h5>Солнечный путь · 55° с.ш. (Москва)</h5>
+        <svg viewBox="0 0 600 225" id="c6sun">
+          <path class="sp-arc" d="M70 200Q300 -60 530 200" stroke="#ffb02055"/>
+          <path class="sp-arc" d="M70 200Q300 40 530 200" stroke="#ffb020aa"/>
+          <path class="sp-arc" d="M70 200Q300 120 530 200" stroke="#41506b"/>
+          <path d="M70 200h460" stroke="#41506b" stroke-width="1.2"/>
+          <path d="M120 200v-4M180 200v-4M240 200v-4M300 200v-4M360 200v-4M420 200v-4M480 200v-4" stroke="#41506b"/>
+          <g id="c6panel" transform="translate(300,196)">
+            <rect x="-22" y="-7" width="44" height="7" rx="1.5" fill="#24457a" stroke="#5b8def" stroke-width="1"/>
+            <path d="M-22 -7l-6-5h44l-6 5" fill="#1a2f4d" stroke="#5b8def" stroke-width="1"/>
+          </g>
+          <text class="sp-lbl" x="536" y="62">21 июн</text>
+          <text class="sp-lbl" x="536" y="128">21 мар</text>
+          <text class="sp-lbl" x="536" y="178">21 дек</text>
+          <text class="sp-lbl" x="62" y="216">В</text>
+          <text class="sp-lbl" x="524" y="216">З</text>
+          <text class="sp-lbl" x="186" y="136">9:00</text>
+          <text class="sp-lbl" x="292" y="114">12:00</text>
+          <text class="sp-lbl" x="404" y="136">15:00</text>
+          <text class="sp-lbl" x="70" y="30" style="fill:#ffb020" id="c6time">12:00 · высота 36°</text>
+          <line id="c6ray" x1="300" y1="120" x2="300" y2="192" stroke="#ffb02066" stroke-width="1.4"/>
+          <circle class="sun-dot" id="c6dot" cx="300" cy="120" r="6"/>
+        </svg>
+        <h5>Тепловая карта генерации · кВт·ч по месяцам × часам</h5>
+        <svg viewBox="0 0 600 165" id="c6heat"></svg>
+      </div>
+      <span class="demo-hint">Солнце идёт по дуге суток; heatmap «проявляется» волной — 204 ячейки, D3-паттерн</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#0b1017"></i>наука</span><span class="chip"><i style="background:#ffb020"></i>дата-инк</span><span class="chip"><i style="background:#41506b"></i>сетка</span></div>
+      <h4>Типографика</h4><div class="val">Оси и подписи — <code>моно 8–9px</code>; только данные в цвете, всё остальное серое (принцип data-ink Тафти)</div>
+      <h4>JS / TS</h4><div class="val">В проде <code>D3.js</code> (scales, дуги, полярные координаты) с tree-shaking; или этот hand-rolled SVG — 80 строк, ноль зависимостей</div>
+      <h4>Фото</h4><div class="val">Не нужны — данные заменяют иллюстрации; опционально фото-подложка региона с 8% затемнением</div>
+      <h4>Куда в проекте</h4><div class="val">Статья «Ориентация и угол наклона» (дуга объясняет лучше текста), карточка региона (годовая heatmap PSH), экран результата (сравнение месяцев)</div>
+      <h4>Плюсы</h4><ul><li class="p">«Научная красота» усиливает позиционирование инженерного бренда</li><li class="p">Каждая визуализация — вечнозелёный SEO-шерабельный ассет</li><li class="p">Показывает экспертизу: никто из конкурентов не визуализирует PSH</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Не эмоциональный — нужен редакторский контекст</li><li class="c">Без подписей-выводов графики останутся «для гиков»</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="70" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>70</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="60" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>60</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="55" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>55</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="20" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>низкий</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>4–6</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>

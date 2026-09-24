@@ -1,0 +1,210 @@
+<style>
+.c10-bars i{animation:c10grow .9s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i,0)*.05s)}
+@keyframes c10grow{from{height:3%}}
+</style>
+
+<!-- ======================= 09 ПРИБОРНАЯ ПАНЕЛЬ ======================= -->
+<section class="concept wrap" id="k9">
+  <div class="concept-head">
+    <span class="cnum">09</span>
+    <div><h2>«Приборная панель»</h2><p class="ctag">Интерфейс как физическое оборудование: аналоговая шкала АКБ, тактильные тумблеры, LED-индикаторы, неоморфные поверхности</p></div>
+    <span class="badge badge-blue">Ниша · аксессуар</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c9">
+        <div class="c9-gauge">
+          <svg viewBox="0 0 300 178">
+            <text x="150" y="22" text-anchor="middle" style="font:700 10px ui-monospace;letter-spacing:.14em" fill="#7b8698">ЗАРЯД АКБ · LiFePO4</text>
+            <path d="M40 145A110 110 0 0 1 260 145" fill="none" stroke="#cdd4de" stroke-width="13" stroke-linecap="round"/>
+            <path id="c9arc" d="M40 145A110 110 0 0 1 260 145" fill="none" stroke="#2fbf8f" stroke-width="13" stroke-linecap="round" stroke-dasharray="269 400" style="transition:stroke-dasharray .5s"/>
+            <g id="c9ticks"></g>
+            <g id="c9needle" style="transform-origin:150px 145px;transform:rotate(50.4deg);transition:transform .55s cubic-bezier(.34,1.56,.64,1)">
+              <line x1="150" y1="145" x2="150" y2="54" stroke="#d54500" stroke-width="3.5" stroke-linecap="round"/>
+            </g>
+            <circle cx="150" cy="145" r="11" fill="#e6ebf2" stroke="#b6bec9" stroke-width="2"/>
+            <text x="150" y="130" text-anchor="middle" id="c9val" style="font:700 32px ui-monospace" fill="#1f8a5f">78%</text>
+          </svg>
+          <div class="c9-knob">
+            <label>Запас энергии · ползунок как верньер</label>
+            <input type="range" min="0" max="100" value="78" id="c9slide">
+            <div class="val" id="c9kwh">7,8 / 10 кВт·ч · до 22:40</div>
+          </div>
+        </div>
+        <div class="c9-ctrl">
+          <div class="c9-switch" id="c9sw1"><span>Ночная зарядка 2,31 ₽</span><span class="tg"></span></div>
+          <div class="c9-switch on" id="c9sw2"><span>Резерв сети &lt; 10 мс</span><span class="tg"></span></div>
+          <div class="c9-switch on" id="c9sw3"><span>Ограничение отдачи 5 кВт</span><span class="tg"></span></div>
+          <div class="c9-leds"><span class="c9-led on"></span><span class="c9-led on"></span><span class="c9-led on"></span><span class="c9-led"></span><span class="c9-led"></span></div>
+          <div class="c9-note">LED-ряд: глубина разряда DoD 20–80% · кликайте тумблеры</div>
+        </div>
+      </div>
+      <span class="demo-hint">Шкала аналоговая, цифра дублирует; тумблеры реально переключаются</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#e0e5ec"></i>алюминий</span><span class="chip"><i style="background:#2fbf8f"></i>зелёный прибор</span><span class="chip"><i style="background:#d54500"></i>стрелка</span></div>
+      <h4>Типографика</h4><div class="val">Шкальные подписи caps mono 9px; цифровое дублирование показаний 32px (принцип дублирования приборов)</div>
+      <h4>JS / TS</h4><div class="val"><code>SVG transform</code> стрелки с пружинным easing; CSS <code>neumorphism</code> (двойные тени, без картинок); LED — box-shadow glow</div>
+      <h4>Фото</h4><div class="val">Нет. Рядом можно ставить фото реального щита заказчика — «ваш пульт будет таким»</div>
+      <h4>Куда в проекте</h4><div class="val">Виджет автономии в шаге 4 визарда (АКБ), карточка накопителя в справочнике, hero страницы «Накопители»</div>
+      <h4>Плюсы</h4><ul><li class="p">Объясняет DoD/автономию интуитивно — шкала честнее ползунка</li><li class="p">Выделяет раздел АКБ визуально</li><li class="p">Ретро-инженерная эстетика = характер бренда</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Неоморфизм живёт только на светлой теме — нужен контраст-контроль</li><li class="c">Трудно масштабировать на весь интерфейс — риск винегрета</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="65" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>65</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="55" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>55</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="50" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>50</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="15" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>низкий</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>3–5</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= 10 ДВУХРЕЖИМНАЯ ======================= -->
+<section class="concept wrap" id="k10">
+  <div class="concept-head">
+    <span class="cnum">10</span>
+    <div><h2>«Двухрежимная система»</h2><p class="ctag">Один бренд, два режима: справочник и статьи — светлые «журнальные», калькулятор и результат — тёмный «пульт». Компромисс, найденный на 14-й итерации</p></div>
+    <span class="badge badge-green">Рекомендованная база ★</span>
+  </div>
+  <div class="concept-grid">
+    <div class="demo">
+      <div class="c10">
+        <div class="c10-bar">
+          <span class="t">Справочник — <b style="color:#c9ced6">журнал</b> · Калькулятор — <b style="color:#c9ced6">пульт</b></span>
+          <div class="c10-seg" id="c10seg">
+            <button class="on" data-m="dark">Тёмный пульт</button>
+            <button data-m="lit">Светлый пульт</button>
+          </div>
+        </div>
+        <div class="c10-panes">
+          <div class="c10-pane c10-light">
+            <span class="pl" style="color:#5c554a">Справочник · светлая тема</span>
+            <div class="inner">
+              <h4>Двухтарифный счётчик: ночной арбитраж</h4>
+              <p>С 23:00 до 07:00 киловатт стоит 2,31 ₽ вместо 5,92 ₽. Гибридный инвертор заряжает АКБ ночью и отдаёт энергию днём — экономия до 41% счёта даже без солнечных панелей.</p>
+              <table>
+                <tr><th>Тариф</th><th>Цена</th><th>Окно</th></tr>
+                <tr><td>День (пик)</td><td><b>5,92 ₽</b></td><td>07:00–23:00</td></tr>
+                <tr><td>Ночь</td><td><b>2,31 ₽</b></td><td>23:00–07:00</td></tr>
+              </table>
+              <a>Читать гайд целиком →</a>
+            </div>
+          </div>
+          <div class="c10-pane c10-calc" id="c10calc">
+            <span class="pl" style="color:#5b6578">Калькулятор · тёмная тема</span>
+            <div class="inner">
+              <div class="c10-kpis">
+                <div class="c10-kpi"><span class="k">Смета от</span><span class="v">898 100 ₽</span></div>
+                <div class="c10-kpi"><span class="k">Покрытие</span><span class="v">68%</span></div>
+                <div class="c10-kpi"><span class="k">Окупаемость</span><span class="v">9,4 л</span></div>
+              </div>
+              <div class="c10-bars">
+                <i style="--h:32%;--i:0"></i><i style="--h:45%;--i:1"></i><i style="--h:68%;--i:2"></i><i style="--h:85%;--i:3"></i>
+                <i style="--h:97%;--i:4"></i><i style="--h:100%;--i:5"></i><i style="--h:95%;--i:6"></i><i style="--h:82%;--i:7"></i>
+                <i style="--h:64%;--i:8"></i><i style="--h:45%;--i:9"></i><i style="--h:30%;--i:10"></i><i style="--h:24%;--i:11"></i>
+              </div>
+              <div class="c10-months"><span>Я</span><span>Ф</span><span>М</span><span>А</span><span>М</span><span>И</span><span>И</span><span>А</span><span>С</span><span>О</span><span>Н</span><span>Д</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="demo-hint">Переключите режим пульта — обе темы из одного набора токенов, 0,45 с переход</span>
+    </div>
+    <aside class="spec">
+      <h4>Палитра</h4>
+      <div class="chips"><span class="chip"><i style="background:#fbfaf7"></i>бумага</span><span class="chip"><i style="background:#22303f"></i>чернила</span><span class="chip"><i style="background:#12161d"></i>пульт</span><span class="chip"><i style="background:#b45309"></i>терракота-мост</span></div>
+      <h4>Типографика</h4><div class="val">Serif-заголовки в светлой зоне; моно-цифры в тёмной; терракота #B45309 — общий акцент, сшивающий темы</div>
+      <h4>JS / TS</h4><div class="val">CSS custom properties + класс <code>lit</code>; <code>prefers-color-scheme</code> + выбор в localStorage; существующий shadcn/ui уже двухтемный — нулевая миграция</div>
+      <h4>Фото</h4><div class="val">Только в светлой зоне (статьи, кейсы). В тёмной — данные и графики</div>
+      <h4>Куда в проекте</h4><div class="val"><b>Весь проект как система</b>: hash-роутер уже разделяет контент и инструмент — темы вешаются на разделы, а не на сессию</div>
+      <h4>Плюсы</h4><ul><li class="p">Разрубает конфликт «тёмная vs светлая»: контент светлый (SEO, читабельность, Я.Метрика), инструмент тёмный (премиальный пульт)</li><li class="p">Единый бренд — терракотовый мост</li><li class="p">Технически почти бесплатно: дизайн-токены уже есть</li></ul>
+      <h4>Минусы</h4><ul><li class="c">Двойной QA обеих тем на каждом компоненте</li><li class="c">Дисциплина: нельзя тащить фото в пульт и телеметрию в журнал</li></ul>
+      <div class="meters">
+        <div class="meter"><span>Вау-эффект</span><div class="bar"><i data-w="70" style="background:linear-gradient(90deg,#ffb020,#ff6a00)"></i></div><b>70</b></div>
+        <div class="meter"><span>Доверие</span><div class="bar"><i data-w="75" style="background:linear-gradient(90deg,#2dd4a8,#33ff99)"></i></div><b>75</b></div>
+        <div class="meter"><span>Конверсия</span><div class="bar"><i data-w="80" style="background:linear-gradient(90deg,#6ea8ff,#93c5fd)"></i></div><b>80</b></div>
+        <div class="meter"><span>CWV-риск</span><div class="bar"><i data-w="20" style="background:linear-gradient(90deg,#ef4444,#f87171)"></i></div><b>низкий</b></div>
+      </div>
+      <div class="effort">Трудозатраты: <b>5–7</b> чел.-дней</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ======================= МАТРИЦА ======================= -->
+<section class="wrap section" id="matrix" style="padding-top:64px">
+  <div class="section-title"><h2>Сравнительная матрица</h2><span class="tag">итог итерации 19 · оценка 1–5</span></div>
+  <div class="matrix-scroll"><table class="matrix">
+    <thead><tr><th>Концепция</th><th>Вау</th><th>Доверие</th><th>Конверсия</th><th>CWV-риск</th><th>Срок</th><th>Роль в системе</th></tr></thead>
+    <tbody>
+      <tr><td class="cname"><span class="no">01</span>Чертёж.ГОСТ</td><td><span class="dots">●●<span class="off">●●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td class="risk-low">низкий</td><td>3–5 д</td><td><span class="mv" style="color:#ffb020;border-color:rgba(255,176,32,.35)">Стиль справочника</span></td></tr>
+      <tr><td class="cname"><span class="no">02</span>Энергопоток</td><td><span class="dots">●●●●<span class="off">●</span></span></td><td><span class="dots">●●<span class="off">●●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td class="risk-low">низкий</td><td>2–3 д</td><td><span class="mv" style="color:#ffb020;border-color:rgba(255,176,32,.35)">Hero-движение</span></td></tr>
+      <tr><td class="cname"><span class="no">03</span>Центр управления</td><td><span class="dots">●●●●<span class="off">●</span></span></td><td><span class="dots">●●●●<span class="off">●</span></span></td><td><span class="dots">●●●●<span class="off">●</span></span></td><td class="risk-low">низкий</td><td>4–6 д</td><td><span class="mv" style="color:#4ade80;border-color:rgba(74,222,128,.35)">Экран результата</span></td></tr>
+      <tr><td class="cname"><span class="no">04</span>Живой конфигуратор</td><td><span class="dots">●●●●●</span></td><td><span class="dots">●●●●<span class="off">●</span></span></td><td><span class="dots">●●●●●</span></td><td class="risk-mid">средний</td><td>5–8 д</td><td><span class="mv" style="color:#4ade80;border-color:rgba(74,222,128,.35)">Ядро калькулятора ★</span></td></tr>
+      <tr><td class="cname"><span class="no">05</span>Фотореализм</td><td><span class="dots">●●●●<span class="off">●</span></span></td><td><span class="dots">●●●●●</span></td><td><span class="dots">●●●●<span class="off">●</span></span></td><td class="risk-mid">средний</td><td>2–4 д</td><td><span class="mv" style="color:#4ade80;border-color:rgba(74,222,128,.35)">Доверие и кейсы</span></td></tr>
+      <tr><td class="cname"><span class="no">06</span>Изоинтерфейс</td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●<span class="off">●●●</span></span></td><td class="risk-low">низкий</td><td>4–6 д</td><td><span class="mv" style="color:#6ea8ff;border-color:rgba(110,168,255,.35)">SEO-контент</span></td></tr>
+      <tr><td class="cname"><span class="no">07</span>3D-усадьба</td><td><span class="dots">●●●●●</span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td class="risk-high">высокий</td><td>8–12 д</td><td><span class="mv" style="color:#f87171;border-color:rgba(248,113,113,.35)">Опция v2</span></td></tr>
+      <tr><td class="cname"><span class="no">08</span>Плакат</td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●<span class="off">●●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td class="risk-low">минимальный</td><td>2–4 д</td><td><span class="mv" style="color:#ffb020;border-color:rgba(255,176,32,.35)">Блок итогов</span></td></tr>
+      <tr><td class="cname"><span class="no">09</span>Приборная панель</td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●<span class="off">●●●</span></span></td><td><span class="dots">●●<span class="off">●●●</span></span></td><td class="risk-low">низкий</td><td>3–5 д</td><td><span class="mv" style="color:#6ea8ff;border-color:rgba(110,168,255,.35)">Аксессуар АКБ</span></td></tr>
+      <tr><td class="cname"><span class="no">10</span>Двухрежимная система</td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●●<span class="off">●●</span></span></td><td><span class="dots">●●●●<span class="off">●</span></span></td><td class="risk-low">низкий</td><td>5–7 д</td><td><span class="mv" style="color:#4ade80;border-color:rgba(74,222,128,.35)">Каркас системы ★</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ======================= ВЕРДИКТ ======================= -->
+<section class="wrap section" id="verdict">
+  <div class="section-title"><h2>Вердикт комиссии: гибридная стратегия</h2><span class="tag">итог итерации 20</span></div>
+  <p class="section-lead">Комиссия единогласно отклонила «выбор одного концепта»: продуктовая задача (инженерный инструмент + контент + лидогенерация) шире любой одной эстетики.
+  Рекомендуется <b style="color:#e8eaed">система с ролями</b>: каждый концепт получает зону ответственности в продукте.</p>
+  <div class="rec">
+    <h3>Итоговая формула оформления</h3>
+    <div class="formula">
+КАРКАС&nbsp;&nbsp;&nbsp;&nbsp;: <b>№10 Двухрежимная система</b> — светлый «журнал» для контента, тёмный «пульт» для инструмента<br>
+ЯДРО ОПЫТА&nbsp;: <b>№4 Живой конфигуратор</b> (визард) + <b>№3 Центр управления</b> (экран результата)<br>
+ДОВЕРИЕ&nbsp;&nbsp;&nbsp;&nbsp;: <b>№5 Фото</b> реальных установок, монтажей и инженеров — кейсы, hero, лидформа<br>
+ДВИЖЕНИЕ&nbsp;&nbsp;: <b>№2 Частицы</b> в hero + <b>№8 count-up</b> итогов + drawing-анимации графиков ECharts<br>
+ХАРАКТЕР&nbsp;&nbsp;&nbsp;: <b>№1 Чертёж.ГОСТ</b> — гайды, нормативка, PDF-смета «как настоящий чертёж»<br>
+SEO-МОЩЬ&nbsp;&nbsp;: <b>№6 Sun-path + heatmap</b> — визуализации в статьях и карточке региона<br>
+ПОСЛЕ РОСТА&nbsp;: <b>№7 3D-сцена</b> (lazy по клику) + <b>№9 приборные шкалы</b> в разделе АКБ
+    </div>
+    <div class="waves">
+      <div class="wave">
+        <span class="wn">Волна 1 · неделя</span>
+        <h4>Быстрые победы</h4>
+        <ul>
+          <li><b>Count-up итогов</b> (№8) и семантические цвета: экономия — teal, риск — red</li>
+          <li><b>Фото в кейсы и лидформу</b> (№5) — 16 фото уже подобраны</li>
+          <li>Группировка сметы: «Панели / Инвертор / АКБ / Монтаж», итог — гигантской цифрой</li>
+          <li>Hover-подсветка строк таблиц и drawing-анимация текущих графиков</li>
+        </ul>
+      </div>
+      <div class="wave">
+        <span class="wn">Волна 2 · 2–3 недели</span>
+        <h4>Ядро опыта</h4>
+        <ul>
+          <li><b>Живой конфигуратор</b> (№4) в шаг «Панели» визарда</li>
+          <li><b>Пульт результата</b> (№3): KPI-плитки + телеметрия + журнал</li>
+          <li><b>Частицы энергопотока</b> (№2) в hero, opacity ≤ 0,5</li>
+          <li>Двухрежимные токены (№10) на весь сайт + терракотовый мост</li>
+        </ul>
+      </div>
+      <div class="wave">
+        <span class="wn">Волна 3 · спринт v2</span>
+        <h4>После роста трафика</h4>
+        <ul>
+          <li><b>Интерактивная карта РФ</b> вместо «стены регионов» (D3)</li>
+          <li><b>3D-усадьба</b> (№7) по кнопке, Three.js lazy</li>
+          <li><b>PDF-смета в чертёжном стиле</b> (№1) с рамкой и штампом</li>
+          <li>Sun-path и heatmap (№6) в статьи про ориентацию и регионы</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer wrap">
+  <p><b>Как читать этот документ.</b> Каждая секция выше — работающее демо на чистом JS (canvas/SVG/CSS), без внешних библиотек: демо можно открыть офлайн, код переносится в Next.js как компоненты.
+  Оценки в метрах — консенсус комиссии по шкале 0–100. Фотоматериалы в демо №5 — реальные изображения из поиска (для продакшена нужны лицензированные или собственные съёмки).
+  Бюджет производительности (LCP ≤ 2,5 с · INP &lt; 200 мс · CLS ≤ 0,1) заложен в каждую концепцию: анимации только на transform/opacity, частицы ≤ 120 с паузой вне вьюпорта, 3D — lazy по клику, фото — AVIF/WebP + lazy + фиксированный aspect-ratio.</p>
+</footer>
