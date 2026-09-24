@@ -80,3 +80,25 @@ Stage Summary:
 - Рекомендация комиссии: целевая система С10 «Энергосистема» (внедрение волнами, старт с С1), палитра П1 «Янтарный полдень» (шорт-лист П9/П6, П3 — дачный лендинг, П8 — A/B)
 - Канон: светлая база + чертёжный ритм + солнечный акцент + тёмные «сцены» только для данных (результат, графики, футер)
 - Скрипт-генератор: scripts/moodboard-combo.py (правки CSS для адаптива — в нём)
+
+---
+Task ID: 5
+Agent: Super Z (main agent)
+Task: Применение к UI вердикта комиссии: сочетание С10 «Энергосистема» + палитра П1 «Янтарный полдень» (уход от тёмной темы)
+
+Work Log:
+- Токены (globals.css, полная замена): светлая база П1 (фон #FAF8F3, поверхности #FFF, бордеры #E8E2D4, текст #22272E); двух-акцентная система: «инженерный» петроль #14657B (primary: ссылки/иконки/выбор) + «солнечный» янтарь (CTA через .bg-gradient-solar #F2A328→#E8940A с тёмным текстом, WCAG AA); стабильность #0E7F63; токены «сцен» (--scene #1F252D, --scene-2, --scene-foreground/-muted/-border/-amber/-petrol); чертёжная сетка .blueprint-grid; штамп-ГОСТ .stamp-gost/.stamp-label; светлые тени карточек; светлый скроллбар; print без изменений по смыслу; prefers-reduced-motion
+- layout.tsx: снят класс dark (светлая тема — база)
+- Витрина (home-page.tsx): фото-hero №5 (hero-roof.jpg, eager+fetchpriority, width/height — CLS) + плакатная полоса цифр №8 (CountUp: 32/23/12/24, IntersectionObserver+rAF+reduced-motion) + blueprint-grid фон; входы Дача/Дом/Бизнес с фотополосами (storage/hero-roof/farm, lazy); «Как мы работаем» с фото инженера; янтарные CTA/тени
+- Фото: 4 фото из концептборда скачаны в public/photos/ и оптимизированы PIL (1600/1200px, q80, progressive): hero-roof 421KB, farm-sunset 227KB, storage 91KB, engineer 214KB
+- Футер → тёмная «сцена» (scene + scene-muted/amber/petrol), дисклеймер на scene-2
+- Result-view: шапка результата = тёмная сцена-«пульт» (CAPEX text-gradient-solar bright, MiniStat onScene на scene-2/70); графики выработки и накопленной экономики обёрнуты в сцены: оси #A8ADB5, сетка #39424E, тултипы #262E38, генерация #FFB020→#E8760A, потребление #4A5563, ReferenceLine #FF6B6B; остальной калькулятор светлый («заповедник точности»)
+- Прочее: wizard-steps accent #E8940A; lead-form тень янтарная; ad-container светлый хэтч; site-header тени/логотип
+- Инфраструктура сессии: dev-сервер убивается harness между вызовами (причина — SIGPIPE через tee в npm-скрипте); рабочий паттерн: setsid + exec без пайпа + вся верификация одним вызовом
+- Верификация: lint чист; фон body rgb(250,248,243) ✓; E2E визард 6 шагов → «Показать результат» → смета/пульт отрендерены; 4 скриншота (home desktop/mobile, result, regions, reference); мобайл 390: scrollW=clientW=390 (нет H-scroll); консоль без ошибок; VLM: главная 8/10 ок, результат 8/10 ок (контраст панелей >7:1), мобайл 8/10; доведён контраст мелких текстов футера (/80→/90→full)
+
+Stage Summary:
+- Приложение переведено на С10+П1: светлая инженерная база, солнечный CTA, петроль-данные, тёмные «сцены» (футер, шапка-пульт результата, графики), фото-слой на витрине и карточках, плакатные count-up цифры, чертёжный ритм
+- Файлы: src/app/globals.css (токены+утилиты), src/app/layout.tsx, src/components/{common/count-up.tsx (новый), pages/home-page.tsx, layout/site-{header,footer}.tsx, calc/result-view.tsx, calc/wizard-steps.tsx, lead/lead-form.tsx}, public/photos/* (4 фото)
+- Скриншоты: download/app-v2-{home,home-mobile,result,regions,reference}.png
+- Перезапуск dev: cd /home/z/my-project && setsid nohup bash -c "exec node node_modules/.bin/next dev -p 3000 > dev-direct.log 2>&1" </dev/null >/dev/null 2>&1 & disown

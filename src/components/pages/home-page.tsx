@@ -1,7 +1,8 @@
 "use client"
 
-// Главная страница (ТЗ 3.1): hero с анимацией, три входа в калькулятор
-// (Дача / Дом / Бизнес), преимущества, «как мы работаем», мини-кейсы, CTA
+// Главная страница (ТЗ 3.1), витрина по сочетанию С10 «Энергосистема» (П1):
+// фото-hero (№5) + плакатные цифры count-up (№8) + чертёжная сетка (№1) +
+// три входа в калькулятор (Дача / Дом / Бизнес) с фотополосами.
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
@@ -14,6 +15,7 @@ import { navigate } from "@/lib/router"
 import { trackGoal } from "@/lib/analytics"
 import { LeadForm } from "@/components/lead/lead-form"
 import { AdSlot } from "@/components/common/ad-slot"
+import { CountUp } from "@/components/common/count-up"
 
 const ENTRIES = [
   {
@@ -23,6 +25,8 @@ const ENTRIES = [
     href: "#/kalkulyator/dacha",
     cta: "Считать дачу",
     stat: "от 0,5 млн ₽",
+    photo: "/photos/storage.jpg",
+    photoAlt: "Накопитель энергии LiFePO4 в контуре автономного дома",
   },
   {
     icon: Building2,
@@ -31,6 +35,8 @@ const ENTRIES = [
     href: "#/kalkulyator",
     cta: "Считать дом",
     stat: "от 1,2 млн ₽",
+    photo: "/photos/hero-roof.jpg",
+    photoAlt: "Солнечные панели на крыше частного дома",
   },
   {
     icon: Sun,
@@ -39,6 +45,8 @@ const ENTRIES = [
     href: "#/kalkulyator",
     cta: "Считать бизнес",
     stat: "от 6,3 млн ₽ / 100 кВт",
+    photo: "/photos/farm-sunset.jpg",
+    photoAlt: "Солнечная ферма на закате",
   },
 ]
 
@@ -61,62 +69,122 @@ const CASES = [
   { title: "Склад 100 кВт, МО", text: "Сетевая СЭС на плоской кровле для фармдистрибьютора, балласт.", href: "#/kejsy", metric: "8,5 лет окупаемость" },
 ]
 
+const STATS = [
+  { value: 32, label: "региона РФ в справочнике", suffix: "" },
+  { value: 23, label: "позиции каталога цен", suffix: "" },
+  { value: 12, label: "месяцев PSH в расчёте", suffix: "" },
+  { value: 24, label: "часа до точной сметы", suffix: "" },
+]
+
 export function HomePage() {
   return (
     <div>
-      {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -right-32 -top-40 h-[480px] w-[480px] rounded-full bg-primary/10 blur-[120px]" />
-          <div className="absolute -left-32 top-24 h-[380px] w-[380px] rounded-full bg-orange-500/8 blur-[110px]" />
-        </div>
-        <div className="mx-auto max-w-7xl px-4 pb-14 pt-16 sm:px-6 md:pt-24">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
-            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1.5 text-xs font-medium text-primary">
-              <Sparkles className="h-3.5 w-3.5" />
-              Калькулятор · справочник · смета за 24 часа
-            </p>
-            <h1 className="max-w-4xl text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl md:text-5xl">
-              Альтернативная энергетика РФ:
-              <br className="hidden md:block" />
-              <span className="text-gradient-solar"> считайте до покупки</span>, а не после
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
-              Профессиональный калькулятор солнечных станций, накопителей и генераторов:
-              смета по реальным ценам «от–до», генерация по вашему региону, LCOE и окупаемость —
-              в браузере, без звонков. Инженерная проверка расчёта — за 24 часа.
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Button
-                size="lg"
-                className="bg-gradient-solar text-primary-foreground shadow-[0_10px_32px_-10px_rgba(255,106,0,0.7)] hover:opacity-95"
-                onClick={() => navigate("#/kalkulyator")}
-              >
-                <Ruler className="mr-2 h-5 w-5" />
-                Рассчитать станцию
-              </Button>
-              <a href="tel:+74951234567" onClick={() => trackGoal("phone_click")}>
-                <Button size="lg" variant="outline">
-                  <Phone className="mr-2 h-4 w-4 text-stable" /> Обсудить проект
+      {/* ===== HERO: фото (№5) + плакатная типографика (№8) + чертёжная сетка (№1) ===== */}
+      <section className="relative overflow-hidden border-b border-border/60 blueprint-grid">
+        <div className="mx-auto max-w-7xl px-4 pb-12 pt-12 sm:px-6 md:pt-20">
+          <div className="grid items-center gap-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-12">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
+              <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1.5 text-xs font-medium text-primary">
+                <Sparkles className="h-3.5 w-3.5" />
+                Калькулятор · справочник · смета за 24 часа
+              </p>
+              <h1 className="max-w-2xl text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl md:text-5xl">
+                Альтернативная энергетика РФ:
+                <span className="text-gradient-solar"> считайте до покупки</span>, а не после
+              </h1>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
+                Профессиональный калькулятор солнечных станций, накопителей и генераторов:
+                смета по реальным ценам «от–до», генерация по вашему региону, LCOE и окупаемость —
+                в браузере, без звонков. Инженерная проверка расчёта — за 24 часа.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Button
+                  size="lg"
+                  className="bg-gradient-solar shadow-[0_10px_28px_-10px_rgba(232,148,10,0.55)] hover:opacity-95"
+                  onClick={() => navigate("#/kalkulyator")}
+                >
+                  <Ruler className="mr-2 h-5 w-5" />
+                  Рассчитать станцию
                 </Button>
-              </a>
-            </div>
-          </motion.div>
+                <a href="tel:+74951234567" onClick={() => trackGoal("phone_click")}>
+                  <Button size="lg" variant="outline">
+                    <Phone className="mr-2 h-4 w-4 text-stable" /> Обсудить проект
+                  </Button>
+                </a>
+              </div>
+            </motion.div>
 
-          {/* Три входа в калькулятор (ТЗ: Дача / Дом / Бизнес) */}
-          <div className="mt-12 grid gap-4 md:grid-cols-3">
-            {ENTRIES.map((e, i) => (
-              <motion.button
-                key={e.title}
-                type="button"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.12 + i * 0.08, duration: 0.4 }}
-                onClick={() => navigate(e.href)}
-                className="card-premium card-premium-hover group p-5 text-left"
-              >
+            {/* Фото-слой витрины: реальный объект, приоритет LCP */}
+            <motion.figure
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="relative"
+            >
+              <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-[0_24px_60px_-28px_rgba(34,39,46,0.35)]">
+                <img
+                  src="/photos/hero-roof.jpg"
+                  alt="Солнечные панели на крыше частного дома"
+                  width={1600}
+                  height={1067}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="aspect-[3/2] w-full object-cover"
+                />
+              </div>
+              <figcaption className="absolute bottom-3 left-3 rounded-lg border border-scene-border/60 bg-scene/90 px-3 py-1.5 text-[11px] font-medium text-scene-foreground backdrop-blur-sm">
+                Объект 10 кВт · наклонная кровля · юг
+              </figcaption>
+              <div className="absolute -right-2 -top-2 rounded-lg border border-border bg-card px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground shadow-sm">
+                Фото: реальный монтаж
+              </div>
+            </motion.figure>
+          </div>
+
+          {/* Плакатная полоса цифр (№8): count-up при появлении */}
+          <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-4">
+            {STATS.map((s) => (
+              <div key={s.label} className="bg-card px-5 py-4">
+                <CountUp
+                  to={s.value}
+                  suffix={s.suffix}
+                  className="block text-2xl font-bold tabular-nums tracking-tight text-foreground md:text-3xl"
+                />
+                <span className="mt-0.5 block border-t-2 border-solar/60 pt-1.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                  {s.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Три входа в калькулятор (ТЗ: Дача / Дом / Бизнес) с фотополосами */}
+      <section className="mx-auto max-w-7xl px-4 pt-12 sm:px-6">
+        <div className="grid gap-4 md:grid-cols-3">
+          {ENTRIES.map((e, i) => (
+            <motion.button
+              key={e.title}
+              type="button"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.12 + i * 0.08, duration: 0.4 }}
+              onClick={() => navigate(e.href)}
+              className="card-premium card-premium-hover group overflow-hidden text-left"
+            >
+              <img
+                src={e.photo}
+                alt={e.photoAlt}
+                width={1200}
+                height={800}
+                loading="lazy"
+                decoding="async"
+                className="h-28 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+              <div className="p-5">
                 <div className="flex items-center justify-between">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/12">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
                     <e.icon className="h-6 w-6 text-primary" />
                   </span>
                   <span className="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-muted-foreground">{e.stat}</span>
@@ -127,13 +195,13 @@ export function HomePage() {
                   {e.cta}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
-              </motion.button>
-            ))}
-          </div>
+              </div>
+            </motion.button>
+          ))}
         </div>
       </section>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6">
         <AdSlot variant="banner" />
       </div>
 
@@ -157,25 +225,43 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ===== Как мы работаем ===== */}
-      <section className="border-y border-border/60 bg-card/30">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">Как мы работаем</h2>
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {STEPS.map((s) => (
-              <div key={s.n} className="relative">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-solar text-base font-bold text-primary-foreground">
-                  {s.n}
-                </span>
-                <h3 className="mt-4 text-lg font-semibold">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-            <span className="flex items-center gap-2"><Clock className="h-4 w-4 text-stable" /> 24 часа на смету</span>
-            <span className="flex items-center gap-2"><FileDown className="h-4 w-4 text-stable" /> PDF с датой актуальности цен</span>
-            <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-stable" /> Без спама: один звонок инженера</span>
+      {/* ===== Как мы работаем: фото инженера + шаги ===== */}
+      <section className="border-y border-border/60 bg-card/40">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.9fr_1.1fr]">
+          <figure className="order-2 lg:order-1">
+            <div className="overflow-hidden rounded-2xl border border-border shadow-[0_20px_50px_-26px_rgba(34,39,46,0.32)]">
+              <img
+                src="/photos/engineer.jpg"
+                alt="Инженер-монтажник устанавливает солнечную панель"
+                width={1200}
+                height={800}
+                loading="lazy"
+                decoding="async"
+                className="aspect-[3/2] w-full object-cover"
+              />
+            </div>
+            <figcaption className="mt-2.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+              Проверка расчёта инженером — до подписания договора
+            </figcaption>
+          </figure>
+          <div className="order-1 lg:order-2">
+            <h2 className="text-2xl font-bold tracking-tight md:text-3xl">Как мы работаем</h2>
+            <div className="mt-8 grid gap-6 md:grid-cols-3">
+              {STEPS.map((s) => (
+                <div key={s.n} className="relative">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-solar text-base font-bold">
+                    {s.n}
+                  </span>
+                  <h3 className="mt-4 text-lg font-semibold">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+              <span className="flex items-center gap-2"><Clock className="h-4 w-4 text-stable" /> 24 часа на смету</span>
+              <span className="flex items-center gap-2"><FileDown className="h-4 w-4 text-stable" /> PDF с датой актуальности цен</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-stable" /> Без спама: один звонок инженера</span>
+            </div>
           </div>
         </div>
       </section>

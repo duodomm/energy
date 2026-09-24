@@ -557,7 +557,7 @@ export function StepStorage({
           type="checkbox"
           checked={input.winterBalance}
           onChange={(e) => set({ winterBalance: e.target.checked })}
-          className="h-4 w-4 accent-[#ffb020]"
+          className="h-4 w-4 accent-[#e8940a]"
         />
         <span className="flex items-center gap-1.5">
           <CalendarClock className="h-4 w-4 text-muted-foreground" />

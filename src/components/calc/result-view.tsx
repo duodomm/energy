@@ -64,28 +64,28 @@ export function ResultView({ result, bundle }: { result: CalcResult; bundle: Ref
 
   return (
     <div className="space-y-8">
-      {/* ===== Шапка результата ===== */}
-      <div className="card-premium border-gradient-solar p-5 md:p-7">
+      {/* ===== Шапка результата: тёмная «сцена»-пульт (канон С10) ===== */}
+      <div className="scene rounded-2xl border border-scene-border p-5 shadow-[0_24px_60px_-30px_rgba(31,37,45,0.45)] md:p-7">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-primary">Предварительная смета</p>
-            <h1 className="mt-1.5 text-2xl font-bold tracking-tight md:text-3xl">
+            <p className="text-xs font-semibold uppercase tracking-wider text-scene-amber">Предварительная смета</p>
+            <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-scene-foreground md:text-3xl">
               СЭС {c.pnom} кВт · {region.name}
             </h1>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-2 text-sm text-scene-muted">
               {c.panelCount} панелей × {c.panelW} Вт · инвертор {c.inverterKw} кВт ·{" "}
               {c.batteryKwh ? `АКБ ${c.batteryKwh} кВт·ч (${c.batteryTech})` : "без АКБ"}
               {c.generatorKw ? ` · генератор ${c.generatorKw} кВт` : ""}
             </p>
           </div>
           <div className="text-right">
-            <p className="text-xs text-muted-foreground">Инвестиции «от–до»</p>
+            <p className="text-xs text-scene-muted">Инвестиции «от–до»</p>
             <p className="text-2xl font-bold md:text-3xl">
               <span className="text-gradient-solar">{formatRub(e.capexFrom)}</span>
-              <span className="mx-1.5 text-muted-foreground">—</span>
+              <span className="mx-1.5 text-scene-muted">—</span>
               <span>{formatRub(e.capexTo)}</span>
             </p>
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="mt-1 text-xs text-scene-muted">
               цены справочника от {priceDate}
               {result.priceStaleDays > 14 && (
                 <Badge variant="destructive" className="ml-2 h-5 gap-1 text-[10px]">
@@ -96,13 +96,14 @@ export function ResultView({ result, bundle }: { result: CalcResult; bundle: Ref
           </div>
         </div>
 
-        <Separator className="my-5" />
+        <Separator className="my-5 bg-scene-border" />
 
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-          <MiniStat icon={<Sun className="h-4 w-4" />} label="Генерация/год" value={formatKwh(result.annualGeneration)} />
-          <MiniStat icon={<Gauge className="h-4 w-4" />} label="Самопокрытие" value={`${Math.round(result.selfSufficiency * 100)}%`} />
-          <MiniStat icon={<Zap className="h-4 w-4" />} label="LCOE (25 лет)" value={`${e.lcoeNominal}–${e.lcoe} ₽`} sub="номинал–дисконт" />
+          <MiniStat onScene icon={<Sun className="h-4 w-4" />} label="Генерация/год" value={formatKwh(result.annualGeneration)} />
+          <MiniStat onScene icon={<Gauge className="h-4 w-4" />} label="Самопокрытие" value={`${Math.round(result.selfSufficiency * 100)}%`} />
+          <MiniStat onScene icon={<Zap className="h-4 w-4" />} label="LCOE (25 лет)" value={`${e.lcoeNominal}–${e.lcoe} ₽`} sub="номинал–дисконт" />
           <MiniStat
+            onScene
             icon={<TrendingUp className="h-4 w-4" />}
             label="Окупаемость"
             value={e.paybackVsGrid ? `${e.paybackVsGrid} лет` : e.paybackVsDiesel ? `${e.paybackVsDiesel} лет` : "—"}
@@ -169,26 +170,29 @@ export function ResultView({ result, bundle }: { result: CalcResult; bundle: Ref
           </CardTitle>
         </CardHeader>
         <CardContent>
+          {/* График выработки — тёмная «сцена» (С10): данные живут на тёмном */}
+          <div className="scene rounded-2xl border border-scene-border p-4">
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData} barGap={2}>
-                <XAxis dataKey="m" stroke="#8b93a1" fontSize={11} tickLine={false} axisLine={{ stroke: "#262d3a" }} />
-                <YAxis stroke="#8b93a1" fontSize={11} tickLine={false} axisLine={{ stroke: "#262d3a" }} width={60} tickFormatter={(v: number) => `${v >= 1000 ? `${Math.round(v / 1000)}к` : v}`} />
+                <XAxis dataKey="m" stroke="#a8adb5" fontSize={11} tickLine={false} axisLine={{ stroke: "#39424e" }} />
+                <YAxis stroke="#a8adb5" fontSize={11} tickLine={false} axisLine={{ stroke: "#39424e" }} width={60} tickFormatter={(v: number) => `${v >= 1000 ? `${Math.round(v / 1000)}к` : v}`} />
                 <RTooltip
-                  cursor={{ fill: "rgba(255,176,32,0.06)" }}
-                  contentStyle={{ background: "#1a202b", border: "1px solid #262d3a", borderRadius: 12, fontSize: 12 }}
+                  cursor={{ fill: "rgba(255,176,32,0.08)" }}
+                  contentStyle={{ background: "#262e38", border: "1px solid #39424e", borderRadius: 12, fontSize: 12, color: "#f2efe7" }}
                   formatter={(v: number, name: string) => [`${nbsp(v)} кВт·ч`, name]}
                 />
-                <Bar dataKey="Потребление" fill="#2a3140" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="Потребление" fill="#4a5563" radius={[3, 3, 0, 0]} />
                 <Bar dataKey="Генерация" fill="url(#gradSolar)" radius={[3, 3, 0, 0]} />
                 <defs>
                   <linearGradient id="gradSolar" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="#ffb020" />
-                    <stop offset="100%" stopColor="#ff6a00" />
+                    <stop offset="100%" stopColor="#e8760a" />
                   </linearGradient>
                 </defs>
               </BarChart>
             </ResponsiveContainer>
+          </div>
           </div>
           <div className="mt-3 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
             <MiniStat label="Нагрузка/год" value={formatKwh(result.annualLoad)} />
@@ -325,26 +329,28 @@ export function ResultView({ result, bundle }: { result: CalcResult; bundle: Ref
           {cumData.length > 0 && (
             <div>
               <p className="mb-2 text-sm font-medium">Накопленная экономия за {cumData.length} лет (динамика, рост тарифа 8%/год)</p>
+              <div className="scene rounded-2xl border border-scene-border p-4">
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={cumData}>
                     <defs>
                       <linearGradient id="gradCum" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="#2dd4a8" stopOpacity={0.4} />
-                        <stop offset="100%" stopColor="#2dd4a8" stopOpacity={0.02} />
+                        <stop offset="100%" stopColor="#2dd4a8" stopOpacity={0.05} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid stroke="#262d3a" strokeDasharray="3 3" />
-                    <XAxis dataKey="year" stroke="#8b93a1" fontSize={11} tickLine={false} axisLine={{ stroke: "#262d3a" }} tickFormatter={(v: number) => `${v}г`} />
-                    <YAxis stroke="#8b93a1" fontSize={11} tickLine={false} axisLine={{ stroke: "#262d3a" }} width={64} tickFormatter={(v: number) => `${v}кк`} />
+                    <CartesianGrid stroke="#39424e" strokeDasharray="3 3" />
+                    <XAxis dataKey="year" stroke="#a8adb5" fontSize={11} tickLine={false} axisLine={{ stroke: "#39424e" }} tickFormatter={(v: number) => `${v}г`} />
+                    <YAxis stroke="#a8adb5" fontSize={11} tickLine={false} axisLine={{ stroke: "#39424e" }} width={64} tickFormatter={(v: number) => `${v}кк`} />
                     <RTooltip
-                      contentStyle={{ background: "#1a202b", border: "1px solid #262d3a", borderRadius: 12, fontSize: 12 }}
+                      contentStyle={{ background: "#262e38", border: "1px solid #39424e", borderRadius: 12, fontSize: 12, color: "#f2efe7" }}
                       formatter={(v: number) => [`${v.toFixed(0)} тыс. ₽ (накопленно)`, "Кэшфлоу"]}
                     />
-                    <ReferenceLine y={0} stroke="#ef4444" strokeDasharray="4 4" />
+                    <ReferenceLine y={0} stroke="#ff6b6b" strokeDasharray="4 4" />
                     <Area type="monotone" dataKey="cum" stroke="#2dd4a8" strokeWidth={2} fill="url(#gradCum)" />
                   </AreaChart>
                 </ResponsiveContainer>
+              </div>
               </div>
               <p className="mt-2 text-xs text-muted-foreground">
                 Точка пересечения нуля — динамическая окупаемость ({e.paybackVsGrid ? `vs сеть: ${e.paybackVsGrid} лет` : ""}{e.paybackVsDiesel ? ` vs дизель: ${e.paybackVsDiesel} лет` : ""}).
@@ -415,15 +421,27 @@ export function ResultView({ result, bundle }: { result: CalcResult; bundle: Ref
 
 // ===== Вспомогательные =====
 
-function MiniStat({ icon, label, value, sub }: { icon?: React.ReactNode; label: string; value: string; sub?: string }) {
+function MiniStat({ icon, label, value, sub, onScene }: { icon?: React.ReactNode; label: string; value: string; sub?: string; onScene?: boolean }) {
   return (
-    <div className="rounded-xl bg-secondary/40 p-3.5">
-      <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+    <div
+      className={
+        onScene
+          ? "rounded-xl border border-scene-border bg-scene-2/70 p-3.5"
+          : "rounded-xl bg-secondary/40 p-3.5"
+      }
+    >
+      <p
+        className={
+          onScene
+            ? "flex items-center gap-1.5 text-xs text-scene-muted"
+            : "flex items-center gap-1.5 text-xs text-muted-foreground"
+        }
+      >
         {icon}
         {label}
       </p>
       <p className="mt-1 text-base font-semibold tabular-nums">{value}</p>
-      {sub && <p className="text-[11px] text-muted-foreground">{sub}</p>}
+      {sub && <p className={onScene ? "text-[11px] text-scene-muted" : "text-[11px] text-muted-foreground"}>{sub}</p>}
     </div>
   )
 }

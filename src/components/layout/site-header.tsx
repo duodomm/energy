@@ -59,8 +59,8 @@ export function SiteHeader() {
           onClick={() => navigate("#/")}
           aria-label="Главная — Альтернативная энергетика РФ"
         >
-          <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-solar shadow-[0_4px_18px_-4px_rgba(255,106,0,0.55)]">
-            <Sun className="h-5 w-5 text-primary-foreground" strokeWidth={2.2} />
+          <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-solar shadow-[0_4px_16px_-4px_rgba(232,148,10,0.5)]">
+            <Sun className="h-5 w-5" strokeWidth={2.2} />
           </span>
           <span className="hidden flex-col leading-tight sm:flex">
             <span className="text-[15px] font-semibold tracking-tight">Альтернативная энергетика</span>
@@ -128,7 +128,7 @@ export function SiteHeader() {
             <span className="tracking-tight">+7 (495) 123-45-67</span>
           </a>
           <Button
-            className="hidden bg-gradient-solar text-primary-foreground shadow-[0_6px_20px_-6px_rgba(255,106,0,0.6)] hover:opacity-95 sm:inline-flex"
+            className="hidden bg-gradient-solar shadow-[0_6px_18px_-6px_rgba(232,148,10,0.55)] hover:opacity-95 sm:inline-flex"
             onClick={() => {
               trackGoal("lead_form_open", { form: "header" })
               navigate("#/kontakty?form=1")
@@ -177,7 +177,7 @@ export function SiteHeader() {
                     <Phone className="h-4 w-4 text-stable" /> +7 (495) 123-45-67
                   </a>
                   <Button
-                    className="w-full bg-gradient-solar text-primary-foreground"
+                    className="w-full bg-gradient-solar"
                     onClick={() => {
                       trackGoal("lead_form_open", { form: "mobile_menu" })
                       setMobileOpen(false)

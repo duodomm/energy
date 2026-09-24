@@ -40,6 +40,13 @@
   --color-solar-deep: var(--solar-deep);
   --color-stable: var(--stable);
   --color-stable-soft: var(--stable-soft);
+  --color-scene: var(--scene);
+  --color-scene-2: var(--scene-2);
+  --color-scene-foreground: var(--scene-foreground);
+  --color-scene-muted: var(--scene-muted);
+  --color-scene-border: var(--scene-border);
+  --color-scene-amber: var(--scene-amber);
+  --color-scene-petrol: var(--scene-petrol);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -47,49 +54,68 @@
 }
 
 /*
-  Дизайн-система «инженерная премиальность» (ТЗ 8.1):
-  тёмная тема (графит #12161D), градиентный акцент «солнце→энергия»
-  (#FFB020 → #FF6A00), зелёно-голубой акцент стабильности #2DD4A8.
-  Карточки с мягкими тенями, скругления 12–16 px, микроанимации.
+  Дизайн-система «Свет вместо мрака» — П1 «Янтарный полдень» (протокол комиссии v2,
+  сочетание С10 «Энергосистема»):
+  светлая тёплая база + солнечный акцент (янтарь, CTA) + инженерный акцент (петроль,
+  данные/ссылки) + тёмные «сцены» 8–12% площади (панель результата, графики
+  выработки, футер). Контраст WCAG AA; чертёжный ритм — тонкой сеткой.
 */
 :root {
   --radius: 0.875rem;
-  --background: #0e1218;
-  --foreground: #e8eaed;
-  --card: #161b24;
-  --card-foreground: #e8eaed;
-  --popover: #1a202b;
-  --popover-foreground: #e8eaed;
-  --primary: #ffb020;
-  --primary-foreground: #1b1204;
-  --secondary: #212734;
-  --secondary-foreground: #c9ced6;
-  --muted: #1c222d;
-  --muted-foreground: #8b93a1;
-  --accent: #232a37;
-  --accent-foreground: #e8eaed;
-  --destructive: #ef4444;
+
+  /* Светлая база П1 */
+  --background: #faf8f3;
+  --foreground: #22272e;
+  --card: #ffffff;
+  --card-foreground: #22272e;
+  --popover: #ffffff;
+  --popover-foreground: #22272e;
+
+  /* Инженерный акцент — петроль (ссылки, данные, иконки, выбор) */
+  --primary: #14657b;
+  --primary-foreground: #ffffff;
+  --secondary: #f0ede3;
+  --secondary-foreground: #4a5058;
+  --muted: #f2efe6;
+  --muted-foreground: #6c7077;
+  --accent: #eaf2f5;
+  --accent-foreground: #14657b;
+  --destructive: #d2382f;
   --destructive-foreground: #fff;
-  --border: #262d3a;
-  --input: #2a3140;
-  --ring: #ffb020;
-  --chart-1: #ffb020;
-  --chart-2: #2dd4a8;
-  --chart-3: #ff6a00;
-  --chart-4: #6ea8ff;
-  --chart-5: #a78bfa;
-  --sidebar: #161b24;
-  --sidebar-foreground: #e8eaed;
-  --sidebar-primary: #ffb020;
-  --sidebar-primary-foreground: #1b1204;
-  --sidebar-accent: #232a37;
-  --sidebar-accent-foreground: #e8eaed;
-  --sidebar-border: #262d3a;
-  --sidebar-ring: #ffb020;
-  --solar: #ffb020;
-  --solar-deep: #ff6a00;
-  --stable: #2dd4a8;
-  --stable-soft: rgba(45, 212, 168, 0.14);
+  --border: #e8e2d4;
+  --input: #ddd6c4;
+  --ring: #e8940a;
+
+  /* Графики на светлом */
+  --chart-1: #e8940a;
+  --chart-2: #14657b;
+  --chart-3: #0e7f63;
+  --chart-4: #b45309;
+  --chart-5: #8a94a3;
+
+  /* Солнечный акцент (энергия, CTA) */
+  --solar: #e8940a;
+  --solar-deep: #c2700a;
+  --stable: #0e7f63;
+  --stable-soft: rgba(14, 127, 99, 0.1);
+
+  /* Тёмные «сцены» П1: панель результата, графики выработки, футер */
+  --scene: #1f252d;
+  --scene-2: #262e38;
+  --scene-foreground: #f2efe7;
+  --scene-muted: #a8adb5;
+  --scene-border: #39424e;
+  --scene-amber: #ffb020;
+  --scene-petrol: #4fb3c9;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #22272e;
+  --sidebar-primary: #14657b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eaf2f5;
+  --sidebar-accent-foreground: #14657b;
+  --sidebar-border: #e8e2d4;
+  --sidebar-ring: #e8940a;
 }
 
 @layer base {
@@ -102,53 +128,111 @@
   body {
     @apply bg-background text-foreground;
     background-image:
-      radial-gradient(1200px 500px at 85% -10%, rgba(255, 106, 0, 0.06), transparent 60%),
-      radial-gradient(900px 420px at 8% -5%, rgba(255, 176, 32, 0.05), transparent 55%),
-      radial-gradient(700px 500px at 50% 110%, rgba(45, 212, 168, 0.04), transparent 60%);
+      radial-gradient(1100px 460px at 88% -8%, rgba(232, 148, 10, 0.07), transparent 60%),
+      radial-gradient(880px 400px at 6% -4%, rgba(20, 101, 123, 0.05), transparent 55%);
     background-attachment: fixed;
   }
   ::selection {
-    background: rgba(255, 176, 32, 0.3);
+    background: rgba(232, 148, 10, 0.26);
   }
 }
 
-/* ===== Градиент «солнце→энергия» и утилиты ===== */
+/* ===== Чертёжный ритм: тонкая сетка «миллиметровки» (№1, дозированно) ===== */
+.blueprint-grid {
+  background-image:
+    linear-gradient(rgba(20, 101, 123, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 101, 123, 0.055) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* ===== Солнечный градиент (CTA): янтарь + тёмный текст (WCAG AA) ===== */
 .text-gradient-solar {
-  background: linear-gradient(100deg, #ffb020 10%, #ff6a00 90%);
+  background: linear-gradient(100deg, #d97f0b 8%, #a85b07 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.scene .text-gradient-solar,
+.text-gradient-solar--bright {
+  background: linear-gradient(100deg, #ffb020 8%, #ff8a3c 92%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 .bg-gradient-solar {
-  background: linear-gradient(100deg, #ffb020 0%, #ff6a00 100%);
+  background: linear-gradient(135deg, #f2a328 0%, #e8940a 100%);
+  color: #22272e;
+}
+.bg-gradient-solar:hover {
+  background: linear-gradient(135deg, #e8940a 0%, #d97f0b 100%);
 }
 .border-gradient-solar {
   border: 1px solid transparent;
   background:
     linear-gradient(var(--card), var(--card)) padding-box,
-    linear-gradient(120deg, rgba(255, 176, 32, 0.55), rgba(255, 106, 0, 0.25)) border-box;
+    linear-gradient(120deg, rgba(232, 148, 10, 0.5), rgba(192, 112, 8, 0.16)) border-box;
+}
+.scene .border-gradient-solar {
+  background:
+    linear-gradient(var(--scene), var(--scene)) padding-box,
+    linear-gradient(120deg, rgba(255, 176, 32, 0.45), rgba(255, 138, 60, 0.14)) border-box;
 }
 
-/* ===== Карточки премиального уровня ===== */
+/* ===== Тёмные «сцены» П1 ===== */
+.scene {
+  background: var(--scene);
+  color: var(--scene-foreground);
+}
+.scene-elevated {
+  background: var(--scene-2);
+  border: 1px solid var(--scene-border);
+}
+
+/* ===== Карточки премиального уровня (светлые) ===== */
 .card-premium {
   @apply rounded-2xl border border-border bg-card;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.03) inset,
-    0 8px 28px -12px rgba(0, 0, 0, 0.55);
+    0 1px 2px rgba(34, 39, 46, 0.04),
+    0 12px 32px -18px rgba(34, 39, 46, 0.16);
   transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 }
 .card-premium-hover:hover {
   transform: translateY(-3px);
-  border-color: rgba(255, 176, 32, 0.35);
+  border-color: rgba(232, 148, 10, 0.5);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.04) inset,
-    0 16px 40px -14px rgba(0, 0, 0, 0.65),
-    0 0 0 1px rgba(255, 176, 32, 0.08);
+    0 1px 2px rgba(34, 39, 46, 0.05),
+    0 18px 44px -20px rgba(34, 39, 46, 0.22),
+    0 0 0 1px rgba(232, 148, 10, 0.1);
+}
+
+/* ===== Штамп ГОСТ (№1): карточки-«спецификации» ===== */
+.stamp-gost {
+  position: relative;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+.stamp-gost::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-top: 1.5px solid rgba(20, 101, 123, 0.35);
+  border-right: 1.5px solid rgba(20, 101, 123, 0.35);
+  pointer-events: none;
+}
+.stamp-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #6c7077;
 }
 
 /* ===== Рекламные контейнеры РСЯ: фиксированная высота (защита CLS ≤ 0.1, ТЗ 8.2/9.1) ===== */
 .ad-container {
-  @apply relative w-full overflow-hidden rounded-xl border border-dashed border-border/70 bg-[repeating-linear-gradient(135deg,transparent,transparent_10px,rgba(255,255,255,0.015)_10px,rgba(255,255,255,0.015)_20px)];
+  @apply relative w-full overflow-hidden rounded-xl border border-dashed border-border/90 bg-[repeating-linear-gradient(135deg,transparent,transparent_10px,rgba(34,39,46,0.022)_10px,rgba(34,39,46,0.022)_20px)];
   min-height: 250px;
 }
 .ad-container--square { min-height: 300px; }
@@ -160,7 +244,7 @@
 }
 .calc-progress-bar > div {
   @apply h-full rounded-full transition-all duration-500;
-  background: linear-gradient(100deg, #ffb020, #ff6a00);
+  background: linear-gradient(100deg, #f2a328, #e8940a);
 }
 
 /* ===== Плавные чипы режимов ===== */
@@ -176,7 +260,7 @@
 }
 .chip-active {
   @apply border-primary/60 bg-primary/10 text-foreground;
-  box-shadow: 0 0 0 1px rgba(255, 176, 32, 0.25);
+  box-shadow: 0 0 0 1px rgba(20, 101, 123, 0.18);
 }
 
 /* ===== Таблицы: мобильные карточки (ТЗ 8.2: mobile-first) ===== */
@@ -245,15 +329,15 @@
   .article-md table { display: block; overflow-x: auto; white-space: nowrap; }
 }
 
-/* ===== Кастомный скроллбар ===== */
+/* ===== Кастомный скроллбар (светлый) ===== */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: #2a3140;
+  background: #d8d2c2;
   border-radius: 8px;
-  border: 2px solid #0e1218;
+  border: 2px solid #faf8f3;
 }
-::-webkit-scrollbar-thumb:hover { background: #3a4354; }
+::-webkit-scrollbar-thumb:hover { background: #c9c2ae; }
 
 /* ===== Утилита ограниченной высоты списков ===== */
 .scrollbox {
@@ -266,7 +350,7 @@
 @media print {
   body { background: #fff !important; color: #000 !important; background-image: none !important; }
   .no-print { display: none !important; }
-  .card-premium, .print-plain {
+  .card-premium, .scene, .print-plain {
     background: #fff !important;
     border-color: #ccc !important;
     box-shadow: none !important;
@@ -274,4 +358,10 @@
   }
   .text-gradient-solar { color: #b45309 !important; -webkit-text-fill-color: #b45309 !important; background: none !important; }
   .print-text { color: #000 !important; }
+}
+
+/* ===== Движение только для тех, кто его не отключил (CWV/доступность) ===== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card-premium-hover:hover { transform: none; }
 }

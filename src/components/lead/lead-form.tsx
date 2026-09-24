@@ -178,7 +178,7 @@ export function LeadForm({
       <Button
         type="submit"
         disabled={loading}
-        className="w-full bg-gradient-solar text-primary-foreground shadow-[0_8px_24px_-8px_rgba(255,106,0,0.65)] hover:opacity-95"
+        className="w-full bg-gradient-solar shadow-[0_8px_22px_-8px_rgba(232,148,10,0.55)] hover:opacity-95"
       >
         {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="mr-2 h-4 w-4" />}
         {submitLabel}
