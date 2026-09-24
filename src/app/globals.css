@@ -7,7 +7,6 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
-  --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -37,111 +36,242 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-solar: var(--solar);
+  --color-solar-deep: var(--solar-deep);
+  --color-stable: var(--stable);
+  --color-stable-soft: var(--stable-soft);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/*
+  Дизайн-система «инженерная премиальность» (ТЗ 8.1):
+  тёмная тема (графит #12161D), градиентный акцент «солнце→энергия»
+  (#FFB020 → #FF6A00), зелёно-голубой акцент стабильности #2DD4A8.
+  Карточки с мягкими тенями, скругления 12–16 px, микроанимации.
+*/
 :root {
-  --radius: 0.625rem;
-  --background: #ffffff;
-  --foreground: #142019;
-  --card: #ffffff;
-  --card-foreground: #142019;
-  --popover: #ffffff;
-  --popover-foreground: #142019;
-  --primary: #15803d;
-  --primary-foreground: #f0fdf4;
-  --secondary: #f4f5f4;
-  --secondary-foreground: #1b2a20;
-  --muted: #f1f3f1;
-  --muted-foreground: #5b6b62;
-  --accent: #ecfdf3;
-  --accent-foreground: #14532d;
-  --destructive: #dc2626;
-  --border: #e3e8e4;
-  --input: #d9e0da;
-  --ring: #10b981;
-  /* Палитра видов ВИЭ: ветер / солнце / малые ГЭС / биомасса / геотермия */
-  --chart-1: #14b8a6;
-  --chart-2: #f59e0b;
-  --chart-3: #06b6d4;
-  --chart-4: #65a30d;
-  --chart-5: #ea580c;
-  --sidebar: #fafbfa;
-  --sidebar-foreground: #142019;
-  --sidebar-primary: #15803d;
-  --sidebar-primary-foreground: #f0fdf4;
-  --sidebar-accent: #ecfdf3;
-  --sidebar-accent-foreground: #14532d;
-  --sidebar-border: #e3e8e4;
-  --sidebar-ring: #10b981;
-}
-
-.dark {
-  --background: #0c1210;
-  --foreground: #e8f0eb;
-  --card: #121a16;
-  --card-foreground: #e8f0eb;
-  --popover: #121a16;
-  --popover-foreground: #e8f0eb;
-  --primary: #34d399;
-  --primary-foreground: #052e16;
-  --secondary: #1a2420;
-  --secondary-foreground: #d5e4db;
-  --muted: #1a2420;
-  --muted-foreground: #9ab0a4;
-  --accent: #12281c;
-  --accent-foreground: #a7f3d0;
-  --destructive: #f87171;
-  --border: #223029;
-  --input: #2a3a32;
-  --ring: #34d399;
-  --chart-1: #2dd4bf;
-  --chart-2: #fbbf24;
-  --chart-3: #22d3ee;
-  --chart-4: #a3e635;
-  --chart-5: #fb923c;
-  --sidebar: #121a16;
-  --sidebar-foreground: #e8f0eb;
-  --sidebar-primary: #34d399;
-  --sidebar-primary-foreground: #052e16;
-  --sidebar-accent: #12281c;
-  --sidebar-accent-foreground: #a7f3d0;
-  --sidebar-border: #223029;
-  --sidebar-ring: #34d399;
+  --radius: 0.875rem;
+  --background: #0e1218;
+  --foreground: #e8eaed;
+  --card: #161b24;
+  --card-foreground: #e8eaed;
+  --popover: #1a202b;
+  --popover-foreground: #e8eaed;
+  --primary: #ffb020;
+  --primary-foreground: #1b1204;
+  --secondary: #212734;
+  --secondary-foreground: #c9ced6;
+  --muted: #1c222d;
+  --muted-foreground: #8b93a1;
+  --accent: #232a37;
+  --accent-foreground: #e8eaed;
+  --destructive: #ef4444;
+  --destructive-foreground: #fff;
+  --border: #262d3a;
+  --input: #2a3140;
+  --ring: #ffb020;
+  --chart-1: #ffb020;
+  --chart-2: #2dd4a8;
+  --chart-3: #ff6a00;
+  --chart-4: #6ea8ff;
+  --chart-5: #a78bfa;
+  --sidebar: #161b24;
+  --sidebar-foreground: #e8eaed;
+  --sidebar-primary: #ffb020;
+  --sidebar-primary-foreground: #1b1204;
+  --sidebar-accent: #232a37;
+  --sidebar-accent-foreground: #e8eaed;
+  --sidebar-border: #262d3a;
+  --sidebar-ring: #ffb020;
+  --solar: #ffb020;
+  --solar-deep: #ff6a00;
+  --stable: #2dd4a8;
+  --stable-soft: rgba(45, 212, 168, 0.14);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(1200px 500px at 85% -10%, rgba(255, 106, 0, 0.06), transparent 60%),
+      radial-gradient(900px 420px at 8% -5%, rgba(255, 176, 32, 0.05), transparent 55%),
+      radial-gradient(700px 500px at 50% 110%, rgba(45, 212, 168, 0.04), transparent 60%);
+    background-attachment: fixed;
   }
   ::selection {
-    background: #a7f3d0;
-    color: #052e16;
+    background: rgba(255, 176, 32, 0.3);
   }
 }
 
-/* Кастомный скроллбар для длинных списков */
-.custom-scrollbar {
+/* ===== Градиент «солнце→энергия» и утилиты ===== */
+.text-gradient-solar {
+  background: linear-gradient(100deg, #ffb020 10%, #ff6a00 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.bg-gradient-solar {
+  background: linear-gradient(100deg, #ffb020 0%, #ff6a00 100%);
+}
+.border-gradient-solar {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(120deg, rgba(255, 176, 32, 0.55), rgba(255, 106, 0, 0.25)) border-box;
+}
+
+/* ===== Карточки премиального уровня ===== */
+.card-premium {
+  @apply rounded-2xl border border-border bg-card;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.03) inset,
+    0 8px 28px -12px rgba(0, 0, 0, 0.55);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.card-premium-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 176, 32, 0.35);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 16px 40px -14px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 176, 32, 0.08);
+}
+
+/* ===== Рекламные контейнеры РСЯ: фиксированная высота (защита CLS ≤ 0.1, ТЗ 8.2/9.1) ===== */
+.ad-container {
+  @apply relative w-full overflow-hidden rounded-xl border border-dashed border-border/70 bg-[repeating-linear-gradient(135deg,transparent,transparent_10px,rgba(255,255,255,0.015)_10px,rgba(255,255,255,0.015)_20px)];
+  min-height: 250px;
+}
+.ad-container--square { min-height: 300px; }
+.ad-container--banner { min-height: 120px; }
+
+/* ===== Полоса прогресса калькулятора ===== */
+.calc-progress-bar {
+  @apply h-2 rounded-full bg-secondary overflow-hidden;
+}
+.calc-progress-bar > div {
+  @apply h-full rounded-full transition-all duration-500;
+  background: linear-gradient(100deg, #ffb020, #ff6a00);
+}
+
+/* ===== Плавные чипы режимов ===== */
+.chip {
+  @apply rounded-xl border border-border bg-secondary/50 px-3.5 py-2 text-sm text-muted-foreground transition-all;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.chip:hover {
+  @apply border-primary/40 text-foreground;
+}
+.chip-active {
+  @apply border-primary/60 bg-primary/10 text-foreground;
+  box-shadow: 0 0 0 1px rgba(255, 176, 32, 0.25);
+}
+
+/* ===== Таблицы: мобильные карточки (ТЗ 8.2: mobile-first) ===== */
+.responsive-table th {
+  @apply text-left text-xs font-medium uppercase tracking-wide text-muted-foreground px-3 py-2.5;
+}
+.responsive-table td {
+  @apply px-3 py-3 text-sm align-middle;
+}
+.responsive-table tbody tr {
+  @apply border-t border-border/60;
+}
+@media (max-width: 767px) {
+  .responsive-table thead { display: none; }
+  .responsive-table tbody tr { display: block; border-radius: 12px; padding: 10px 12px; margin-bottom: 10px; background: var(--card); border: 1px solid var(--border); }
+  .responsive-table tbody tr td { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; border: none; }
+  .responsive-table tbody tr td::before {
+    content: attr(data-label);
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+}
+
+/* ===== Markdown статей ===== */
+.article-md h2 {
+  @apply mt-10 mb-4 text-xl font-semibold tracking-tight text-foreground;
+  scroll-margin-top: 90px;
+}
+.article-md h3 {
+  @apply mt-8 mb-3 text-lg font-semibold text-foreground;
+}
+.article-md p {
+  @apply my-4 leading-relaxed text-foreground/90;
+}
+.article-md ul, .article-md ol {
+  @apply my-4 space-y-2 pl-5 leading-relaxed text-foreground/90;
+}
+.article-md ul { list-style: disc; }
+.article-md ol { list-style: decimal; }
+.article-md a {
+  @apply text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary;
+}
+.article-md blockquote {
+  @apply my-5 border-l-2 border-primary/60 pl-4 italic text-muted-foreground;
+}
+.article-md table {
+  @apply my-6 w-full text-sm border-collapse;
+}
+.article-md table th {
+  @apply border-b border-border bg-secondary/40 px-3 py-2.5 text-left font-medium;
+}
+.article-md table td {
+  @apply border-b border-border/60 px-3 py-2.5;
+}
+.article-md strong {
+  @apply font-semibold text-foreground;
+}
+.article-md code {
+  @apply rounded bg-secondary px-1.5 py-0.5 text-[0.85em];
+}
+@media (max-width: 767px) {
+  .article-md table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* ===== Кастомный скроллбар ===== */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #2a3140;
+  border-radius: 8px;
+  border: 2px solid #0e1218;
+}
+::-webkit-scrollbar-thumb:hover { background: #3a4354; }
+
+/* ===== Утилита ограниченной высоты списков ===== */
+.scrollbox {
+  @apply overflow-y-auto;
+  max-height: 24rem;
   scrollbar-width: thin;
-  scrollbar-color: #94a3b8 transparent;
 }
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: color-mix(in srgb, currentColor 18%, transparent);
-}
-.dark .custom-scrollbar {
-  scrollbar-color: #475569 transparent;
+
+/* ===== Печать сметы (PDF через печать браузера, ТЗ 4.3) ===== */
+@media print {
+  body { background: #fff !important; color: #000 !important; background-image: none !important; }
+  .no-print { display: none !important; }
+  .card-premium, .print-plain {
+    background: #fff !important;
+    border-color: #ccc !important;
+    box-shadow: none !important;
+    color: #000 !important;
+  }
+  .text-gradient-solar { color: #b45309 !important; -webkit-text-fill-color: #b45309 !important; background: none !important; }
+  .print-text { color: #000 !important; }
 }

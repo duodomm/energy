@@ -1,56 +1,101 @@
-"use client";
+"use client"
 
-import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { SiteHeader, type TabId } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
-import { OverviewSection } from "@/components/sections/overview-section";
-import { TypesSection } from "@/components/sections/types-section";
-import { RegionsSection } from "@/components/sections/regions-section";
-import { ProjectsSection } from "@/components/sections/projects-section";
-import { ForecastSection } from "@/components/sections/forecast-section";
-import { AboutSection } from "@/components/sections/about-section";
+import { useEffect } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { SiteHeader } from "@/components/layout/site-header"
+import { SiteFooter } from "@/components/layout/site-footer"
+import { StickyCta } from "@/components/layout/sticky-cta"
+import { ExitIntent } from "@/components/layout/exit-intent"
+import { useHashRoute, routeToPath } from "@/lib/router"
+import { trackPageview } from "@/lib/analytics"
+
+import { HomePage } from "@/components/pages/home-page"
+import { CalculatorPage } from "@/components/pages/calculator-page"
+import { DachaCalcPage } from "@/components/pages/dacha-calc-page"
+import { LcoePage } from "@/components/pages/lcoe-page"
+import { HubPage } from "@/components/pages/hub-page"
+import { RegionsPage } from "@/components/pages/regions-page"
+import { CasesPage } from "@/components/pages/cases-page"
+import { ReferencePage } from "@/components/pages/reference-page"
+import { BlogPage } from "@/components/pages/blog-page"
+import { ArticlePage } from "@/components/pages/article-page"
+import { AboutPage } from "@/components/pages/about-page"
+import { ContactsPage } from "@/components/pages/contacts-page"
+import { PrivacyPage } from "@/components/pages/privacy-page"
+import { ThanksPage } from "@/components/pages/thanks-page"
+import { AdminPage } from "@/components/pages/admin-page"
+import { NotFound } from "@/components/pages/not-found"
+
+// Карта страниц ТЗ 3.1 в hash-маршрутах:
+// #/ — главная; #/kalkulyator(/dacha); #/kalkulyator-lcoe; #/solnce; #/nakopiteli;
+// #/generatory; #/teo; #/regiony; #/kejsy; #/spravochnik; #/blog(/slug);
+// #/o-proekte; #/kontakty; #/politika-konfidencialnosti; #/spasibo; #/admin
+// + любой одно-сегментный маршрут, совпадающий со slug статьи из БД.
+
+const HUBS = new Set(["solnce", "nakopiteli", "generatory", "teo"])
+
+function renderPage(path: string[], hash: string, slugHint: string | null) {
+  const [a, b] = path
+  switch (a) {
+    case undefined:
+      return <HomePage />
+    case "kalkulyator":
+      return b === "dacha" ? <DachaCalcPage /> : <CalculatorPage sharedHash={hash.startsWith("calc=") ? hash : null} />
+    case "kalkulyator-lcoe":
+      return <LcoePage />
+    case "regiony":
+      return <RegionsPage />
+    case "kejsy":
+      return <CasesPage />
+    case "spravochnik":
+      return <ReferencePage />
+    case "blog":
+      return b ? <ArticlePage slug={b} /> : <BlogPage />
+    case "o-proekte":
+      return <AboutPage />
+    case "kontakty":
+      return <ContactsPage openForm={hash.includes("form=1")} />
+    case "politika-konfidencialnosti":
+      return <PrivacyPage />
+    case "spasibo":
+      return <ThanksPage />
+    case "admin":
+      return <AdminPage />
+    default:
+      if (HUBS.has(a ?? "")) return <HubPage hub={a ?? "sun"} slug={b ?? null} />
+      if (slugHint) return <ArticlePage slug={slugHint} />
+      return <NotFound path={path} />
+  }
+}
 
 export function AppShell() {
-  const [tab, setTab] = useState<TabId>("overview");
+  const route = useHashRoute()
+  const pathStr = routeToPath(route)
 
-  const handleTabChange = useCallback((t: TabId) => {
-    setTab(t);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
-
-  // Синхронизация таба с hash для удобного шаринга ссылок
+  // Прогрев: одно-сегментный маршрут может быть slug статьи (перелинковка из статей)
   useEffect(() => {
-    const fromHash = window.location.hash.replace("#", "") as TabId;
-    const valid = ["overview", "types", "regions", "projects", "forecast", "about"];
-    if (valid.includes(fromHash) && fromHash !== "overview") {
-      const id = requestAnimationFrame(() => setTab(fromHash));
-      return () => cancelAnimationFrame(id);
-    }
-  }, []);
+    trackPageview(pathStr)
+  }, [pathStr])
 
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader tab={tab} onTabChange={handleTabChange} />
-      <main className="flex-1">
-        <AnimatePresence mode="wait">
+      <SiteHeader />
+      <main className="flex-1 pb-20 md:pb-0">
+        <AnimatePresence mode="wait" initial={false}>
           <motion.div
-            key={tab}
-            initial={{ opacity: 0, y: 10 }}
+            key={pathStr}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
           >
-            {tab === "overview" && <OverviewSection onNavigate={handleTabChange} />}
-            {tab === "types" && <TypesSection />}
-            {tab === "regions" && <RegionsSection />}
-            {tab === "projects" && <ProjectsSection />}
-            {tab === "forecast" && <ForecastSection />}
-            {tab === "about" && <AboutSection />}
+            {renderPage(route.path, route.hash, route.path.length === 1 ? route.path[0] : null)}
           </motion.div>
         </AnimatePresence>
       </main>
       <SiteFooter />
+      <StickyCta />
+      <ExitIntent />
     </div>
-  );
+  )
 }

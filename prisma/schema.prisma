@@ -4,67 +4,123 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:/home/z/my-project/db/custom.db"
 }
 
-// Справочник видов ВИЭ
-model EnergyType {
-  id          String       @id // wind | solar | hydro | biomass | geothermal
-  name        String
-  shortName   String
-  description String
-  color       String
-  cim         Float // типовой КИУМ, %
-  projects    Project[]
-  yearlyStats YearlyStat[]
-}
-
-// Регионы РФ
+// === Справочник регионов (ТЗ: раздел 5, таблица regions) ===
+// psh[12] хранится как JSON-строка (SQLite не поддерживает массивы в Prisma)
 model Region {
-  id              Int      @id @default(autoincrement())
-  name            String   @unique
-  federalDistrict String
-  projects        Project[]
+  id           Int      @id @default(autoincrement())
+  code         String   @unique
+  name         String
+  federalOkrug String
+  pshJson      String // 12 значений: среднемесячные пик-солнце-часы, ч/сут
+  tariffFlat   Float // одноставочный тариф, ₽/кВт·ч (население)
+  tariffDay    Float // дневная зона, ₽/кВт·ч
+  tariffNight  Float // ночная зона, ₽/кВт·ч
+  installK     Float // региональный коэффициент стоимости монтажа
+  snowRegion   Int // снеговой район по СП 20.13330 (I–VIII)
+  windRegion   Int // ветровой район по СП 20.13330 (I–VII)
+  climateNote  String
+  dieselPrice  Float // ₽/л
+  gasPrice     Float // ₽/м³
+  updatedAt    DateTime @updatedAt
 }
 
-// Каталог ключевых объектов генерации
-model Project {
-  id              Int        @id @default(autoincrement())
-  name            String
-  energyTypeId    String
-  energyType      EnergyType @relation(fields: [energyTypeId], references: [id])
-  regionId        Int
-  region          Region     @relation(fields: [regionId], references: [id])
-  capacityMW      Float
-  status          String // operating | construction | planned
-  yearCommissioned Int?
-  yearPlanned     Int?
-  operator        String
-  investmentBlnRub Float?
-  description     String
-  isFlagship      Boolean    @default(false)
+// === Каталог оборудования с ценами «от–до» (ТЗ: equipment_catalog) ===
+model EquipmentCatalog {
+  id         Int      @id @default(autoincrement())
+  category   String // panel | inverter | battery_lifepo4 | battery_nmc | battery_agm | vrfb | controller | avr | mount | cable | switchboard | grounding | generator_diesel | generator_gas
+  tech       String? // уточнение технологии/класса
+  name       String
+  unit       String // ₽/Вт, ₽/Вт·ч, шт, м, комплект
+  spec       String? // диапазон мощностей/ёмкостей
+  priceFrom  Float
+  priceTo    Float
+  currency   String   @default("RUB")
+  updated_at DateTime @updatedAt
+  sourceNote String?
 }
 
-// Годовые ряды: установленная мощность и выработка по видам ВИЭ
-model YearlyStat {
-  id           Int        @id @default(autoincrement())
-  year         Int
-  energyTypeId String
-  energyType   EnergyType @relation(fields: [energyTypeId], references: [id])
-  capacityMW   Float
-  generationTWh Float
-
-  @@unique([year, energyTypeId])
+// === Ставки монтажа по округам (ТЗ: mount_rates) ===
+model MountRate {
+  id              Int     @id @default(autoincrement())
+  federalOkrug    String  @unique
+  baseRateRubHour Float // ставка нормо-часа, ₽
+  minCalloutRub   Float // минимальная стоимость выезда бригады, ₽
 }
 
-// Прогнозные сценарии развития ВИЭ (без крупных ГЭС)
-model ForecastPoint {
-  id               Int    @id @default(autoincrement())
-  year             Int
-  scenario         String // conservative | base | optimistic
-  capacityMW       Float
-  sharePercent     Float
-  investmentBlnRub Float
+// === Нормы работ (ТЗ: works_norms) ===
+model WorkNorm {
+  id          Int    @id @default(autoincrement())
+  code        String @unique
+  workName    String
+  normHours   Float // нормо-часов на единицу
+  unit        String // панель | кВт | кВт·ч | м | шт | комплекс
+  complexityK Float // коэффициент сложности
+}
 
-  @@unique([year, scenario])
+// === Технические записи лидов БЕЗ ПДн (ТЗ: leads) ===
+// ПДн (имя/телефон/e-mail) НЕ хранятся — передаются в РФ-CRM в момент заявки
+model Lead {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  objectType     String
+  region         String
+  scenario       String
+  capexFrom      Float?
+  capexTo        Float?
+  utmJson        String? // источник, UTM-метки, cookie id
+  deliveryStatus String   @default("delivered") // delivered | pending_retry | failed
+  formId         String? // форма: calc | dacha | lcoe | exit | sticky | header | quiz
+  note           String? // техническая информация без ПДн
+}
+
+// === Статьи/кейсы/гайды (ТЗ: articles) ===
+model Article {
+  id           Int      @id @default(autoincrement())
+  slug         String   @unique
+  hub          String // sun | storage | generator | economics | cases | reference | blog
+  kind         String   @default("article") // article | case | hub | guide
+  title        String
+  teaser       String
+  bodyMd       String
+  author       String
+  seoTitle     String?
+  seoDesc      String?
+  readMinutes  Int      @default(7)
+  caseSpecJson String? // для кейсов: конфигурация для воспроизведения в калькуляторе
+  published    Boolean  @default(true)
+  views        Int      @default(0)
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
+}
+
+// === Тарифы поставщиков (ТЗ: tariffs) ===
+model Tariff {
+  id          Int      @id @default(autoincrement())
+  region      String
+  provider    String
+  tariffFlat  Float
+  tariffDay   Float
+  tariffNight Float
+  note        String?
+  updatedAt   DateTime @updatedAt
+}
+
+// === Глоссарий (справочник) ===
+model GlossaryTerm {
+  id         Int    @id @default(autoincrement())
+  term       String @unique
+  category   String // technology | equipment | economics | mounting | norms
+  definition String
+}
+
+// === FAQ (справочник) ===
+model FaqItem {
+  id        Int     @id @default(autoincrement())
+  question  String
+  answer    String
+  category  String // calculator | solar | batteries | economics | legal | mounting
+  sortOrder Int     @default(0)
 }
