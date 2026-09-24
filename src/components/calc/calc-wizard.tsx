@@ -24,14 +24,17 @@ import { navigate } from "@/lib/router"
 const STEP_TITLES = ["Объект и режим", "Электроснабжение", "Генерация", "Накопление", "Монтаж", "Контакты"]
 
 export function CalcWizard({
-  bundle, initialInput,
+  bundle, initialInput, autoResult = false,
 }: {
   bundle: RefBundle
   initialInput?: CalcInput | null
+  autoResult?: boolean
 }) {
   const [input, setInput] = useState<CalcInput>(() => initialInput ?? defaults())
   const [step, setStep] = useState(1)
-  const [showResult, setShowResult] = useState(false)
+  // Расшаренная ссылка (#calc=...): получатель сразу видит смету со схемой,
+  // «Изменить параметры» возвращает в визард с восстановленными значениями
+  const [showResult, setShowResult] = useState(autoResult)
 
   const set = (patch: Partial<CalcInput>) => setInput((prev) => ({ ...prev, ...patch }))
 
@@ -275,11 +278,12 @@ export function CalculatorPage({ sharedHash }: { sharedHash: string | null }) {
           <Share2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
           <p className="text-sm leading-relaxed">
             Открыт <b>расшаренный расчёт</b> — параметры восстановлены из ссылки без обращения
-            к хранилищам. Нажмите «Показать результат» или поменяйте параметры.
+            к хранилищам, смета со схемой станции открыта сразу. «Изменить параметры» —
+            продолжить расчёт с восстановленными значениями.
           </p>
         </div>
       )}
-      <CalcWizard bundle={bundle} initialInput={shared} />
+      <CalcWizard bundle={bundle} initialInput={shared} autoResult={!!shared} />
     </div>
   )
 }

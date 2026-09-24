@@ -181,7 +181,11 @@ export function DachaCalcPage() {
                       />
                       <span className="flex-1 text-sm">{a.label}</span>
                       <span className="text-xs text-muted-foreground">{a.kwh} кВт·ч/сут</span>
-                      {a.start && <Zap className="h-3.5 w-3.5 text-primary" title="Пусковые токи" />}
+                      {a.start && (
+                        <span title="Пусковые токи">
+                          <Zap className="h-3.5 w-3.5 text-primary" />
+                        </span>
+                      )}
                     </label>
                   ))}
                 </div>

@@ -16,6 +16,8 @@ import { trackGoal } from "@/lib/analytics"
 import { LeadForm } from "@/components/lead/lead-form"
 import { AdSlot } from "@/components/common/ad-slot"
 import { CountUp } from "@/components/common/count-up"
+import { EnergyFlowStrip } from "@/components/common/energy-flow"
+import { Estate3D } from "@/components/common/estate-3d"
 
 const ENTRIES = [
   {
@@ -160,6 +162,20 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* ===== №2 «Энергопоток»: тёмная сцена с canvas-частицами (специя ≤10% площади) ===== */}
+      <section className="mx-auto max-w-7xl px-4 pt-10 sm:px-6">
+        <div
+          className="scene overflow-hidden rounded-2xl border border-scene-border shadow-[0_24px_60px_-30px_rgba(31,37,45,0.5)]"
+          aria-label="Демонстрация потока энергии станции"
+        >
+          <EnergyFlowStrip className="h-56 md:h-64" />
+        </div>
+        <p className="mt-3 text-[11px] leading-relaxed text-muted-foreground">
+          Демонстрация физики: днём панели питают дом и заряжают АКБ, вечером дом работает от батареи.
+          Реальная генерация считается по PSH и наклону вашего региона — в калькуляторе.
+        </p>
+      </section>
+
       {/* Три входа в калькулятор (ТЗ: Дача / Дом / Бизнес) с фотополосами */}
       <section className="mx-auto max-w-7xl px-4 pt-12 sm:px-6">
         <div className="grid gap-4 md:grid-cols-3">
@@ -198,6 +214,19 @@ export function HomePage() {
               </div>
             </motion.button>
           ))}
+        </div>
+      </section>
+
+      {/* ===== №7 «3D-усадьба»: живая модель участка ===== */}
+      <section className="mx-auto max-w-7xl px-4 pt-12 sm:px-6">
+        <h2 className="text-2xl font-bold tracking-tight md:text-3xl">Прикиньте станцию в 3D</h2>
+        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
+          Дом 10×6 м с южным скатом 35°. Двигайте мощность — панели «вырастают» на скате,
+          переполнение уходит на наземный каркас; переключите зиму — низкое солнце
+          удлинит тени и покажет, почему наклон панелей важен. Сцену можно вращать.
+        </p>
+        <div className="mt-7">
+          <Estate3D />
         </div>
       </section>
 

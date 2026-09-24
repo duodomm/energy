@@ -18,6 +18,7 @@ import {
 import type { CalcInput, ObjectType, RefBundle, RefRegion, SystemMode, InstallType, Orientation, Shading, BatteryTech, GeneratorType, PanelClass, Voltage, TariffPlan, ConsumerType } from "@/lib/calc/types"
 import { objectLabel, summarize, LoadBuilder } from "./load-builder"
 import { SunPathCard } from "./sun-path"
+import { BatteryGauge } from "@/components/common/battery-gauge"
 import { cn } from "@/lib/utils"
 
 // ===== Общие элементы =====
@@ -359,7 +360,7 @@ const ORIENTS: { key: Orientation; label: string; k: number }[] = [
   { key: "west", label: "Запад", k: 0.88 },
 ]
 
-const SHADES: { key: Shading; label: string }[] = [
+const SHADES: { key: Shading; label: string; k: number }[] = [
   { key: "none", label: "Без затенения", k: 1.0 },
   { key: "partial", label: "Частичное", k: 0.9 },
   { key: "heavy", label: "Сильное", k: 0.82 },
@@ -557,7 +558,7 @@ export function StepStorage({
           </button>
         ))}
       </div>
-      <label className="mb-7 flex w-fit cursor-pointer items-center gap-2.5 text-sm text-muted-foreground">
+      <label className="mb-4 flex w-fit cursor-pointer items-center gap-2.5 text-sm text-muted-foreground">
         <input
           type="checkbox"
           checked={input.winterBalance}
@@ -570,13 +571,20 @@ export function StepStorage({
         </span>
       </label>
 
+      {/* №9 «Приборная панель»: неоморфный прибор АКБ — живая ёмкость из ядра */}
+      <BatteryGauge
+        input={input}
+        bundle={bundle}
+        onChangeHours={(h) => set({ autonomyHours: h, batteryTech: h === 0 ? "none" : input.batteryTech === "none" ? "lifepo4" : input.batteryTech })}
+      />
+
       {input.autonomyHours > 0 && (
-        <>
+        <div className="mt-7">
           <Label className="mb-2.5 flex items-center gap-1.5 text-sm">
             Технология АКБ
             <FieldTooltip text="LiFePO4 — выбор по умолчанию: не горит, 6000+ циклов. AGM дешевле на малых ёмкостях, но DoD 50%. VRFB — промышленные 30+ кВт·ч под заказ." />
           </Label>
-          <div className="mb-7 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
             {BATTERIES.map((b) => (
               <button key={b.key} type="button" onClick={() => set({ batteryTech: b.key })} className={cn("chip flex-col items-start gap-1.5 p-4", input.batteryTech === b.key && "chip-active")}>
                 <BatteryCharging className={cn("h-6 w-6", input.batteryTech === b.key ? "text-primary" : "text-muted-foreground")} />
@@ -588,7 +596,7 @@ export function StepStorage({
               </button>
             ))}
           </div>
-        </>
+        </div>
       )}
 
       <Label className="mb-2.5 flex items-center gap-1.5 text-sm">

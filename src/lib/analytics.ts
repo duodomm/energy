@@ -19,6 +19,7 @@ type MetricaGoal =
   | "phone_click"
   | "pdf_download"
   | "share_click"
+  | "estate3d_interact"
 
 const YM_ID = 0 // номер счётчика задаётся при деплое
 

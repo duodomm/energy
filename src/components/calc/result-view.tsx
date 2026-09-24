@@ -24,6 +24,7 @@ import { LeadForm } from "@/components/lead/lead-form"
 import { AdSlot } from "@/components/common/ad-slot"
 import { trackGoal } from "@/lib/analytics"
 import { MONTH_RU } from "@/lib/calc/months"
+import { SolarHouseCard } from "./solar-house"
 
 const nbsp = (v: number) => Math.round(v).toLocaleString("ru-RU")
 
@@ -110,6 +111,17 @@ export function ResultView({ result, bundle }: { result: CalcResult; bundle: Ref
             sub={e.paybackVsGrid ? "vs сеть" : e.paybackVsDiesel ? "vs дизель" : undefined}
           />
         </div>
+      </div>
+
+      {/* ===== №4: схема станции — share-превью ===== */}
+      {/* Живая схема из волны 2: в смете и в PDF — та же картинка, которую
+          увидит получатель stateless-ссылки при восстановлении расчёта */}
+      <div>
+        <SolarHouseCard input={result.input} bundle={bundle} />
+        <p className="no-print mt-2 text-[11px] leading-relaxed text-muted-foreground">
+          <Share2 className="mr-1 inline h-3 w-3" />
+          Эта схема входит в ссылку «Поделиться расчётом»: получатель увидит её и смету целиком — без обращений к серверу.
+        </p>
       </div>
 
       {/* ===== Предупреждения ===== */}

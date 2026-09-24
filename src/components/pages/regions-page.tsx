@@ -11,6 +11,7 @@ import { MountainSnow, Wind, Sun, Zap, Fuel, Search, TrendingUp } from "lucide-r
 import { PageHero } from "@/components/common/page-hero"
 import { AdSlot } from "@/components/common/ad-slot"
 import { PshHeatmap } from "@/components/common/psh-heatmap"
+import { SunPathMini } from "@/components/common/sun-path-mini"
 import { loadRefBundle } from "@/lib/calc/ref-bundle"
 import type { RefBundle, RefRegion } from "@/lib/calc/types"
 import { navigate } from "@/lib/router"
@@ -128,10 +129,15 @@ export function RegionsPage() {
                     </div>
                   </div>
 
-                  {/* №6: сезонность PSH — heatmap по месяцам на общей шкале */}
+                  {/* №6: сезонность PSH (heatmap) + солнечный путь региона (дуги) */}
                   <div className="mt-3 border-t border-border/60 pt-3">
-                    <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">PSH по месяцам, ч/сут</p>
-                    <PshHeatmap psh={r.psh} />
+                    <div className="grid gap-5 md:grid-cols-2">
+                      <div className="min-w-0">
+                        <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">PSH по месяцам, ч/сут</p>
+                        <PshHeatmap psh={r.psh} />
+                      </div>
+                      <SunPathMini region={r} />
+                    </div>
                   </div>
 
                   <button
