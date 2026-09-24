@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "N=6; SUB=Мужчина запускает генератор; BRAND=GENERAC, GP6500; WARM=нейтральный; SUIT=нет\nN=7; SUB=Реклама аренды техники; BRAND=CAT, SATILLA; WARM=тёплый; SUIT=нет\nN=8; SUB=Смартфон с сайтом обогревателей; BRAND=НЕТ; WARM=тёплый; SUIT=нет\nN=9; SUB=Карбюратор и запчасти; BRAND=labwork-parts; WARM=холодный; SUIT=нет\nN=10; SUB=Зарядные станции Huawei; BRAND=HUAWEI; WARM=холодный; SUIT=нет",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790264919,
+  "id": "2026092423482899a4a0a66b164da7",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "2026092423482899a4a0a66b164da7",
+  "usage": {
+    "completion_tokens": 172,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 14933,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 15105
+  }
+}

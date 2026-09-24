@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "1) Нет, на фото нет читаемого текста или логотипа (на красном корпусе генератора видны только винты крепления рамы, но никаких надписей или эмблем).\n2) Да, человек, генератор, свет и композиция без искажений — изображение выглядит естественным, с правильными пропорциями и перспективой.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790265062,
+  "id": "202609242351000c714f4ed4a9483d",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "202609242351000c714f4ed4a9483d",
+  "usage": {
+    "completion_tokens": 83,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 1132,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1215
+  }
+}

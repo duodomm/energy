@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "N=1; SUB=Красный генератор на белом фоне; BRAND=AiPower XOS4600iDF; WARM=нейтральный; SUIT=нет\nN=2; SUB=Желтый генератор Firman; BRAND=Firman, CO Alert; WARM=теплый; SUIT=нет\nN=3; SUB=Музыкальный семплер Akai; BRAND=AKAI, MPC SAMPLE; WARM=нейтральный; SUIT=нет\nN=4; SUB=Женщина с фонариком в темноте; BRAND=НЕТ; WARM=холодный; SUIT=нет\nN=5; SUB=Мужчина с серверами NVIDIA; BRAND=NVIDIA; WARM=нейтральный; SUIT=нет\nN=6; SUB=Предупреждения о масле Volkswagen; BRAND=Volkswagen; WARM=теплый; SUIT=нет\nN=7; SUB=Портативная станция Jackery; BRAND=Jackery Explorer 1000; WARM=теплый; SUIT=нет\nN=8; SUB=Мужчина чинит красный генератор; BRAND=SILENT GERMANY; WARM=теплый; SUIT=да\nN=9; SUB=Смартфон, роутер и проектор; BRAND=Google, eero, Hisense; WARM=теплый; SUIT=нет\nN=10; SUB=Грозовые тучи над лесом; BRAND=НЕТ; WARM=холодный; SUIT=нет",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790264991,
+  "id": "20260924234931d025334e487842a1",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20260924234931d025334e487842a1",
+  "usage": {
+    "completion_tokens": 360,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 27048,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 27408
+  }
+}

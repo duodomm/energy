@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "N=1; PHOTO=Рука с ручкой, очки и бумага; VISIBLE=да; OVERLAP=нет; LOOKS=9\nN=2; PHOTO=Инженеры работают с оборудованием; VISIBLE=да; OVERLAP=нет; LOOKS=8\nN=3; PHOTO=Рабочее место инженера за компьютером; VISIBLE=да; OVERLAP=нет; LOOKS=9",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790265812,
+  "id": "2026092500032782bff6fdc0a547d4",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "2026092500032782bff6fdc0a547d4",
+  "usage": {
+    "completion_tokens": 101,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 5145,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 5246
+  }
+}

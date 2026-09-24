@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "N=6; SUB=Человек запускает бензиновый генератор; BRAND=GENERAC; WARM=тёплый; SUIT=нет",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790264894,
+  "id": "20260924234802350f356724ce4546",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20260924234802350f356724ce4546",
+  "usage": {
+    "completion_tokens": 37,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 24051,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 24088
+  }
+}

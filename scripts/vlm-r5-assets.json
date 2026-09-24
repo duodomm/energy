@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "N=1; SUBJECT=Руки пишут в блокноте на подносе; ISSUES=Вотермарки; MOOD=Тёплое\nN=2; SUBJECT=Группа людей в мастерской; ISSUES=Лица крупно; MOOD=Холодное\nN=3; SUBJECT=Руки держат смартфон над ноутбуком; ISSUES=Вотермарки; MOOD=Тёплое\nN=4; SUBJECT=Макрос капель воды на солнечной панели; ISSUES=ОК; MOOD=Тёплое\nN=5; SUBJECT=Интерьер комнаты с открытой дверью; ISSUES=ОК; MOOD=Тёплое\nN=6; SUBJECT=Портативная станция EcoFlow у розетки; ISSUES=ОК; MOOD=Тёплое\nN=7; SUBJECT=Рабочий с планшетом на крыше домов; ISSUES=ОК; MOOD=Тёплое",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790264642,
+  "id": "2026092423435581e220c95cac4e44",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "2026092423435581e220c95cac4e44",
+  "usage": {
+    "completion_tokens": 226,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 3896,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 4122
+  }
+}

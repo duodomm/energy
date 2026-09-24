@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "N=1; SUB=Записи в блокноте и чашка кофе; TEXT=НЕТ; OK=да\nN=2; SUB=Группа техников осматривает оборудование; TEXT=НЕТ; OK=да\nN=3; SUB=Современный домашний офис с двумя мониторами; TEXT=НЕТ; OK=да\nN=4; SUB=Мужчина проверяет металлический корпус; TEXT=НЕТ; OK=да\nN=5; SUB=Макросъемка солнечной панели с каплями; TEXT=НЕТ; OK=да\nN=6; SUB=Вид из гаража на улицу и полки; TEXT=НЕТ; OK=да\nN=7; SUB=Рабочий осматривает технику крупным планом; TEXT=НЕТ; OK=да\nN=8; SUB=Техник с планшетом на крыше домов; TEXT=НЕТ; OK=да",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790265137,
+  "id": "20260924235212945958fc79a6437b",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20260924235212945958fc79a6437b",
+  "usage": {
+    "completion_tokens": 214,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 4197,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 4411
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "1) Да, есть читаемый текст: на зелёной кепке видна надпись «MUSTANG FENWICK» (или похожая), а также логотип трактора; на серой жилетке/рубашке частично читается текст, похожий на «UNA VE» (возможно, часть более длинного слова или бренда).\n2) Да, человек (мужчина в кепке и жилетке), красный генератор с чёрной рамой, тёплый естественный освещение и композиция кадра сохранились без искажений.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790265033,
+  "id": "2026092423502890e52f7fc88d4ceb",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "2026092423502890e52f7fc88d4ceb",
+  "usage": {
+    "completion_tokens": 134,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 1139,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1273
+  }
+}

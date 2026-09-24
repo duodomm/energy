@@ -11,12 +11,15 @@ export function CountUp({
   duration = 1100,
   suffix = "",
   prefix = "",
+  decimals = 0,
   className,
 }: {
   to: number
   duration?: number
   suffix?: string
   prefix?: string
+  /** знаков после запятой (12,5 → decimals: 1); локаль ru-RU — запятая */
+  decimals?: number
   className?: string
 }) {
   const [value, setValue] = useState(to)
@@ -54,11 +57,14 @@ export function CountUp({
     return () => io.disconnect()
   }, [to, duration])
 
-  const rounded = Math.round(value)
+  const rounded = value.toFixed(decimals)
   return (
     <span ref={ref} className={className}>
       {prefix}
-      {rounded.toLocaleString("ru-RU")}
+      {Number(rounded).toLocaleString("ru-RU", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      })}
       {suffix}
     </span>
   )

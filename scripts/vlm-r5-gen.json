@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Фото 1: логотип/текст (GROWATT) — слева-центр, сверху (на корпусе станции); третья кадра без брендов и текста — средняя.\n\nN=2; SUB=Станция Anker с дронами и аккумуляторами; WM=Anker, текст на бойлере; FACE=нет; SUIT=нет\nN=3; SUB=Три портативные станции EcoFlow и Jackery; WM=EcoFlow, Jackery; FACE=нет; SUIT=да\nN=4; SUB=Станция EcoFlow Max и вентилятор на скамейке; WM=EcoFlow, FlexDirect; FACE=нет; SUIT=да\nN=5; SUB=Ноутбук и монитор подключены к розетке; WM=KTC, 100W; FACE=нет; SUIT=да\nN=6; SUB=Светящиеся плетеные уличные столики у бассейна; WM=НЕТ; FACE=нет; SUIT=нет\nN=7; SUB=Вентилятор и очиститель воздуха Vtoman дома; WM=Vtoman, DREAME; FACE=нет; SUIT=нет\nN=8; SUB=Компактная станция EcoFlow на белом фоне; WM=EcoFlow; FACE=нет; SUIT=да",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790264786,
+  "id": "2026092423460647dbc11f609a43c3",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "2026092423460647dbc11f609a43c3",
+  "usage": {
+    "completion_tokens": 298,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 23313,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 23611
+  }
+}

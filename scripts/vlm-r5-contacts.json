@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "N=1; SUB=Рука держит смартфон с белым экраном; WM=dreamstime (повсюду), ID и автор внизу; FACE=нет; WARM=нейтральный; CROP=да\nN=2; SUB=Девушка в очках делает селфи; WM=shutterstock, TippaPatt (повсюду), ID внизу; FACE=да; WARM=нейтральный; CROP=да\nN=3; SUB=Монитор и блокнот на светлом столе; WM=alamy (повсюду), ID внизу; FACE=нет; WARM=тёплый; CROP=да\nN=4; SUB=Стильное рабочее место с техникой; WM=нет; FACE=нет; WARM=нейтральный; CROP=да\nN=5; SUB=Ноутбук на подставке и кофе на столе; WM=нет; FACE=нет; WARM=тёплый; CROP=да\nN=6; SUB=Мужчина программирует за компьютером; WM=нет; FACE=да; WARM=тёплый; CROP=да\nN=7; SUB=Чёрно-белое фото ладоней; WM=shutterstock, Doidam 10 (повсюду), ID внизу; FACE=нет; WARM=холодный; CROP=да\nN=8; SUB=Современный кабинет с двумя мониторами; WM=нет; FACE=нет; WARM=тёплый; CROP=да\nN=9; SUB=Уютная гостиная с камином и креслами; WM=нет; FACE=нет; WARM=тёплый; CROP=да\nN=10; SUB=Рабочий стол с iMac и аксессуарами; WM=нет; FACE=нет; WARM=нейтральный; CROP=да",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790264751,
+  "id": "20260924234531bce80e34aa904d89",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20260924234531bce80e34aa904d89",
+  "usage": {
+    "completion_tokens": 438,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 25790,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 26228
+  }
+}

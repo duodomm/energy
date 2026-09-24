@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "N=1; SUB=Писание в блокноте с кофе на подносе; WM=водяные знаки dreamstime по всему полю, надпись внизу; FACE=нет; WARM=тёплый; CROP=да\nN=2; SUB=Девушка с кофе и ноутбуком в кафе; WM=нет; FACE=да; WARM=тёплый; CROP=да\nN=3; SUB=Девушка у окна за столом с книгой; WM=нет; FACE=да (профиль); WARM=тёплый; CROP=да\nN=4; SUB=Рука пишет ручкой в книге рядом с очками; WM=нет; FACE=нет; WARM=холодный; CROP=да\nN=5; SUB=Кофе, ноутбук и цветы на столе в кафе; WM=водяные знаки dreamstime, подпись внизу; FACE=нет; WARM=тёплый; CROP=да\nN=6; SUB=Блокнот, кофе и ключи на столе у окна; WM=нет; FACE=нет; WARM=нейтральный; CROP=да\nN=7; SUB=Рабочее место: книга, ноутбук, планер; WM=текст сверху и справа снизу; FACE=нет; WARM=нейтральный; CROP=да\nN=8; SUB=Иллюстрация ночного рабочего стола с ноутбуком; WM=нет; FACE=нет; WARM=холодный; CROP=да\nN=9; SUB=Ноутбук и книга на открытом воздухе; WM=текстовые плашки сверху; FACE=нет; WARM=нейтральный; CROP=да\nN=10; SUB=Открытый блокнот и лампа на тёмном столе; WM=нет; FACE=нет; WARM=тёплый; CROP=да",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790264690,
+  "id": "202609242344300d8f1c69c3ff4448",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "202609242344300d8f1c69c3ff4448",
+  "usage": {
+    "completion_tokens": 450,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 20942,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 21392
+  }
+}

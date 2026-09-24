@@ -1,7 +1,8 @@
 "use client"
 
 // Хабы-«столпы» (ТЗ 3.1): /solnce, /nakopiteli, /generatory, /teo.
-// Лендинг хаба: hero, ключевые статьи хаба, быстрые входы в калькулятор.
+// Лендинг хаба: hero, живые материалы (шаги/цифры/дата-виз/мифы),
+// ключевые статьи хаба, быстрые входы в калькулятор.
 
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -11,6 +12,7 @@ import { Sun, BatteryCharging, Fuel, TrendingUp, ArrowRight, Clock, Calculator, 
 import { PageHero } from "@/components/common/page-hero"
 import { HeroCorner } from "@/components/common/hero-corner"
 import { AdSlot } from "@/components/common/ad-slot"
+import { HubExtras, HubMyths } from "@/components/hub/hub-extras"
 import { navigate } from "@/lib/router"
 import { apiGet } from "@/lib/api-static"
 
@@ -70,16 +72,27 @@ const HUB_META: Record<string, {
   },
 }
 
+// app-shell передаёт URL-слаг хаба (solnce/nakopiteli/generatory/teo),
+// а HUB_META, API-фильтр, JSON-бандлы и контент-блоки ждут ключ
+// (sun/storage/generator/economics). Нормализуем один раз здесь.
+const SLUG_TO_KEY: Record<string, string> = {
+  solnce: "sun", nakopiteli: "storage", generatory: "generator", teo: "economics",
+}
+const CORNER_VARIANT: Record<string, "sun" | "battery" | "generator" | "economics"> = {
+  sun: "sun", storage: "battery", generator: "generator", economics: "economics",
+}
+
 export function HubPage({ hub }: { hub: string; slug?: string | null }) {
-  const meta = HUB_META[hub] ?? HUB_META.sun
+  const key = SLUG_TO_KEY[hub] ?? hub
+  const meta = HUB_META[key] ?? HUB_META.sun
   const [items, setItems] = useState<ArticleListItem[] | null>(null)
 
   useEffect(() => {
     // dev: живой API с фильтром; статика: бандл хаба (клиент ещё раз фильтрует)
-    apiGet<ArticleListItem[]>(`/api/articles?hub=${hub}`, `/api-data/articles-hub-${hub}.json`)
-      .then((d) => setItems(d.filter((i) => i.hub === hub)))
+    apiGet<ArticleListItem[]>(`/api/articles?hub=${key}`, `/api-data/articles-hub-${key}.json`)
+      .then((d) => setItems(d.filter((i) => i.hub === key)))
       .catch(() => setItems([]))
-  }, [hub])
+  }, [key])
 
   return (
     <div>
@@ -87,7 +100,7 @@ export function HubPage({ hub }: { hub: string; slug?: string | null }) {
         eyebrow={meta.eyebrow}
         title={meta.title}
         description={meta.description}
-        corner={<HeroCorner variant={hub === "solnce" ? "sun" : hub === "nakopiteli" ? "battery" : hub === "generatory" ? "generator" : "economics"} />}
+        corner={<HeroCorner variant={CORNER_VARIANT[key] ?? "economics"} />}
       >
         <div className="mt-6 flex flex-wrap gap-2.5">
           {meta.quick.map((q) => (
@@ -101,7 +114,11 @@ export function HubPage({ hub }: { hub: string; slug?: string | null }) {
       <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6">
         <AdSlot variant="banner" />
 
-        <h2 className="mb-5 mt-8 text-xl font-semibold tracking-tight md:text-2xl">Материалы хаба</h2>
+        <div className="mt-10">
+          <HubExtras hub={key} />
+        </div>
+
+        <h2 className="mb-5 mt-10 text-xl font-semibold tracking-tight md:text-2xl">Материалы хаба</h2>
         {!items ? (
           <div className="grid gap-4 md:grid-cols-2">{[1, 2, 3, 4].map((i) => <Skeleton key={i} className="h-40 rounded-2xl" />)}</div>
         ) : items.length === 0 ? (
@@ -130,6 +147,10 @@ export function HubPage({ hub }: { hub: string; slug?: string | null }) {
             ))}
           </div>
         )}
+
+        <div className="mt-10">
+          <HubMyths hub={key} />
+        </div>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-3">
           <Button variant="outline" onClick={() => navigate("#/kalkulyator")} className="justify-start">

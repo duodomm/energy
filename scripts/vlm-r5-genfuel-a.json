@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "N=1; SUB=Схема расположения серийных номеров генераторов; BRAND=NORTERN LIGHTS, RPM Diesel Company; WARM=нейтральный; SUIT=нет\nN=2; SUB=Открытое руководство по техническому обслуживанию; BRAND=RPM Diesel Company; WARM=тёплый; SUIT=нет\nN=3; SUB=Топливная форсунка в прозрачной упаковке; BRAND=Golden vidar, DLLA15; WARM=нейтральный; SUIT=нет\nN=4; SUB=Металлический съёмник с тремя лапами; BRAND=НЕТ; WARM=нейтральный; SUIT=нет\nN=5; SUB=Выхлопная труба и комплект крепежа для двигателя; BRAND=ARSPORT, MADE IN USA; WARM=нейтральный; SUIT=нет",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790264908,
+  "id": "20260924234824f0ab41a8d3924516",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20260924234824f0ab41a8d3924516",
+  "usage": {
+    "completion_tokens": 202,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 9201,
+    "prompt_tokens_details": {
+      "cached_tokens": 2
+    },
+    "total_tokens": 9403
+  }
+}

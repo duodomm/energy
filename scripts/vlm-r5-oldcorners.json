@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "N=1; SUB=Капля воды на солнечной панели; BRAND=НЕТ; OK=да\nN=2; SUB=Белый домашний аккумулятор энергии; BRAND=powerwall (на корпусе); OK=да\nN=3; SUB=Портативная электростанция в комнате; BRAND=ecoflow (на корпусе); OK=да\nN=4; SUB=Рабочий с планшетом на крыше; BRAND=НЕТ; OK=да\nN=5; SUB=Солнечная электростанция на поле; BRAND=НЕТ; OK=да\nN=6; SUB=Миниатюрная библиотека в шкафу; BRAND=НЕТ; OK=нет\nN=7; SUB=Современный дом с солнечными панелями; BRAND=НЕТ; OK=да",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1790264808,
+  "id": "202609242346450158501bc6ed4cb3",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "202609242346450158501bc6ed4cb3",
+  "usage": {
+    "completion_tokens": 186,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2326,
+    "prompt_tokens_details": {
+      "cached_tokens": 2
+    },
+    "total_tokens": 2512
+  }
+}
