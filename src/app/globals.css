@@ -298,6 +298,9 @@
 }
 .article-md p {
   @apply my-4 leading-relaxed text-foreground/90;
+  /* R9: выравнивание по длине строки; списки/заголовки остаются слева */
+  text-align: justify;
+  hyphens: auto;
 }
 .article-md ul, .article-md ol {
   @apply my-4 space-y-2 pl-5 leading-relaxed text-foreground/90;
@@ -684,3 +687,6 @@
   .sun-dot-halo { animation: none; }
   .neu-led, .neu-led--on { transition: none; }
 }
+
+/* R10: карточные шаги внутри статьи — без маркеров списка */
+.article-md ol.steps-cards { list-style: none; padding-left: 0; }

@@ -484,7 +484,7 @@ export function computeCalc(input: CalcInput, bundle: RefBundle): CalcResult {
     warnings.push({
       level: "alert",
       text: "Режим микрогенерации (продажа излишков по упрощённому порядку) применим до 15 кВт. Для вашей мощности требуется иной порядок взаимодействия с сетевой организацией — рассмотрите гибридную схему с накопителем или проектирование под собственное потребление.",
-      link: { label: "Подробнее в хабе «Экономика»", href: "#/teo" },
+      link: { label: "Подробнее в разделе «Экономика»", href: "#/teo" },
     })
   }
   if (input.mode === "grid" && pnom <= 15 && input.consumerType === "household") {

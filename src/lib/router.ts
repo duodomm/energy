@@ -25,7 +25,13 @@ function parse(): Route {
 export function useHashRoute(): Route {
   const [route, setRoute] = useState<Route>(parse)
   useEffect(() => {
-    const onChange = () => setRoute(parse())
+    const onChange = () => {
+      setRoute(parse())
+      // R9: обычные <a href="#/..."> не скроллят страницу (id цели нет —
+      // браузер остаётся на текущей высоте, «переход в середину»).
+      // Любая смена маршрута = новая страница => мягкий подъём наверх.
+      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior })
+    }
     window.addEventListener("hashchange", onChange)
     return () => window.removeEventListener("hashchange", onChange)
   }, [])

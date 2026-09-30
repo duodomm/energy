@@ -32,7 +32,7 @@ export function ThanksPage() {
           <FileDown className="mr-2 h-4 w-4" /> Посмотреть кейсы со сметами
         </Button>
         <Button className="bg-gradient-solar text-primary-foreground" onClick={() => navigate("#/blog")}>
-          Читать хабы
+          Читать разделы
         </Button>
       </div>
       <p className="mt-10 flex items-center gap-2 text-xs text-muted-foreground">

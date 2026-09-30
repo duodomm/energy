@@ -27,7 +27,7 @@ const HUB_META: Record<string, {
   quick: { label: string; href: string }[]
 }> = {
   sun: {
-    eyebrow: "Хаб «Солнечная энергетика»",
+    eyebrow: "Солнечная энергетика",
     title: "Панели, инверторы, схемы и монтаж",
     description: "Как солнце превращается в киловатт-часы в российском климате: PSH регионов, выбор панелей и инверторов, снеговые и ветровые нагрузки СП 20.13330.",
     icon: Sun, color: "#FFB020",
@@ -38,7 +38,7 @@ const HUB_META: Record<string, {
     ],
   },
   storage: {
-    eyebrow: "Хаб «Накопители энергии»",
+    eyebrow: "Накопители энергии",
     title: "LiFePO4, NMC, AGM и VRFB",
     description: "Ёмкость по автономии, глубина разряда, КПД туда-обратно и реальные сроки службы. Двухтарифный арбитраж ночным тарифом и когда АКБ не нужны вовсе.",
     icon: BatteryCharging, color: "#2DD4A8",
@@ -49,7 +49,7 @@ const HUB_META: Record<string, {
     ],
   },
   generator: {
-    eyebrow: "Хаб «Генерация: газ и дизель»",
+    eyebrow: "Генерация: газ и дизель",
     title: "Резерв, АВР и расчёт топлива",
     description: "Дизель против газа по цене кВт·ч с ресурсом и ТО, автоматический ввод резерва по ПУЭ, связка генератора с солнечным гибридом через dry contact.",
     icon: Fuel, color: "#FF6A00",
@@ -60,7 +60,7 @@ const HUB_META: Record<string, {
     ],
   },
   economics: {
-    eyebrow: "Хаб «Экономика»",
+    eyebrow: "Экономика",
     title: "LCOE, окупаемость, тарифы, микрогенерация",
     description: "Две модели окупаемости, дисконтирование без обмана, тарифы по регионам с зонами день/ночь, порядок продажи излишков до 15 кВт по ФЗ-471.",
     icon: TrendingUp, color: "#2DD4A8",
@@ -118,7 +118,7 @@ export function HubPage({ hub }: { hub: string; slug?: string | null }) {
           <HubExtras hub={key} />
         </div>
 
-        <h2 className="mb-5 mt-10 text-xl font-semibold tracking-tight md:text-2xl">Материалы хаба</h2>
+        <h2 className="mb-5 mt-10 text-xl font-semibold tracking-tight md:text-2xl">Материалы раздела</h2>
         {!items ? (
           <div className="grid gap-4 md:grid-cols-2">{[1, 2, 3, 4].map((i) => <Skeleton key={i} className="h-40 rounded-2xl" />)}</div>
         ) : items.length === 0 ? (

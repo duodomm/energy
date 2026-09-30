@@ -18,6 +18,8 @@ import { AdSlot } from "@/components/common/ad-slot"
 import { CountUp } from "@/components/common/count-up"
 import { EnergyFlowStrip } from "@/components/common/energy-flow"
 import { Estate3D } from "@/components/common/estate-3d"
+import { Reveal } from "@/components/common/reveal"
+import { HomeArticle } from "@/components/pages/home-article"
 
 const ENTRIES = [
   {
@@ -90,13 +92,16 @@ export function HomePage() {
                 Калькулятор · справочник · смета за 24 часа
               </p>
               <h1 className="max-w-2xl text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl md:text-5xl">
-                Альтернативная энергетика РФ:
-                <span className="text-gradient-solar"> считайте до покупки</span>, а не после
+                Независимость от сети:
+                <span className="text-gradient-solar"> как получить свой киловатт</span>
+                и узнать его цену
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
-                Профессиональный калькулятор солнечных станций, накопителей и генераторов:
-                смета по реальным ценам «от–до», генерация по вашему региону, LCOE и окупаемость —
-                в браузере, без звонков. Инженерная проверка расчёта — за 24 часа.
+                Панели, накопитель и резерв превращают сеть в страховку, а не в единственный
+                источник. Три уровня независимости: резерв — на часы, гибрид — на сутки,
+                автономия — на годы. Цена вашего киловатта становится предсказуемой на
+                двадцать лет вперёд: считаем по PSH региона, реальным ценам оборудования
+                и нормо-часам монтажа — в браузере, без звонков.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Button
@@ -113,6 +118,15 @@ export function HomePage() {
                   </Button>
                 </a>
               </div>
+              <p className="mt-4 text-sm text-muted-foreground">
+                <button
+                  type="button"
+                  className="text-primary underline decoration-primary/40 underline-offset-4 transition-colors hover:decoration-primary"
+                  onClick={() => window.dispatchEvent(new CustomEvent("home-article:open"))}
+                >
+                  в продолжении статьи — цена, надёжность, климат ↓
+                </button>
+              </p>
             </motion.div>
 
             {/* Фото-слой витрины: реальный объект, приоритет LCP */}
@@ -137,9 +151,6 @@ export function HomePage() {
               <figcaption className="absolute bottom-3 left-3 rounded-lg border border-scene-border/60 bg-scene/90 px-3 py-1.5 text-[11px] font-medium text-scene-foreground backdrop-blur-sm">
                 СЭС 10 кВт · наклонная кровля · юг
               </figcaption>
-              <div className="absolute -right-2 -top-2 rounded-lg border border-border bg-card px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground shadow-sm">
-                Визуализация объекта
-              </div>
             </motion.figure>
           </div>
 
@@ -160,6 +171,9 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ===== Главная статья «Независимость»: тизер + мягкий авто-кат (R10) ===== */}
+      <HomeArticle />
 
       {/* ===== №2 «Энергопоток»: тёмная сцена с canvas-частицами (специя ≤10% площади) ===== */}
       <section className="mx-auto max-w-7xl px-4 pt-10 sm:px-6">
@@ -218,12 +232,14 @@ export function HomePage() {
 
       {/* ===== №7 «3D-усадьба»: живая модель участка ===== */}
       <section className="mx-auto max-w-7xl px-4 pt-12 sm:px-6">
+        <Reveal>
         <h2 className="text-2xl font-bold tracking-tight md:text-3xl">Прикиньте станцию в 3D</h2>
         <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
           Дом 10×6 м с южным скатом 35°. Двигайте мощность — панели «вырастают» на скате,
           переполнение уходит на наземный каркас; переключите зиму — низкое солнце
           удлинит тени и покажет, почему наклон панелей важен. Сцену можно вращать.
         </p>
+        </Reveal>
         <div className="mt-7">
           <Estate3D />
         </div>
@@ -235,12 +251,15 @@ export function HomePage() {
 
       {/* ===== Преимущества ===== */}
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+        <Reveal>
         <h2 className="text-2xl font-bold tracking-tight md:text-3xl">Почему расчётам здесь можно верить</h2>
         <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
           Методологию согласовали инженер, сметчик, экономист-снабженец и монтажник.
           Каждый параметр, влияющий на цену, объясняется прямо в калькуляторе.
         </p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        </Reveal>
+        <Reveal className="mt-8">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {ADVANTAGES.map((a) => (
             <Card key={a.title} className="card-premium border-border/60">
               <CardContent className="p-5">
@@ -251,6 +270,7 @@ export function HomePage() {
             </Card>
           ))}
         </div>
+        </Reveal>
       </section>
 
       {/* ===== Как мы работаем: фото инженера + шаги ===== */}
@@ -297,6 +317,7 @@ export function HomePage() {
       {/* ===== Мини-кейсы ===== */}
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
+          <Reveal>
           <div>
             <h2 className="text-2xl font-bold tracking-tight md:text-3xl">Кейсы с полными сметами</h2>
             <p className="mt-3 max-w-2xl text-[15px] text-muted-foreground">
@@ -307,6 +328,7 @@ export function HomePage() {
           <Button variant="outline" onClick={() => navigate("#/kejsy")}>
             Все кейсы <ArrowRight className="ml-1.5 h-4 w-4" />
           </Button>
+          </Reveal>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {CASES.map((c) => (

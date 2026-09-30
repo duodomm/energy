@@ -34,10 +34,10 @@ interface ArticleData {
 }
 
 const HUB_TITLES: Record<string, string> = {
-  sun: "Хаб «Солнечная энергетика»",
-  storage: "Хаб «Накопители»",
-  generator: "Хаб «Генерация»",
-  economics: "Хаб «Экономика»",
+  sun: "Солнечная энергетика",
+  storage: "Накопители энергии",
+  generator: "Генерация: газ и дизель",
+  economics: "Экономика",
   cases: "Кейсы",
   reference: "Справочник",
   blog: "Блог",

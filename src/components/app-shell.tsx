@@ -1,11 +1,13 @@
 "use client"
 
 import { useEffect } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion, MotionConfig } from "framer-motion"
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
 import { StickyCta } from "@/components/layout/sticky-cta"
 import { ExitIntent } from "@/components/layout/exit-intent"
+import { BackToTop } from "@/components/common/back-to-top"
+import { ReadingProgress } from "@/components/common/reading-progress"
 import { useHashRoute, routeToPath } from "@/lib/router"
 import { trackPageview } from "@/lib/analytics"
 
@@ -78,8 +80,10 @@ export function AppShell() {
   }, [pathStr])
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
+      <ReadingProgress routeKey={pathStr} />
       <main className="flex-1 pb-20 md:pb-0">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
@@ -96,6 +100,8 @@ export function AppShell() {
       <SiteFooter />
       <StickyCta />
       <ExitIntent />
+      <BackToTop />
     </div>
+    </MotionConfig>
   )
 }

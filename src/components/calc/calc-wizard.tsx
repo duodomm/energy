@@ -4,6 +4,7 @@
 // результат показывается НЕЗАВИСИМО от заполнения контактов (принцип итерации 14 ТЗ)
 
 import { useEffect, useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { ChevronLeft, ChevronRight, RotateCcw, Share2, Sparkles, FileDown, Mail } from "lucide-react"
@@ -138,7 +139,15 @@ export function CalcWizard({
         <SolarHouseCard input={input} bundle={bundle} compact />
       </div>
 
-      {/* Шаги */}
+      {/* Шаги: смена шага — мягкий сдвиг+фейд 0,2 с (R9); reducedMotion уважается глобально */}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={step}
+          initial={{ opacity: 0, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -24 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+        >
       {step === 1 && <StepObject input={input} set={set} bundle={bundle} />}
       {step === 2 && (
         <StepPower
@@ -181,6 +190,8 @@ export function CalcWizard({
           </div>
         </div>
       )}
+        </motion.div>
+      </AnimatePresence>
 
       {/* Навигация */}
       <div className="mt-9 flex items-center justify-between gap-3 border-t border-border/70 pt-6">

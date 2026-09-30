@@ -3,10 +3,15 @@
 // Рекламный контейнер РСЯ фиксированной высоты (ТЗ 8.2, 9.1):
 // до загрузки объявлений зарезервированное место — CLS ≤ 0.1.
 // В продакшене: <div id="yandex_rtb_R-A-XXXXXX"> + script РСЯ.
+// ADS_ENABLED = false: рекламные места закрыты до появления готовых блоков
+// РСЯ — слоты не рендерятся вовсе (включение одним флагом, без правок страниц).
 
 import { cn } from "@/lib/utils"
 
+const ADS_ENABLED = false
+
 export function AdSlot({ variant = "rect", label = "Реклама" }: { variant?: "rect" | "square" | "banner"; label?: string }) {
+  if (!ADS_ENABLED) return null
   return (
     <div
       className={cn("ad-container no-print flex items-center justify-center", variant === "square" && "ad-container--square", variant === "banner" && "ad-container--banner")}
