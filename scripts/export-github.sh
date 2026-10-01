@@ -53,20 +53,20 @@ rm -rf "$TMP/keep-scripts"
 git init -q -b main
 git add -A
 git -c user.name="AltEnergo RF" \
-      -c user.email="altenergo-rf@users.noreply.github.com" \
+      -c user.email="energy@users.noreply.github.com" \
       commit -q -m "$COMMIT_MSG"
 
 # 4. Bundle (полный git-репозиторий: ветка + HEAD) и zip (исходники без .git)
-git bundle create -q "$OUT/altenergo-rf.git.bundle" --all
+git bundle create -q "$OUT/energy.git.bundle" --all
 cd "$TMP"
-rm -rf altenergo-rf
-cp -a work altenergo-rf
-rm -rf altenergo-rf/.git
-rm -f "$OUT/altenergo-rf-src.zip"
-zip -qr "$OUT/altenergo-rf-src.zip" altenergo-rf
+rm -rf energy
+cp -a work energy
+rm -rf energy/.git
+rm -f "$OUT/energy-src.zip"
+zip -qr "$OUT/energy-src.zip" energy
 
 # 5. Верификация: клон из bundle идентичен рабочему дереву
-git clone -q "$OUT/altenergo-rf.git.bundle" "$TMP/verify"
+git clone -q "$OUT/energy.git.bundle" "$TMP/verify"
 diff <(cd "$TMP/verify" && git ls-files | sort) \
      <(cd "$TMP/work"   && git ls-files | sort) \
   && echo "VERIFY OK: состав bundle == экспортируемому дереву"
@@ -80,4 +80,4 @@ grep -q 'file:../db/custom.db' prisma/schema.prisma \
   && echo "VERIFY OK: относительный путь SQLite в экспорте"
 
 echo "---- Экспорт готов ----"
-ls -lh "$OUT/altenergo-rf.git.bundle" "$OUT/altenergo-rf-src.zip" | awk '{print $9, $5}'
+ls -lh "$OUT/energy.git.bundle" "$OUT/energy-src.zip" | awk '{print $9, $5}'

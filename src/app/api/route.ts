@@ -7,7 +7,7 @@ export async function GET() {
     await db.$queryRaw`SELECT 1`
     return NextResponse.json({
       status: "ok",
-      service: "altenergo-rf-api",
+      service: "energy-api",
       db: "connected",
       endpoints: ["/api/reference", "/api/articles", "/api/lead", "/api/admin"],
     })
