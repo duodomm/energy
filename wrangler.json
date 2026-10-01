@@ -17,8 +17,5 @@
   ],
   "vars": {
     "CRM_WEBHOOK_URL": ""
-  },
-  "limits": {
-    "cpu_ms": 50
   }
 }
